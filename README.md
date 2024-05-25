@@ -28,6 +28,12 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 5. MAGIC & NETGEN : Physical Verification
 
 
+# Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
+ This module gave the foundation of the chip that has to be designed as well as introduced the OpenLANE ASIC design flow and SKywater 130 nm openPDK.
+
+ The chip contained 48 pins with Quad Flat No-Leads (QFN) die package carrying an area of 7mm x 7mm. The SoC consisted of a CPU with GPIO bank which has to be designed on RISC-V ISA. Apart from this it included various foundry IPs such as PLL, SRAM, ADC & DAC all connected to the IO pads through the wire bonds for the functioning of the chip.
+
+![Screenshot (1574)Cropped](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/33608c68-87c2-43bd-96e5-c97809d62dad)
 
 
 
