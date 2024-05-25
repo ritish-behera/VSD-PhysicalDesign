@@ -51,7 +51,7 @@ Once the setup is ready we run the synthesis through "run_synthesis" command whi
 
 [Picture of synthesis result and report window]
 
-After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports, cell utilisation report and synthesis netlist can be found inside these directories.  
+After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports, cell utilisation report and synthesized netlist can be found inside these directories.  
 
 [Picture of flop ratio data]
 
