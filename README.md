@@ -37,11 +37,12 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 
 The first task of this module involved the initiation of the openLANE flow and hence the logic or RTL synthesis of the design through YOSYS and ABC. Besides a minor task of calculating the flop ratio of the synthesized design was added later.
 
-[picture of invoking openLANE tool]
+![Screenshot from 2024-05-26 00-28-42](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/be2d9e99-fd10-4f57-87f0-ede688cbe389)
 
 To invoke the tool the flow.tcl file was executed through tcl command in the terminal inside the working directory. It initiated the entire flow of RTL to GDSII without human interaction. The "-interactive" switch can be used to counter the execution of entire flow at once to step by step execution by the user.
 
-[Picture of package installaion, design preparation & synthesis]
+
+![Screenshot from 2024-05-26 00-30-06](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/611c0011-a309-4f2c-a89c-ac9f6885acfc)
 
 After the initialisation of the tool, to install the additional packages the "package require openlane 0.9" command was used. 
 
@@ -49,19 +50,24 @@ Before synthesis we have to go through design setup stage which creates all the 
 
 Once the setup is ready we run the synthesis through "run_synthesis" command which generates synthesized design output and stores inside the picorv32a design directory.
 
-[Picture of synthesis result and report window]
+![Screenshot from 2024-05-26 00-30-55](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8e81f420-7c7e-413e-87f0-a1fd25551e72)
 
-After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports, cell utilisation report and synthesized netlist can be found inside these directories.  
+![Screenshot from 2024-05-26 00-34-56](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e1583f55-2802-41e4-9e6d-b642848216a6)
 
-[Picture of flop ratio data]
+
+After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports and cell utilisation report can be found inside these directories.  
+
+![Screenshot from 2024-05-26 00-36-14](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/43c7c8c1-7c3c-4e9a-b31b-e71aa96ef595)
+
+![Screenshot from 2024-05-26 00-37-09](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5bc94db-8ecd-4e64-b775-ac2f6d04e939)
 
 Flop ratio represents the ratio between total no of D-flipflops used to the total no of cells present in the synthesized design.
 
 These data can be found inside the "yosys.stat.rpt" file (/runs/reports/yosys.stat.rpt) which assembles all the data of logic block used in the design.
 
-The number of D-flipflops are represented by "sky_fd_sc_hd_dfxtp_4" and it was divided by the total number of cells in the design to get the flop-ratio.
+The number of D-flipflops are represented by "sky_fd_sc_hd_dfxtp_2" and it was divided by the total number of cells in the design to get the flop-ratio.
 
-Flop Ratio = xxxx / xxxxx = xxxx
+Flop Ratio = 1613 / 14876 = 0.10842
 
 This concludes the first module.
 
