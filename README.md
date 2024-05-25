@@ -62,7 +62,7 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 
 
 
-# Apendix
+# Appendix
 1. For more information visit https://github.com/efabless/openlane2
 2. Tim Ansell - Skywater PDK: Fully open source manufacturable PDK for a 130nm process https://www.youtube.com/live/EczW2IWdnOM?si=lctS_oMLOfPLJU4v
 3. Mohamed Shalan - OpenLane, A Digital ASIC Flow for SkyWater 130nm Open PDK https://www.youtube.com/live/Vhyv0eq_mLU?si=vtTc57Oq7si5CrXv
