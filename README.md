@@ -35,10 +35,35 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 
 ![Screenshot (1574)Cropped](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/33608c68-87c2-43bd-96e5-c97809d62dad)
 
+The first task of this module involved the initiation of the openLANE flow and hence the logic or RTL synthesis of the design through YOSYS and ABC. Besides a minor task of calculating the flop ratio of the synthesized design was added later.
 
+[picture of invoking openLANE tool]
 
+To invoke the tool the flow.tcl file was executed through tcl command in the terminal inside the working directory. It initiated the entire flow of RTL to GDSII without human interaction. The "-interactive" switch can be used to counter the execution of entire flow at once to step by step execution by the user.
 
+[Picture of package installaion, design preparation & synthesis]
 
+After the initialisation of the tool, to install the additional packages the "package require openlane 0.9" command was used. 
+
+Before synthesis we have to go through design setup stage which creates all the directories for the excution og the speciic design as well as prepares the files. Here we are using "picorv32a" design for our synthesis which is available in the openlane work directory. For design prepartion "prep -design picorv32a" command was used.
+
+Once the setup is ready we run the synthesis through "run_synthesis" command which generates synthesized design output and stores inside the picorv32a design directory.
+
+[Picture of synthesis result and report window]
+
+After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports, cell utilisation report and synthesis netlist can be found inside these directories.  
+
+[Picture of flop ratio data]
+
+Flop ratio represents the ratio between total no of D-flipflops used to the total no of cells present in the synthesized design.
+
+These data can be found inside the "yosys.stat.rpt" file (/runs/reports/yosys.stat.rpt) which assembles all the data of logic block used in the design.
+
+The number of D-flipflops are represented by "sky_fd_sc_hd_dfxtp_4" and it was divided by the total number of cells in the design to get the flop-ratio.
+
+Flop Ratio = xxxx / xxxxx = xxxx
+
+This concludes the first module.
 
 
 
