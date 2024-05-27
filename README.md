@@ -215,8 +215,25 @@ For viewing the placement layout in Magic we will follow the similar method as f
 
 This ends the placement phase of the flow.
 
-## Cell Design and XCharacterization Flow
+## Cell Design and Characterization Flow
+Moving a bit apart from the flow in openLANE, we will discuss about the library cell characterization and respective design flow as cells are the basic block behind all the netlist,floorplan and placement. 
 
+A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) with different dimension and threshold voltage as well as various macros, IPs and decap cells, with timing information. In 
+1. Inputs
+   - Process Design Kits (PDKs) obtained from foundries
+   - DRC, LVS Rule with lambda-based design rules
+   - SPICE model which involves the parameter of PMOS and NMOS
+
+2. Design Steps
+   - Circuit Design
+   - Layout Design
+   - Characterization
+
+   
+   
+          
+    
+   
 
 
 
