@@ -73,7 +73,7 @@ This concludes the first module.
 
 
 # Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
-After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power and ground rail grid of the die core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool.
+After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power and ground rail grid of the die core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool. Also a minor task of representing the core area in micron units was done as part of the module.
 
 Afterwards, we have moved to powerplanning, pin assignment and placement steps and at the end briefed about the library cell characterization using the SPICE parameters, DRC rules and timing constraints.
 
@@ -121,7 +121,15 @@ In order to mitigate this problem we use a grid or mess of power and ground line
 [Figure of Powerplanning Grid]
 
 ### Pin Assignment and Logic Blockage Cells
+Apart from the core area, to connect the input and output nodes of the netlist to external environment, pins are assigned at the boundary of the die. This requires handshkaing between frontend and backend VLSI design as the input/output pins should be placed near to the input/output nodes of the logic which rersults in random distribution of pins around the die.
 
+The pins include both data pins and clock pins with the clock pins slightly bigger in size to help reduce the path resistance which affects the drive strength of the clock.
+
+Moreover, in order to not to place any logic blocks and routing channels in the pin area, logical blockage cell are placed which reserves the pin locations.
+
+[Figure of grid with pin assignment]
+
+## Floorplanning through OpenLANE
 
 
 
