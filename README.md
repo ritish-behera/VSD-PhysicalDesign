@@ -120,12 +120,12 @@ In order to mitigate this problem we use a grid or mess of power and ground line
 
 [Figure of Powerplanning Grid]
 
-### Pin Assignment and Logic Blockage Cells
+### Pin Assignment and Logic Cell Blockage 
 Apart from the core area, to connect the input and output nodes of the netlist to external environment, pins are assigned at the boundary of the die. This requires handshkaing between frontend and backend VLSI design as the input/output pins should be placed near to the input/output nodes of the logic which rersults in random distribution of pins around the die.
 
 The pins include both data pins and clock pins with the clock pins slightly bigger in size to help reduce the path resistance which affects the drive strength of the clock.
 
-Moreover, in order to not to place any logic blocks and routing channels in the pin area, logical blockage cell are placed which reserves the pin locations.
+Moreover, in order to not to place any logic blocks and routing channels in the pin area, logical cell blockage is used which reserves the pin locations.
 
 [Figure of grid with pin assignment]
 
@@ -134,7 +134,7 @@ In the previous steps, we have already invoked the openlane tool and synthesized
 
 Before diving into the execution, we should be aware of the default configurations that will be used by the openLANE tool in the floorplan.
 
-To get this data move to the "openlane/designs/picorv32a/" directory and open the "config.tcl" file. It includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file. This will be verified in the later stages.
+To get this data move to the "openlane/designs/picorv32a/" directory and open the "config.tcl" file. It includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file.
 
 [Figure of config.tcl file]
 
@@ -175,7 +175,7 @@ To get the information about the utilization factor and metla layers, type "what
 Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
 
 ## Placement and Routing
-
+Placement involves the arrangement of standard cells in their specific position on the power-ground grid.
 
 
 
