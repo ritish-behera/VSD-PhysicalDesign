@@ -245,8 +245,16 @@ Characterization of a cell is the most important aspect of a library cell genera
 - Providing necessary output capacitance to measure the values of charge, current and delays
 - Providing simulation commands like tran and dc
 At last all these data output is fed to the "GUNA" characterization tool which outputs the config file.
-    
-   
+
+The following figures define some of the timing characterization values of cells which helps calculating propagation delay and transition time.
+
+[Figure Timing threshold definitions]
+
+Propagation delay = Out_time_threshold - In_time_threshold
+
+Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low_fall)
+
+ [Figure for propagation delay waveform and transition time]  
 
 
 
