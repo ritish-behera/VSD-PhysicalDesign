@@ -235,7 +235,16 @@ A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) wi
    - GDSII, LEF, Extractwd SPICE netlist (.cir)
    - Timing, Noise, power (.libs)   
    
-          
+### Characterization Flow
+Characterization of a cell is the most important aspect of a library cell generation which includes timing, power and noise analysisof the cell. The characterization typically involves the following steps-
+- Reading the SPICE models (pmos & nmos model files)
+- Reading extracted SPICE netlist (RC values)
+- Recognizing the behaviou of the circuit and reading its subcircuit
+- Attaching the necessary power and ground
+- Applying the stimulus
+- Providing necessary output capacitance to measure the values of charge, current and delays
+- Providing simulation commands like tran and dc
+At last all these data output is fed to the "GUNA" characterization tool which outputs the config file.
     
    
 
