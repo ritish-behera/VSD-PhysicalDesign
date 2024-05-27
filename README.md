@@ -175,13 +175,20 @@ To get the information about the utilization factor and metla layers, type "what
 Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
 
 ## Placement and Routing
-Placement involves the arrangement of standard cells in their specific position on the power-ground grid.
+Placement involves the arrangement of standard cells in their specific position on the power-ground grid of the core.
 
-In this step we bind the netlist with physical cells having specific dimensions that is fixed height and varible width for standard cells. Moreover these cells are library specific which contains physical cells with variable dimensions, timing informations, venn condition etc. 
+In this step we bind the netlist with physical cells having specific dimensions i.e. fixed height and varible width for standard cells. Moreover these cells are library specific which contains physical cells with variable dimensions, timing informations, venn condition etc. 
 
 During the placement phase the physical cells are placed on the prvious floorplan which indeed gives the distibution of cells. The cells should be placed near to their respective input/output ports to help maintain the timing constraints.
 
 ### Optimization of Placement Using Estimated Wirelength and Capacitances
+To start from the last point of the last section, we often face the challenge of not able to place the cells near to their respective IO ports. Sometimes the cells are far away from the port due to previous floorplans or other reasons which leads to more wiring cost. The more the wiring, the more resistance and capacitance effect it will have, leading to signal noise issues and greater slew values.
+
+In order to fix these issues there are couple of ways which includes placing repeaters or buffers in between port and the cells. This help maintains the signal integrity and replicates the original signal at the cost of some area. Once the repeaters are placed, check the datapath at ideal condition of clock as well check the set up condition to verify the placement. 
+
+[Figure of standard cell and buffer placement with routes]
+
+## Congestion Aware Placement using RePlAce
 
 
 
