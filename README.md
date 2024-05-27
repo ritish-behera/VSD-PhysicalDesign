@@ -130,8 +130,51 @@ Moreover, in order to not to place any logic blocks and routing channels in the 
 [Figure of grid with pin assignment]
 
 ## Floorplanning through OpenLANE
+In the previous steps, we have already invoked the openlane tool and synthesized the netlist into specific gate configurations. Now we will move forward to run the floorplan command in the terminal.
 
+Before diving into the execution, we should be aware of the default configurations that will be used by the openLANE tool in the floorplan.
 
+To get this data move to the "openlane/designs/picorv32a/" directory and open the "config.tcl" file. It includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file. This will be verified in the later stages.
+
+[Figure of config.tcl file]
+
+Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to runs/results/config.tcl then runs/config.tcl and with highest priority to sky130A_sky13_fd_sc_hd_config.tcl file.  
+
+Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
+
+[Figure of run_floorplan command]
+
+Once the run is completed, all the reports and results are stored in the "openlane/designs/picorv32a/runs" directory.
+
+Move to the "results/floorplan" directory to get the def (Design Exchange Format) file named "picorv32a.design.def" which provides guidelines for the distribution of power and ground connections implemented on the floorplan The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan through "Magic" tool using the def file.
+
+[Figure of picorv32a.design.def file]
+
+To get the data of core utilization and aspect ratio of the cells, open the "config.tcl" file located in the runs directory. Additionally this file gives more informationtion such as core margin, IO hmetal, IO vmetal, target density, endcap cell etc.
+
+[Figure of config.tcl file]
+
+Also check the "logs" file to get all the informations regarding the floorplan run. We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run.
+
+[Figure of log file with vmetal, hmetal value]
+
+Once all the data are verified now move to view the actual layout of the floorplan in the "Magic" tool window.
+
+To invoke the magic tool within the current directory of floorplan use the following command to get the def file data plotted on Magic tool window-
+
+[Figure of Invoking magic tool]
+
+[Figure of Floorplan Layout]
+
+We can now verify all the data through the layout.
+
+For example, as we have set the "IO PIN MODE = 1" it represents all the pins in the die are equidistant from each other which can be seen in the figure. Also as we have have mentioned the clock pins are slightly wider than the data pins so as to facilitate the drive strength.
+
+To get the information about the utilization factor and metla layers, type "what" in the magic command window. 
+
+Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
+
+## Placement and Routing
 
 
 
