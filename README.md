@@ -193,8 +193,29 @@ In order to fix these issues there are couple of ways which includes placing rep
 [Figure of standard cell and buffer placement with routes]
 
 ## Congestion Aware Placement using RePlAce
-During the current step we have done only congestion driven placement leaving the timing driven placement.
+During the current step we have done only congestion driven placement leaving the timing driven placement for later. To start the flow run the command "run_placement" on the openlane window after the floorplan is done.
 
+[Figure of run_placement command]
+
+There are two section of the placement step-
+1. Global Placement - Course grain placement with no legalisation
+2. Detail Placement - Fine grain placement with legalisation
+
+Note : Legalisation refers to the placement of standard cells in exact rows of the grid with no overlaps
+
+For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HOWL) method to define the location of the cells. The parameters for this method can be seen in the config.tcl file in the runs section. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
+
+[Figure for HPWL and OVFL data]
+
+For viewing the placement layout in Magic we will follow the similar method as floorplan, invking the magic tools in the placement directory and hence putting the "picorv32a.placement.def" file as the input argument.
+
+[Figure of invoking command]
+
+[Figure of Placement in Magic]
+
+This ends the placement phase of the flow.
+
+## Cell Design and XCharacterization Flow
 
 
 
