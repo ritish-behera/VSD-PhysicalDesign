@@ -218,18 +218,22 @@ This ends the placement phase of the flow.
 ## Cell Design and Characterization Flow
 Moving a bit apart from the flow in openLANE, we will discuss about the library cell characterization and respective design flow as cells are the basic block behind all the netlist,floorplan and placement. 
 
-A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) with different dimension and threshold voltage as well as various macros, IPs and decap cells, with timing information. In 
+A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) with different dimension and threshold voltage as well as various macros, IPs and decap cells, with timing information. The designing of a cell to add it to the library involves the following-
 1. Inputs
    - Process Design Kits (PDKs) obtained from foundries
    - DRC, LVS Rule with lambda-based design rules
    - SPICE model which involves the parameter of PMOS and NMOS
+   - User defined specs (cell height, cell width, supply voltage, metal layers, drwan gate length etc)
 
 2. Design Steps
    - Circuit Design
    - Layout Design
    - Characterization
 
-   
+3. Outputs
+   - CDL (Circuit Description Language)
+   - GDSII, LEF, Extractwd SPICE netlist (.cir)
+   - Timing, Noise, power (.libs)   
    
           
     
