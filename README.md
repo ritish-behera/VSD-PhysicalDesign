@@ -140,6 +140,10 @@ To get this data move to the "openlane/designs/picorv32a/" directory and open th
 
 Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to runs/results/config.tcl then runs/config.tcl and with highest priority to sky130A_sky13_fd_sc_hd_config.tcl file.  
 
+Again, the switches which can be used along floorplan command is given in the "openlane/configuration/". It can be seen by opening the "README.md" file from the list.
+
+[Figure of switches of floorplan]
+
 Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
 
 [Figure of run_floorplan command]
@@ -189,7 +193,7 @@ In order to fix these issues there are couple of ways which includes placing rep
 [Figure of standard cell and buffer placement with routes]
 
 ## Congestion Aware Placement using RePlAce
-
+During the current step we have done only congestion driven placement leaving the timing driven placement.
 
 
 
