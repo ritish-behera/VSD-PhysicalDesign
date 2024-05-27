@@ -177,6 +177,12 @@ Also notice that, decap cells are present near the boundries whereas tap cells (
 ## Placement and Routing
 Placement involves the arrangement of standard cells in their specific position on the power-ground grid.
 
+In this step we bind the netlist with physical cells having specific dimensions that is fixed height and varible width for standard cells. Moreover these cells are library specific which contains physical cells with variable dimensions, timing informations, venn condition etc. 
+
+During the placement phase the physical cells are placed on the prvious floorplan which indeed gives the distibution of cells. The cells should be placed near to their respective input/output ports to help maintain the timing constraints.
+
+### Optimization of Placement Using Estimated Wirelength and Capacitances
+
 
 
 
