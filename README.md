@@ -4,7 +4,7 @@ PDK Used : SKyWater 130nm
 Date : 22nd May 2024
 ## Contents
 1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
-2. Module-2 :
+2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 :
 4. Module-4 :
 5. Module-5 :
@@ -72,7 +72,15 @@ Flop Ratio = 1613 / 14876 = 0.10842
 This concludes the first module.
 
 
+# FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
+After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power and ground rail grid of the die core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool.
 
+Afterwards, we have moved to powerplanning, pin assignment and placement steps and at the end briefed about the library cell characterization using the SPICE parameters, DRC rules and timing constraints.
+
+## Floorplanning
+Floorplanning typically invovles the ordering or arrangement of IPs which also could be referred as pre-placed cells in the power-ground mess of core of the chip.
+
+The core of chip is the portion where all the logic blocks are assembled or fabricated whereas the die suurounds the core as well as provides extra area for IO pin assignment.
 
 
 
