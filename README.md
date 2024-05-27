@@ -72,7 +72,7 @@ Flop Ratio = 1613 / 14876 = 0.10842
 This concludes the first module.
 
 
-# FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
+# Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power and ground rail grid of the die core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool.
 
 Afterwards, we have moved to powerplanning, pin assignment and placement steps and at the end briefed about the library cell characterization using the SPICE parameters, DRC rules and timing constraints.
@@ -80,7 +80,47 @@ Afterwards, we have moved to powerplanning, pin assignment and placement steps a
 ## Floorplanning
 Floorplanning typically invovles the ordering or arrangement of IPs which also could be referred as pre-placed cells in the power-ground mess of core of the chip.
 
-The core of chip is the portion where all the logic blocks are assembled or fabricated whereas the die suurounds the core as well as provides extra area for IO pin assignment.
+The core of chip is the portion where all the logic blocks are assembled or fabricated whereas the die suurounds the core as well as provides extra area for IO pin assignment. During floorplan stage in order to provide some space for routing and standard cells in further steps, we need to set some parameters for it which will be implemented by the tool during the execution.
+
+The two essential parameters are 
+1. Utilization Factor
+2. Aspect Ratio
+
+The utilization factor refers to the area occupied by the synthesized netlist to the total area of the core i.e. Utilizatiion Factor = Area Occupie by Netlist / Total Area of Core
+
+A utilization factor of 1 which 100% represents that the total area of core is occupied leaving no space for extra logic. Therefore, in practical cases we consider 50-60% of core utilization to leave some space for extra buffers which helps in fixing timing violations as well as maintains signal integrity.
+
+The aspect ratio represents the shape and size of the cell i.e it is the ratio between height and width of the cell. Aspect ratio = Height of Cell/Width of Cell
+
+An aspect ratio of 1 refers to a square shape and rectangles for other values.
+
+### Concept of Pre-placed cells
+Basically macros are the pre-placed cells which we implement in floorplanning stage before placement and routing. Macros can be either large memories or special IPs which is implemented once and is repeated throughout the chip for further use with the same functionality. These are placed in user defined locations which is automated through place and route tool.
+
+The macors actually go through a step called "Partition" where the large logic is granualirized to separate blocks of small logics with same functionality as a whole. This helps in floorplanning as the same netlist can be repeated multiple times to be placed at different locations.
+
+[Figure for Partitioning into Blocks]
+
+### De-Cap Cells
+Another type of cell which are placed during the floorplanning state is the de-cap cells or de-coupling capacitor cells. As the name suggests the extra capacitor integrated with the cells decouples the actual voltage source from the cell and act itself as the source during switching.
+
+Basically, what happens when a cell is too far from the main source the switching signal gets detoriated before reaching the cells due to the resistive and inductive effect of the interconnects or wires. This leads to noise in the signal and affects the switching of the cells. In order to counter this we add extra capacitors parallel to the cell which charge itself to the same voltage as the source during non-switching activities and acts as a virtual source during the switching activities. These are implemented near the cells with high switching acitivities.
+
+[figure for decap cells]
+The power issue of local cells or local communication is solved by de-cap cells but there still exists power issue in global communication that is between macros(with de-cap cells) which are connected together (Driver-Load Configuration) through wires and requires switching simultaneously. In order to solve this we use the powerplanning stage.
+
+## Powerplanning
+During simultaneous switching, the two main issues which arises in the global communications are-
+1. Ground Bounce - Problem due to discharging of multiple cells through a single ground line and hence creating a voltage bump
+2. Voltage Droop - problem due to demand of charging multiple cells at the same time through a single vdd line creating a voltage trough
+
+[Figures of ground bounce and voltage droop]
+
+In order to mitigate this problem we use a grid or mess of power and ground line running across the core parallelly to provide the required charge near to the cell. This step is done in the power planning stage.
+
+[Figure of Powerplanning Grid]
+
+### Pin Assignment and Logic Blockage Cells
 
 
 
