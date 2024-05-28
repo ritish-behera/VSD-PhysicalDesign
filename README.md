@@ -183,11 +183,11 @@ Hence, the dimension of the core in micron units can be calculated from the abov
 
 To get the data of core utilization and aspect ratio of the cells, open the "config.tcl" file located in the runs directory. Additionally this file gives more informationtion such as core margin, IO hmetal, IO vmetal, target density, endcap cell etc.
 
-[Figure of config.tcl file]
+![configTCLfile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ea4b6642-f376-46f0-a669-6f1d3f9f5b6d)
 
 Also check the "logs/floorplan" directory to get all the informations regarding the floorplan run. We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run. You can verify the number of metal layers from the "ioPlacer.log" file after the run with the "config.tcl" before the run. 
 
-[Figure of log file with vmetal, hmetal value,ioplacer.log]
+![logListFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/22cc2578-0768-446e-8296-cddf79311b64)
 
 Once all the data are verified now move to view the actual layout of the floorplan in the "Magic" tool window.
 
@@ -228,7 +228,7 @@ In order to fix these issues there are couple of ways which includes placing rep
 ## Congestion Aware Placement using RePlAce
 During the current step we have done only congestion driven placement leaving the timing driven placement for later. To start the flow run the command "run_placement" on the openlane window after the floorplan is done.
 
-![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
+![Screenshot from 2024-05-28 10-11-32](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9c1da2b7-6064-4b5b-a404-d1d1b725b037)
 
 There are two section of the placement step-
 1. Global Placement - Course grain placement with no legalisation
