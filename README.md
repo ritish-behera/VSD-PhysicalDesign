@@ -110,13 +110,15 @@ The macors actually go through a step called "Partition" where the large logic i
 ### De-Cap Cells
 Another type of cell which are placed during the floorplanning state is the de-cap cells or de-coupling capacitor cells. As the name suggests the extra capacitor integrated with the cells decouples the actual voltage source from the cell and act itself as the source during switching.
 
+![Screenshot (1597)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/cde30678-0851-4d3c-9206-be0d75166420)
+
 Basically, what happens when a cell is too far from the main source the switching signal gets detoriated before reaching the cells due to the resistive and inductive effect of the interconnects or wires. This leads to noise in the signal and affects the switching of the cells. In order to counter this we add extra capacitors parallel to the cell which charge itself to the same voltage as the source during non-switching activities and acts as a virtual source during the switching activities. These are implemented near the cells with high switching acitivities.
 
-![Screenshot (1597)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/cde30678-0851-4d3c-9206-be0d75166420)
+![Screenshot (1598)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8ca1ea4c-7305-4bf9-9da9-a1c853faccbc)
 
 The power issue of local cells or local communication is solved by de-cap cells but there still exists power issue in global communication that is between macros(with de-cap cells) which are connected together (Driver-Load Configuration) through wires and requires switching simultaneously. In order to solve this we use the powerplanning stage.
 
-![Screenshot (1598)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8ca1ea4c-7305-4bf9-9da9-a1c853faccbc)
+![Screenshot (1602)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/27a72e06-7053-4d04-bef7-c710bdad8726)
 
 ## Powerplanning
 During simultaneous switching, the two main issues which arises in the global communications are-
@@ -129,7 +131,9 @@ During simultaneous switching, the two main issues which arises in the global co
 
 In order to mitigate this problem we use a grid or mess of power and ground line running across the core parallelly to provide the required charge near to the cell. This step is done in the power planning stage.
 
-[Figure of Powerplanning Grid]
+![Screenshot (1603)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4dfe341-edbd-4152-b1f6-cdcac1e00c86)
+
+![Screenshot (1604)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8867808d-8d9b-4b6f-8000-7104ef7ac710)
 
 ### Pin Assignment and Logic Cell Blockage 
 Apart from the core area, to connect the input and output nodes of the netlist to external environment, pins are assigned at the boundary of the die. This requires handshkaing between frontend and backend VLSI design as the input/output pins should be placed near to the input/output nodes of the logic which rersults in random distribution of pins around the die.
@@ -138,7 +142,7 @@ The pins include both data pins and clock pins with the clock pins slightly bigg
 
 Moreover, in order to not to place any logic blocks and routing channels in the pin area, logical cell blockage is used which reserves the pin locations.
 
-[Figure of grid with pin assignment]
+![Screenshot (1606)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/374439ec-9ccc-4694-b803-429ed93ab221)
 
 ## Floorplanning through OpenLANE
 In the previous steps, we have already invoked the openlane tool and synthesized the netlist into specific gate configurations. Now we will move forward to run the floorplan command in the terminal.
