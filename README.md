@@ -205,7 +205,7 @@ To start from the last point of the last section, we often face the challenge of
 
 In order to fix these issues there are couple of ways which includes placing repeaters or buffers in between port and the cells. This help maintains the signal integrity and replicates the original signal at the cost of some area. Once the repeaters are placed, check the datapath at ideal condition of clock as well check the set up condition to verify the placement. 
 
-[Figure of standard cell and buffer placement with routes]
+![Screenshot (1609)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fcd46fa0-7675-41c6-81a6-013e41ca6abb)
 
 ## Congestion Aware Placement using RePlAce
 During the current step we have done only congestion driven placement leaving the timing driven placement for later. To start the flow run the command "run_placement" on the openlane window after the floorplan is done.
@@ -263,13 +263,19 @@ At last all these data output is fed to the "GUNA" characterization tool which o
 
 The following figures define some of the timing characterization values of cells which helps calculating propagation delay and transition time.
 
-[Figure Timing threshold definitions]
+![Screenshot (1615)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/291f7017-94f4-4e71-93b8-67b0bb920e0f)
 
 Propagation delay = Out_time_threshold - In_time_threshold
 
+- Propagation delay is calculated by the difference of output and input time at 50% point of both the waveforms.
+
 Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low_fall)
 
- [Figure for propagation delay waveform and transition time]  
+- Transition time is calculated by the difference of time between 80% & 20% point of the same waveform. 
+
+![Screenshot (1617)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/cec2a8af-c86e-4009-8652-05d9a53af350)
+  
+![Screenshot (1622)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8a5d0f17-39e3-4001-9afa-0289bc704c85)
 
 
 
