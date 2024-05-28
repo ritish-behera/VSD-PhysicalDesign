@@ -149,15 +149,15 @@ In the previous steps, we have already invoked the openlane tool and synthesized
 
 Before diving into the execution, we should be aware of the switches and the default configurations of the floorplan during the execution through openLANE. These can be found in the "openlane/configuration/" directory.
 
-[Figure of directory]
+![configurationFoldr](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/09950797-7653-4aff-8005-50b83fe3dd6a)
 
 To view the list of switches that can be used along the floorplan command, open the "README.md" file from the list.
 
-[Figure of switches of floorplan]
+![switchesFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e937fc22-9ae5-440b-b7f8-f4fd40e3f45e)
 
 The "floorplan.tcl" file includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file.
 
-[Figure of floorplan.tcl file]
+![FloorplanDefualtTCL](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89640b4c-963a-498c-974a-373c2c64cac1)
 
 Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to system defualts i.e. "configuration/floorplan.tcl" then "designs/picorv32a/config.tcl" and with highest priority to "designs/picorv32a/sky130A_sky130_fd_sc_hd_config.tcl" file.  
 
@@ -165,13 +165,13 @@ Note: The floorplan follows a speicifc precedance order for parameters with resp
 
 Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
 
-[Figure of run_floorplan command]
+![floorplanCommand](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89f7b882-ea76-4e79-9ac5-e2a0f25cfc1f)
 
 Once the run is completed, all the reports and results are stored in the "openlane/designs/picorv32a/runs" directory.
 
 Move to the "results/floorplan" directory to get the def (Design Exchange Format) file named "picorv32a.design.def" which provides guidelines for the distribution of power and ground connections implemented on the floorplan. The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan through "Magic" tool using the def file.
 
-[Figure of picorv32a.design.def file]
+![floorplandefFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0050f92e-bb03-4918-ada1-f2a6d1acb8fe)
 
 Here the UNITS DISTANCE MICRON 1000 represents that 1 micron is equal to 1000 data base points.
 
@@ -193,9 +193,11 @@ Once all the data are verified now move to view the actual layout of the floorpl
 
 To invoke the magic tool within the current directory of floorplan use the following command to get the def file data plotted on Magic tool window-
 
-[Figure of Invoking magic tool]
+![FloorplanCommand (1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/733ef30c-3374-4977-a2f4-883830dfcb25)
 
-[Figure of Floorplan Layout]
+![FP1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/82ab4188-bb27-474e-af63-5d91ae9c5b04)
+
+![FP2](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/194a2c80-1a11-4b63-9008-649919b2340e)
 
 We can now verify all the data through the layout.
 
@@ -203,7 +205,11 @@ For example, as we have set the "IO PIN MODE = 1" it represents all the pins in 
 
 To get the information about the utilization factor and metla layers, type "what" in the magic command window. 
 
+![FP5](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/15810110-232f-48e6-afbe-ec88b1ee455e)
+
 Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
+
+![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
 
 ## Placement and Routing
 Placement involves the arrangement of standard cells in their specific position on the power-ground grid of the core.
@@ -222,7 +228,7 @@ In order to fix these issues there are couple of ways which includes placing rep
 ## Congestion Aware Placement using RePlAce
 During the current step we have done only congestion driven placement leaving the timing driven placement for later. To start the flow run the command "run_placement" on the openlane window after the floorplan is done.
 
-[Figure of run_placement command]
+![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
 
 There are two section of the placement step-
 1. Global Placement - Course grain placement with no legalisation
@@ -232,13 +238,14 @@ Note : Legalisation refers to the placement of standard cells in exact rows of t
 
 For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HOWL) method to define the location of the cells. The parameters for this method can be seen in the config.tcl file in the runs section. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
 
-[Figure for HPWL and OVFL data]
-
 For viewing the placement layout in Magic we will follow the similar method as floorplan, invking the magic tools in the placement directory and hence putting the "picorv32a.placement.def" file as the input argument.
 
-[Figure of invoking command]
+![place1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/91a645ae-1aae-4cb4-a503-f46d1fdd5f35)
 
-[Figure of Placement in Magic]
+![place2](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c85f0343-fa50-4adb-80df-26738c192bec)
+
+![place3](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7818c094-6238-4e35-aa24-dc0cce6b3a4e)
+
 
 This ends the placement phase of the flow.
 
