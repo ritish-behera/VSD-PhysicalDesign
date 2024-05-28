@@ -73,7 +73,7 @@ This concludes the first module.
 
 
 # Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
-After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power rail and ground rail grid of the core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool. Also a minor task of representing the core area in micron units was done as part of the module.
+After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power rail and ground rail grid of the core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool. Also a minor task of representing the core dimeison in micron units was done as part of the module.
 
 Afterwards, we have moved to powerplanning, pin assignment and placement steps and at the end briefed about the library cell characterization using the SPICE parameters, DRC rules and timing constraints.
 
@@ -147,17 +147,21 @@ Moreover, in order to not to place any logic blocks and routing channels in the 
 ## Floorplanning through OpenLANE
 In the previous steps, we have already invoked the openlane tool and synthesized the netlist into specific gate configurations. Now we will move forward to run the floorplan command in the terminal.
 
-Before diving into the execution, we should be aware of the default configurations that will be used by the openLANE tool in the floorplan.
+Before diving into the execution, we should be aware of the switches and the default configurations of the floorplan during the execution through openLANE. These can be found in the "openlane/configuration/" directory.
 
-To get this data move to the "openlane/designs/picorv32a/" directory and open the "config.tcl" file. It includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file.
+[Figure of directory]
 
-[Figure of config.tcl file]
-
-Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to runs/results/config.tcl then runs/config.tcl and with highest priority to sky130A_sky13_fd_sc_hd_config.tcl file.  
-
-Again, the switches which can be used along floorplan command is given in the "openlane/configuration/". It can be seen by opening the "README.md" file from the list.
+To view the list of switches that can be used along the floorplan command, open the "README.md" file from the list.
 
 [Figure of switches of floorplan]
+
+The "floorplan.tcl" file includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file.
+
+[Figure of floorplan.tcl file]
+
+Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to system defualts i.e. "configuration/floorplan.tcl" then "designs/picorv32a/config.tcl" and with highest priority to "designs/picorv32a/sky130A_sky130_fd_sc_hd_config.tcl" file.  
+
+[Figure of config.tcl and sky130.tcl file]
 
 Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
 
@@ -165,17 +169,25 @@ Now use the "run_floorplan" command in the openlane window to execute the synthe
 
 Once the run is completed, all the reports and results are stored in the "openlane/designs/picorv32a/runs" directory.
 
-Move to the "results/floorplan" directory to get the def (Design Exchange Format) file named "picorv32a.design.def" which provides guidelines for the distribution of power and ground connections implemented on the floorplan The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan through "Magic" tool using the def file.
+Move to the "results/floorplan" directory to get the def (Design Exchange Format) file named "picorv32a.design.def" which provides guidelines for the distribution of power and ground connections implemented on the floorplan. The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan through "Magic" tool using the def file.
 
 [Figure of picorv32a.design.def file]
+
+Here the UNITS DISTANCE MICRON 1000 represents that 1 micron is equal to 1000 data base points.
+
+And the dimesion of the core is given as follows ( 0 0 ) ( 660685 671405 ) where the first coordinate represents the bottom left corner of die and second coordinate represents top right corner of the die.
+
+Hence, the dimension of the core in micron units can be calculated from the above values as -
+1. Height = ( 671405 - 0 )/1000 = 671.405 microns
+2. Width = ( 660685 - 0 )/1000 = 660.685 microns 
 
 To get the data of core utilization and aspect ratio of the cells, open the "config.tcl" file located in the runs directory. Additionally this file gives more informationtion such as core margin, IO hmetal, IO vmetal, target density, endcap cell etc.
 
 [Figure of config.tcl file]
 
-Also check the "logs" file to get all the informations regarding the floorplan run. We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run.
+Also check the "logs/floorplan" directory to get all the informations regarding the floorplan run. We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run. You can verify the number of metal layers from the "ioPlacer.log" file after the run with the "config.tcl" before the run. 
 
-[Figure of log file with vmetal, hmetal value]
+[Figure of log file with vmetal, hmetal value,ioplacer.log]
 
 Once all the data are verified now move to view the actual layout of the floorplan in the "Magic" tool window.
 
