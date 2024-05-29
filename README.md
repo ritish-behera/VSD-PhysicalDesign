@@ -335,6 +335,7 @@ The robustness of a CMOS inverter can be studied through its static behaviour wh
 The main characteristic of a VTC which defines the specfic inverter is the switching thershold or trip point which is nothing but the point where both input and output has the same voltage value. At this point both pmos and nmos are at satuaration region leading to huge amount of current flow. The switching threshold condition can be given as 
 1. Vgs = Vds    i.e. Gate-source voltage is equal to drain-source voltage
 2. Idsp = -Idsn    i.e. the summation of drain current of pmos and nmos is always zero
+
 This switching threshold is heavily dependent upon the transistor sizing of pmos and nmos which is nothing but the W/L ratio of the transistor. The output VTC of inverter having higher W/L ratio of pmos than nmos
  is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio as well a switching threshold. The switching threshold is calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
 
