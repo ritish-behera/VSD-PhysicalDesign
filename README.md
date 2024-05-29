@@ -315,7 +315,7 @@ M2 out in 0 0 nmos w=0.375u l=0.25u          // ModelName Drain Gate Source Subs
 
 cload out 0 10f                              // Output load capacitance
 vdd vdd 0 0.25                               // Supply voltage
-vin in 0 0.25                                // Ground
+vin in 0 0.25                                // Input Voltage
 
 ** Simulation Commands**
 .op
@@ -342,8 +342,21 @@ This switching threshold is heavily dependent upon the transistor sizing of pmos
 [figure of VTC Curve with different w/l ratio]
 
 ### Dyanamic Simulation of CMOS Inverter 
+Dynamic simulation of a CMOS inverter refers to the analysis of its performance under varying input signals over time. This type of simulation helps in understanding the transient behavior and timing characteristics of the inverter, which are crucial for characterization of cells. We will use this transient analysis to calculate the timing characteristics i.e. rise time, fall time & propagation delay of the inverter through SPICE simulations.
 
+[Figure of Dyanamic Simulation]
 
+To perform the transient analysis we have to make the following changes in the previous program :
+```
+vin in 0 0 pulse 0 2.5 0 10p 10p 1n 2n                               // ModelName Node dcValue0 dcValue1 Type ZeroValue OneValue Shift RiseDelay FallDelay PulseWidth Period
+
+** Simulation Commands **
+.op
+.tran 10p 4n
+```
+This will produce time dependent waveform from which we can calculate the delay values of the inverter by setting the load capacitances. The following setup is carried out in NGSpice in later stages.
+
+## Inception of Layout and 16 Mask CMOS Fabrication Process
 
 
 
