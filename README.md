@@ -5,7 +5,7 @@ Date : 22nd May 2024
 ## Contents
 1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
-3. Module-3 :
+3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 4. Module-4 :
 5. Module-5 :
 
@@ -297,6 +297,8 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 ![Screenshot (1622)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8a5d0f17-39e3-4001-9afa-0289bc704c85)
 
 
+
+# Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 
 
 
