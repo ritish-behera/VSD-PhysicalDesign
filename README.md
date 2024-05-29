@@ -299,9 +299,48 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
+In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further as part of the cell characterization we will anylyze the timings i.e. rise, fall and propagation delay of the inverter through Magic and later on we will import this complete design to our library "picrov32a" generating the lef files.
 
+## SPICE Deck Creation for CMOS Inverter
+SPICE is a powerful, general-purpose analog electronic circuit simulator that is used to verify the integrity of circuit designs and predict circuit behavior. The circuit is described in a SPICE netlist, which includes component values and connectivity. Further, accurate models for the components (transistors, diodes, etc.) are provided, often based on process technology data and analysis types (transient, AC, DC) are specified along with simulation parameters.T he output results are then analyzed using graphical tools to verify the circuit's performance.
 
+Here in this report we will discuss about a CMOS inverter and hence in the first step we will create a SPICE deck or netlist for the inverter circuit.
 
+[Figure of SPICE deck requirement and Program]
+
+SPICE deck program :
+``` 
+M1 out in vdd vdd pmos w=0.375u l=0.25u      // ModelName Drain Gate Source Substrate Type Width Length
+M2 out in 0 0 nmos w=0.375u l=0.25u          // ModelName Drain Gate Source Substrate Type Width Length
+
+cload out 0 10f                              // Output load capacitance
+vdd vdd 0 0.25                               // Supply voltage
+vin in 0 0.25                                // Ground
+
+** Simulation Commands**
+.op
+.dc vin 0 2.5 0.05                           // DC Analysis Input ZeroValue OneValue Steps
+
+** .include tsmc_025um_model.mod **
+.lib "tsmc_025um_model.mod"                  // Model file containing the description of pmos and nmos
+.end
+```
+
+### Static Simulation of CMOS Inverter
+
+Whatever we have done in the above setup is called as the static simluation or DC analysis of a CMOS inverter which produces a voltage transfer curve (VTC) when plotted.
+
+The robustness of a CMOS inverter can be studied through its static behaviour which is a reason of its wide use. 
+
+The main characteristic of a VTC which defines the specfic inverter is the switching thershold or trip point which is nothing but the point where both input and output has the same voltage value. At this point both pmos and nmos are at satuaration region leading to huge amount of current flow. The switching threshold condition can be given as 
+1. Vgs = Vds    i.e. Gate-source voltage is equal to drain-source voltage
+2. Idsp = -Idsn    i.e. the summation of drain current of pmos and nmos is always zero
+This switching threshold is heavily dependent upon the transistor sizing of pmos and nmos which is nothing but the W/L ratio of the transistor. The output VTC of inverter having higher W/L ratio of pmos than nmos
+ is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio as well a switching threshold. The switching threshold is calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
+
+[figure of VTC Curve with different w/l ratio]
+
+### Dyanamic Simulation of CMOS Inverter 
 
 
 
