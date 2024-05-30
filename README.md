@@ -448,12 +448,38 @@ First of all remove the the thin screen oxide by dissolving it in HF solution. N
 ![Screenshot (1644)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b10d1a74-c1b7-4e5e-8daf-d4ec4d6466fb)
 
 
-So now to bring the bottom connection up, we will use the layer of photoresist and mask-11 exposing the non-contact areas. Now the excess TiN is etched out using RCA cleaning which is nothing but a combination of deionized H2O, NH4OH and H2O2 solutions.
+So now to bring the bottom connection up, we will use the layer of photoresist and mask-11 exposing the non-contact areas. Now the excess TiN is etched out using RCA cleaning which is nothing but a combination of deionized H2O, NH4OH and H2O2 solutions and hence the TiN contacts remains.
 
 ![Screenshot (1645)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ca1a4794-4983-45dc-94e4-56d6c679f5be)
 
 ![Screenshot (1647)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd364ff-a2a8-40b1-9256-a02bb393f144)
 
+### Higher Level Metal Formation
+To avoid the non-linear surface topography of the wafer we need to planarize it. To achieve this deposit a thick layer (~1um) of SiO2 doped with phosphorous or boron (known as phosphosilicate or borophospho-silicat) which act as a protective layer for the mobile Na ion as well as boron reduces the overall temperature. Now the wafer surface is polished using a process called CMP (Chemical Mechanical Polishing) and outputs something similar the fgure below- 
+
+![Screenshot (1649)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3a3ef481-f7db-47da-9f39-e302ba5846a9)
+
+The next step is to drilling the contacts into it by the same photolithography technique using the mask-12. 
+
+![Screenshot (1650)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d2b34eaa-2780-46eb-a5fe-7436cc1e5a82)
+
+Now remove the mask and etch out the SiO2 to drill the contact holes making it accessible to upper layers and use a thin layer (~10nm) of TiN which is very good adhesion material for TiSi2. The next step is to deposit a blanket tungsten layer for the contact and carry out the CMP process for planarizing it.
+
+![Screenshot (1652)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d1d729f1-b916-4e56-9f0d-808259f4c457)
+
+Now to bring the contacts outside of the chip we deposit a aluminium layer (which is a higher metal layer) and pattern it through photolithography to take it to top layer. Now use the same method of SiO2 depostion followed by CMP and tugsten-aluminium layers while using the masks13-15 to take it outside of the chip. Nowadays instead of aluminium, copper is used as the alternative for higher metal layers due to its low resistivity.
+
+![Screenshot (1654)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b2de6856-cd8c-494f-96cb-53b199257e10)
+
+![Screenshot (1655)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6a239c8e-443e-4985-a57a-00579424ec92)
+
+At the end, in order to protect the chip a Si3N4 layer is deposited on the top metal layer wchich uses the final mask-16.
+
+![Screenshot (1656)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b7de523e-cd71-407d-8016-7409796b5878)
+
+This ends the total process of fabricating a 16 mask CMOS inverter with source , drain, gate output terminals.
+
+![Screenshot (1657)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/435e0439-3fbe-4ff8-a67a-96ef4d2b17bb)
 
 
 
