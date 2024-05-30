@@ -340,7 +340,7 @@ This switching threshold is heavily dependent upon the transistor sizing of pmos
 
 ![Screenshot (1629)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9aac8057-4b72-4618-b116-a31ba7eb9134)
 
-The output VTC of inverter having higher W/L ratio of pmos than nmos is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio as well a switching threshold. 
+The output VTC of inverter having higher W/L ratio of pmos than nmos is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio shifting the switching threshold. 
  
 ![Screenshot (1628)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2482a7fc-2354-4176-b817-0e17303aa16e)
 
@@ -360,6 +360,67 @@ vin in 0 0 pulse 0 2.5 0 10p 10p 1n 2n                               // ModelNam
 This will produce time dependent waveform from which we can calculate the delay values of the inverter by setting the load capacitances. The following setup is carried out in NGSpice in later stages.
 
 ## Inception of Layout and 16 Mask CMOS Fabrication Process
+The 16-mask CMOS process is a specific technology where 16 photolithographic masks are employed during the fabrication. the mask is an opaque plate which blocks the UV light to react with certain areas of
+photo-resist. Part of resist is exposed to UV light, which gets washed away giving us the open areas for further process steps. We will brief about these fabrication steps to help understand the depth of design rules during the layout generation of the cell. 
+
+### Selecting a Substrate
+We start with choosing a substrate as a base for fabrication. In general a lightly doped (~10^15 cm-3) P-type silicon substrate with high resistivity (5 ~ 50 ohm) is selected.
+
+![Screenshot (1631)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8594a9be-191c-475b-9ecf-c342d85b1634)
+
+### Creating Active Region for Transistor
+An isoltaion over active area is created by growing a thin layer of (~40nm) silicon oxide (SiO2) followed by a layer of (~80nm) of silicon nitride (Si3N4) and photoresist (~1um) for photolithography process ( Action between UV light and photoresist). Then the hard mask is placed over the photoresist help avoid the area which will be etched out. This mask is reffered to as the mask-1 .
+
+![Screenshot (1632)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2178dd01-942c-4964-bbf3-697f102ec6ed)
+
+Once this is done we expose it to UV light and use the developing solution to dissolve and remove the exposed region. Then remove the mask and etch off Si3N4 followed by removing the phototresist which was below the mask. To create an isolation between the two active rgions where pmos and nmos will be fabricated, we put it again in a oxidation furnace which grows a second layer of SiO2 in the gaps .This process is called as "LOCOS" or "Local Oxidation of Silicon" and the structure of oxide is referred as "bird's beak". Finally the remaing Si3N4 is etched out to get only the oxidised layer on the top.
+
+![Screenshot (1633)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/98dbf3c4-1bff-49ef-aadc-4eef7d8caf46)
+
+### N-Well and P-Well Formation
+Once the isolation is done between active regions, we again grow the photoresist layer over it and put the mask-2 at the other region where we want create the well.Expose it to the UV light to remove the exposed area and take out the mask. Now through ion implantation process we diffuse boron into the substrate at 200Kev to create the p-well.  
+
+![Screenshot (1634)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d6924f38-bb5a-4e74-b1a3-93fd0021c3a3)
+
+Similarly, to create the n-well we use the photoresist and the 3rd mask followed by diffusion of phosphorous into substrate at 400KeV. This require more enrgy as phosphorus is a heavy metal.
+
+![Screenshot (1635)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/285f4741-f783-4a0c-8d91-4db1baa0946b)
+
+Later to improve the depth of diffusion of the wells, the wafer undergoes a high-temperature annealing process in a furnace. This step is known as "drive-in diffusion". The high temperature causes the dopant atoms to move from areas of high concentration (surface) into the silicon lattice, spreading out to create a uniform dopant distribution at the desired depth.
+
+![Screenshot (1636)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6d4e524f-4599-43e6-bb43-edf9c8bdd37b)
+
+### Formation of Gate Terminal
+The threshold voltage Vt of a device is highly dependent upon the doping concentraion of p and n region as well as oxide capacitance. In order the control both, before gate formation we modify the doping concentraion of p-well by depositing photoresist and creating mask-4 followed by boron diffusion at low energy (~60KeV). This facilitates the desired concentration of p-region.
+
+![Screenshot (1661)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6397ca1c-c842-4716-8149-162db25cd9f5)
+
+![Screenshot (1662)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/85eefe9a-e52c-4459-915c-7f9fb8c66a99)
+
+Similar steps are taken for the n-region creating the mask-5 and diffusing arsenic afterwards at a low temperature.
+
+Again to control the oxide capacitance we etch off the damaged silicon oxide (because of repeated ion implantation) by dissolving it into HF solution followed by growing a thin layer (~10nm) of high quality SiO2 which controls the threshold voltage Vt.
+
+Now for gate formation, we use a polysilicon layer(0.4um) over it and then the photoresist and mask-6 (also referred as polysilicon mask) for the pattern generation. In most cases, bfore etching out the photoresist, we dope it with n-type ion implant for low gate resistance of the device.
+
+![Screenshot (1663)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c118d51f-f744-47c7-9145-23a43831e74d)
+
+Once the UV exposer and removal of photoresist is done, we get the following structure of the gate- 
+
+![Screenshot (1664)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3d4c9b72-a25e-4537-a4ee-fa64785147bd)
+
+### Lightly Doped Drain (LDD) Formation
+
+
+
+
+
+
+
+
+
+
+
 
 
 
