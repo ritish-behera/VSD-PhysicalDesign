@@ -410,14 +410,49 @@ Once the UV exposer and removal of photoresist is done, we get the following str
 ![Screenshot (1664)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3d4c9b72-a25e-4537-a4ee-fa64785147bd)
 
 ### Lightly Doped Drain (LDD) Formation
+We want to achieve a doping profile of P+,P-,N in nmos and N+,N-,P in pmos region. The P+ & N+ represent the source drain doping whereas N and P rpresnt the substrate dopings. The profile P- & P+ represents the lightly doped drain in the well. So basically there are two reasons for this extra LDD formation -
+1. Hot Electroon Effect : When device size is reduced, the elctric field provided by the power supply becomes stronger leading to breakage of Si-Si bonds by the high energy carriers as well as crosses the 3.2eV barrier between the Si and SiO2 conduction band and hence penetrating into the oxide.
+2. Short Channel Effect : Due to the reduced size of the device, the drain field penetrates to the channel leading to effects like channel length modulation, velocity saturation and DIBL.
+
+Therefore in order to avoid these phenomenon we use the LDD formation technique.
+
+It has similar process of photoresist deposition and mask-7 creation as well as phosphorous (N-) diffusion for nmos. For pmos we use the mask-8 with diffusion of boron (P-) for LDD formation.
+
+![Screenshot (1665)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7ea394cd-8df7-47d5-ae0e-085530ed8caa)
+
+![Screenshot (1640)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fb02d80b-5aa4-4c07-9762-770d5f0b6fff)
 
 
+In order to protect the LDD in later processes of formation of source and drain with N+ or P+ dopings, we need to create the side-wall spacers. A thick layer (~0.1um) of Si3N4 or SiO2 is deposited over the surface and hence  plasma anisotropic etching is carried out which forms the side-wall spacers around the gates which protect from the exposer of diffusion into LDD.
+
+![Screenshot (1639)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a6af7172-c044-46e2-9841-5fcc944b2d39)
+
+![Screenshot (1638)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/440d821d-0a82-40c4-a03f-cd0be4cb85c5)
+
+### Source Drain Formation 
+Before the source and drain formation, a thin layer of screen oxide is deposited over the surface in order to avoid channeling during the implantation.
+
+Now in similar fashion we deposit the photoresist and mask-9 above it and implant the arsenic (N+) on the exposed area with a energy of 75KeV. This creates the source and drain region for the nmos transistor. Similarly for pmos source drain we use the mask-10 and boron (P+) as implant for it with 50KeV energy. 
+
+![Screenshot (1641)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/bdc7e948-214a-41b7-80d6-5e43c26953c2)
+
+Afterwardss, to increase the penetration depth of the diffused implants we put it in a high temperature furnace for the annealing process.
+
+### Contacts and Local Interconnect Formation
+Contacts are the only thing that can be accessed by the user to control the pmos and nmos.
+
+First of all remove the the thin screen oxide by dissolving it in HF solution. Now deposit the titanium on the wafer by the process of sputtering which acts as a low resistant contact. Further the wafer is heated at about 650-700 degree centigrade in N2 ambient condition to form the local contact TiSi2. Again due to this another material TiN is formed which is used for the local communication interconnect.
+
+![Screenshot (1643)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/02b3a044-0274-46a3-8af3-5720991e24df)
+
+![Screenshot (1644)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b10d1a74-c1b7-4e5e-8daf-d4ec4d6466fb)
 
 
+So now to bring the bottom connection up, we will use the layer of photoresist and mask-11 exposing the non-contact areas. Now the excess TiN is etched out using RCA cleaning which is nothing but a combination of deionized H2O, NH4OH and H2O2 solutions.
 
+![Screenshot (1645)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ca1a4794-4983-45dc-94e4-56d6c679f5be)
 
-
-
+![Screenshot (1647)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd364ff-a2a8-40b1-9256-a02bb393f144)
 
 
 
