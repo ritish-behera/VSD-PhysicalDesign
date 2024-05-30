@@ -306,7 +306,7 @@ SPICE is a powerful, general-purpose analog electronic circuit simulator that is
 
 Here in this report we will discuss about a CMOS inverter and hence in the first step we will create a SPICE deck or netlist for the inverter circuit.
 
-[Figure of SPICE deck requirement and Program]
+![Screenshot (1623)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd27fb4-8426-43f0-bc68-2dbb078b9af2)
 
 SPICE deck program :
 ``` 
@@ -336,15 +336,18 @@ The main characteristic of a VTC which defines the specfic inverter is the switc
 1. Vgs = Vds    i.e. Gate-source voltage is equal to drain-source voltage
 2. Idsp = -Idsn    i.e. the summation of drain current of pmos and nmos is always zero
 
-This switching threshold is heavily dependent upon the transistor sizing of pmos and nmos which is nothing but the W/L ratio of the transistor. The output VTC of inverter having higher W/L ratio of pmos than nmos
- is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio as well a switching threshold. The switching threshold is calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
+This switching threshold is heavily dependent upon the transistor sizing of pmos and nmos which is nothing but the W/L ratio of the transistor. The switching threshold is calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
 
-[figure of VTC Curve with different w/l ratio]
+![Screenshot (1629)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9aac8057-4b72-4618-b116-a31ba7eb9134)
+
+The output VTC of inverter having higher W/L ratio of pmos than nmos is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio as well a switching threshold. 
+ 
+![Screenshot (1628)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2482a7fc-2354-4176-b817-0e17303aa16e)
 
 ### Dyanamic Simulation of CMOS Inverter 
 Dynamic simulation of a CMOS inverter refers to the analysis of its performance under varying input signals over time. This type of simulation helps in understanding the transient behavior and timing characteristics of the inverter, which are crucial for characterization of cells. We will use this transient analysis to calculate the timing characteristics i.e. rise time, fall time & propagation delay of the inverter through SPICE simulations.
 
-[Figure of Dyanamic Simulation]
+![Screenshot (1630)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9a78550d-eb2a-49c8-9369-734022816d26)
 
 To perform the transient analysis we have to make the following changes in the previous program :
 ```
