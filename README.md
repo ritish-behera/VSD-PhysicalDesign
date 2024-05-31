@@ -161,8 +161,6 @@ The "floorplan.tcl" file includes all the default values for the run such as cor
 
 Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to system defualts i.e. "configuration/floorplan.tcl" then "designs/picorv32a/config.tcl" and with highest priority to "designs/picorv32a/sky130A_sky130_fd_sc_hd_config.tcl" file.  
 
-[Figure of config.tcl and sky130.tcl file]
-
 Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
 
 ![floorplanCommand](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89f7b882-ea76-4e79-9ac5-e2a0f25cfc1f)
@@ -180,6 +178,8 @@ And the dimesion of the core is given as follows ( 0 0 ) ( 660685 671405 ) where
 Hence, the dimension of the core in micron units can be calculated from the above values as -
 1. Height = ( 671405 - 0 )/1000 = 671.405 microns
 2. Width = ( 660685 - 0 )/1000 = 660.685 microns 
+
+So, the area of die = 671.405 x 660.685 = 443587.212425 sq. microns
 
 To get the data of core utilization and aspect ratio of the cells, open the "config.tcl" file located in the runs directory. Additionally this file gives more informationtion such as core margin, IO hmetal, IO vmetal, target density, endcap cell etc.
 
@@ -210,6 +210,18 @@ To get the information about the utilization factor and metla layers, type "what
 Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
 
 ![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
+
+Again, in the openLANE floe we can change the parameter of certain floorplan variable on the fly and run it again. For example we can change the pin placement strategy by providing the following switch in the openlane terminal-
+```
+set ::env(FP_IO_MODE) 2
+2
+% run_floorplan
+```
+This will produce the following floorplan with uneven pin assignment in the die.
+
+![UnevenPin](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5d2d4e4b-c928-4c44-b321-ae120e7ba3f3)
+
+
 
 ## Placement and Routing
 Placement involves the arrangement of standard cells in their specific position on the power-ground grid of the core.
