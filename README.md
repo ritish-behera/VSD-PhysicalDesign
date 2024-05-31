@@ -494,13 +494,47 @@ This ends the total process of fabricating a 16 mask CMOS inverter with source ,
 ![Screenshot (1657)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/435e0439-3fbe-4ff8-a67a-96ef4d2b17bb)
 
 ## Layout and SPICE Parameter Extraction Through "Magic"
-Foe reference we have taken a pre-built cmos inverter cloning it from the github repo - https://github.com/nickson-jose/vsdstdcelldesign
+For reference we have taken a pre-built cmos inverter cloning it from the github repo - https://github.com/nickson-jose/vsdstdcelldesign
 
-After cloning it to /openlane directory we can see several files contained in it.  Our popint of interest is the "sky130_inv.mag" file which stores the layout information. Invoke the Magic tool through the tech file and pass "sky130inv.mag" as the argument. It will show the layout in the magic window.
+After cloning it to /openlane directory we can see several files contained in it.  Our point of interest is the "sky130_inv.mag" file which stores the layout information. Invoke the Magic tool through the tech file and pass "sky130inv.mag" as the argument. It will show the layout in the magic window.
 
 ![layoutInvoking](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e37f273e-c399-4e7b-b24b-0786ebf4a06a)
 
 ![InverterLayout](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1b9c9d3d-8cdf-4fbf-8e89-e6468f13bc30)
+
+We can check drc errors in the layout through the "DRC" tab and from the drop down list, select the "DRC Find Next Error" and it will lead to the area of the error as well as list down the errrors in command line. We will discuss about the design rules in Magic in later sections. 
+
+![drc](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/4b4f8a74-bca6-41f1-aedf-fae99a89b188)
+
+Now to extract the whole layout use the following command in the command line of Magic-
+```
+extract all
+```
+Now for the extraction of netlist with parasitics that will be used in NGSpice we will use the following commands-
+```
+ext2spice cthresh 0 rthresh 0
+ext2spice
+```
+![ExtractionCommands](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6aacae3f-0688-406e-987f-a4fd0e33aca1)
+
+After execxuting these codes we will get the following extracted files in our directory-
+
+![OutputExtFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/15df62b3-1410-48db-a772-d51a31351b06)
+
+## SPICE Deck Creation and Timing Characterization of the Inverter
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
