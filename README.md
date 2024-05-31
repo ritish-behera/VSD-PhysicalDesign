@@ -493,8 +493,14 @@ This ends the total process of fabricating a 16 mask CMOS inverter with source ,
 
 ![Screenshot (1657)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/435e0439-3fbe-4ff8-a67a-96ef4d2b17bb)
 
+## Layout and SPICE Parameter Extraction Through "Magic"
+Foe reference we have taken a pre-built cmos inverter cloning it from the github repo - https://github.com/nickson-jose/vsdstdcelldesign
 
+After cloning it to /openlane directory we can see several files contained in it.  Our popint of interest is the "sky130_inv.mag" file which stores the layout information. Invoke the Magic tool through the tech file and pass "sky130inv.mag" as the argument. It will show the layout in the magic window.
 
+![layoutInvoking](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e37f273e-c399-4e7b-b24b-0786ebf4a06a)
+
+![InverterLayout](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1b9c9d3d-8cdf-4fbf-8e89-e6468f13bc30)
 
 
 
