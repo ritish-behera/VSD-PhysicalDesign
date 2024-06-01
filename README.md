@@ -580,7 +580,26 @@ To describe the errors in geometrical construct we have to invoke the command "c
 
 ![Screenshot 2024-06-01 162028](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/90d4c0b9-3dd6-45f4-8233-c1db4eb14274)
 
-Moving towards the next exercise
+Moving towards the next exercise, we have identified some missing or incorrect drc rules in the n-well layout and fixed that according to the documentation. In the figure below which we have taken as an example, there exists no error in the n-well structure as per the current rule set of the tech file.
+
+![Screenshot 2024-06-01 163826](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/401b3bf1-3096-4f18-89d0-a8e193efca5a)
+
+But according to the nwell.4 rule, all n-wells should contain metal-contacted tap inside it. Therefore to fix this missing rule we have to modify the tech file by adding these constructs -
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9f3da849-98da-452e-b9a4-7a95f6a4cc38)
+
+PS: the bloat-all operator has set of all n-well that contains tap. What we have done is, we have taken the set of all n-well and removed all the set of n-well containing taps from that. Whatever now is leftover, is taken as an error.
+
+Afterwards, we have defined the error in the "N-well" section as full variants, which means that this error will be showed whenever we run the drc in 'full' style.
+
+![Screenshot 2024-06-01 174222](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/108a6f0a-c4b8-4cc5-814d-a21decdfd2a1)
+
+Now we will check our updated tech file by loading it again and will run the drc check. As can be seen in the figure the n-well without the tap shows an drc error whereas the n-well with tap, at the right side, doesnt show any errors. Hence we have fixed the missing drc rule.
+
+![Screenshot 2024-06-01 183728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f3e24948-d0b7-43fa-9c5a-6bfa245f2b9b)
+
+
+
 
 
 
