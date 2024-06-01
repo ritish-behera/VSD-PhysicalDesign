@@ -6,7 +6,7 @@ Date : 22nd May 2024
 1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
-4. Module-4 :
+4. Module-4 : Pre-layout Timing Analysis and Importance of Good Clock Tree 
 5. Module-5 :
 
 ## Introduction
@@ -610,6 +610,36 @@ Afterwards, we have defined the error in the "N-well" section as full variants, 
 Now we will check our updated tech file by loading it again and will run the drc check. As can be seen in the figure the n-well without the tap shows an drc error whereas the n-well with tap, at the right side, doesnt show any errors. Hence we have fixed the missing drc rule.
 
 ![Screenshot 2024-06-01 183728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f3e24948-d0b7-43fa-9c5a-6bfa245f2b9b)
+
+
+# Module-4 : Pre-layout Timing Analysis and Importance of Good Clock Tree 
+Till this point we discussed about the extraction of the layout of a standard cell as well as calculated the timing characterization values for the cell. Our next goal is to plug in this newly designed standard cell to our working design "picorv32a" and check its functionality. In this module we will be focusing on how to import the data associated with the cell to the design library in form of LEF as well as make it ready for PnR stages.
+
+Openlane is just a place and route tool and hence heavily dependent upon the LEF file. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. But the layout which we have extracted (.mag) contains extra informations like power, ground and logic implemented which is of no significant use in PnR. This is what makes extracting LEF file more important. 
+
+## Timing Modelling Using Delay Table
+### Converting Grid Info to Track Info
+Tracks are basically the paths through which the routing takes place. It connects the outside IO pins to cell's IO nodes. To get the track information of the sky130 pdk move to the directory "openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/" and open the "tracks.info file".
+
+PS : The first term in a track info represents the track layer followed by horizontal (X) or vertical (Y) direction followed by offset value followed by pitch i.e. [Tracklayer Horizontal/Vertical Offset Pitch]
+
+![Screenshot 2024-06-01 221016](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a03c81cf-6133-4c00-a8b0-389ddf5920d2)
+
+The PnR tool follows some specific guidelines to execute its automated process. It includes -
+- The IO port must lie on the intersection of vertical and horizontal tracks
+- Widths of standard cells should be odd multiple of track pitch
+- Height should be odd multiple of vertical track pitch
+
+So in order to check the guideline that our designed inverter's IO ports lie on the intersection of vertical or horizontal tracks or not, we changed the grid dimension of layout in magic as per the layer1 tracks (As the IO ports are on layer1) and verified its correctness. Refer to the figure for the intersection point at input A and output Y.
+
+![Screenshot 2024-06-01 221306](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1aa099d7-e95d-4859-bab1-192b5661d96e)
+
+![Screenshot 2024-06-01 221246](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d2470e14-5d89-4116-9af0-cf06fca054ac)
+
+
+
+
+
 
 
 
