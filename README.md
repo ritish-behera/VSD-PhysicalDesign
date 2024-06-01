@@ -618,7 +618,7 @@ Till this point we discussed about the extraction of the layout of a standard ce
 Openlane is just a place and route tool and hence heavily dependent upon the LEF file. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. But the layout which we have extracted (.mag) contains extra informations like power, ground and logic implemented which is of no significant use in PnR. This is what makes extracting LEF file more important. 
 
 ## Timing Modelling Using Delay Table
-### Converting Grid Info to Track Info
+### Conversion of Grid Info to Track Info
 Tracks are basically the paths through which the routing takes place. It connects the outside IO pins to cell's IO nodes. To get the track information of the sky130 pdk move to the directory "openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/" and open the "tracks.info file".
 
 PS : The first term in a track info represents the track layer followed by horizontal (X) or vertical (Y) direction followed by offset value followed by pitch i.e. [Tracklayer Horizontal/Vertical Offset Pitch]
@@ -636,8 +636,32 @@ So in order to check the guideline that our designed inverter's IO ports lie on 
 
 ![Screenshot 2024-06-01 221246](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d2470e14-5d89-4116-9af0-cf06fca054ac)
 
+The 2nd and guidelines of the PnR tool can also be verified through the grid as the the grid dimesion refers to the pitch and the inner PR boundar contains 3 horizontal box and 7 vertical box. So our design is completely compatible for the PnR tool.
 
+### Conversion of Magic Layout to Standard Cell LEF
+The first step for this would be the conversion of all the labels of inverter into specific ports. This can be done through the "Edit" tab and then selecting the "Text" option. 
 
+Now set the port name (Text String), size, layer attached and enable the port for all the labels. The enable number should be given as per you want it on the LEF file.
+
+![Screenshot 2024-06-01 231223](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/bb1f55e1-55ad-4470-9879-ba281f2190cb)
+
+![Screenshot 2024-06-01 231102](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/874088d4-1399-4134-ae98-0a171b0ff015)
+
+![Screenshot 2024-06-01 231017](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7605ec7d-d5b6-4bcc-b7e8-d4d16e193741)
+
+![Screenshot 2024-06-01 231307](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d6fa89f8-73cd-4bbf-b659-34b3e9a01a13)
+
+Once this is done we have to define the port class (input/output/inout) and port use attributes (power/ground/signal) for every port in the magic command terminal and save it with a custom name for further use.
+
+![Screenshot 2024-06-01 232151](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8831babb-82da-4cc0-be24-bdfd5cb3b081)
+
+Now open the newly saved .mag file in magic and use the command "lef write" to generate the LEF file in the current directory.
+
+![Screenshot 2024-06-01 232744](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9ed3e163-5842-41c8-a41e-cee47ce1b66f)
+
+Now open the .lef file to see all the contents as we have assigned before. See the figure to verify all the properties.
+
+![Screenshot 2024-06-01 232841](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1c6f10d1-deb7-4363-aa9a-39c81ecfe6c8)
 
 
 
