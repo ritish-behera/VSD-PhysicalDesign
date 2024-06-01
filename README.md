@@ -570,9 +570,17 @@ Now we will load the updated tech file to Magic through magic command line as we
 
 ![Screenshot 2024-06-01 110905](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/13321c51-9a81-4f59-a36c-322c8c9a7b8f)
 
+In the next few exercise we have dealt geometrical construct of drc rules and missing rules through the n-well structures defined in nwell.mag file. The below figure shows the part of the documentation which contains the drc rules for the n-well in sky130 nm pdk.
 
+![Screenshot 2024-06-01 154922](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7a7fda54-80c5-47d6-83bd-1d7f84abe97d)
 
+To describe the drc error in geometrical constructs we have taken an example of dnwell placed inside the nwell. As per the rule nwell.5 and nwell.6, the outer and inner layer of the dnwell must be surrounded by layers of nwell with minimum widths of 0.4um and 1.03um respectively. 
 
+To describe the errors in geometrical construct we have to invoke the command "cif ostyle drc" in the Magic terminal. We have taken an example of inner layer error of dnwell which can be seen through the command "cif see dnwell_shrink". (Refer to the figure)
+
+![Screenshot 2024-06-01 162028](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/90d4c0b9-3dd6-45f4-8233-c1db4eb14274)
+
+Moving towards the next exercise
 
 
 
