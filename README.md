@@ -544,6 +544,27 @@ Now the rise and fall delay of the output waveform was calculated at 20% (0.66) 
 This values sums up the timing characterization of the standard library cell at a nominal temperature of 27 degree centigrade.
 
 ## Magic Tool Options and DRC Rules
+In this section we will go through the DRC rules for the open source pdks. For this purpose we have referenced file from the website - http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz which contains information of the drc rules in magic.
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6ea40030-172e-4512-a845-00daa54cd01c)
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/eccb26cc-ebff-4221-a583-1b87af682b2d)
+
+The .mag files gives the layout files whereas the .magicrc tells the magic tool where to find the tech file.
+
+As the first exercise for resolving the drc error we have taken an example of poly and nres poly spacing which is in the poly.mag file. As per the rule in the documentation the poly to poly distance should be at least 0.480 microns. But it doesnt consider the poly to nres poly distance . So our aim in this exercise was to add the rule to the tech file "sky130A.tech". 
+
+We first checked the distance between the poly and nres poly through creating a box and viewing its height on the terminal. Clearly the space is 0.210 microns which is less than the desired space.
+
+![Screenshot 2024-06-01 105944](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c453a061-daa9-4d0c-b98c-c7c0ca3d407a)
+
+Now to resolve this issue we added the following rules set to poly.9 which will also define the rules for poly and nres poly spacings.
+
+![Screenshot 2024-06-01 110505](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/79fec960-c969-43a0-bb45-22a6e7582e16)
+
+Now we will load the updated tech file to Magic through magic command line as well as will check the drc error is fixed or not. The following figure verifies that the issue is solved as there is no drc error found.
+
+![Screenshot 2024-06-01 110905](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/13321c51-9a81-4f59-a36c-322c8c9a7b8f)
 
 
 
