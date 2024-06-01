@@ -574,7 +574,7 @@ In the next exercise we have tried adding the drc rule for spacings between nres
 
 ![Screenshot 2024-06-01 152029](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c3ff0faf-6460-45bf-8627-fc0c0b9d9d97)
 
-In order to add the error as per the documentation we have added the following error constrcut in the tech file which serves the error for all diffusion spacings.
+In order to add the rule as per the documentation we have added the following error constrcut in the tech file which serves the error for all diffusion spacings.
 
 ![Screenshot 2024-06-01 152507](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/17d63e20-3b5d-41cc-bc71-919de16b00a5)
 
