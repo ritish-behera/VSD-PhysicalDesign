@@ -570,6 +570,19 @@ Now we will load the updated tech file to Magic through magic command line as we
 
 ![Screenshot 2024-06-01 110905](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/13321c51-9a81-4f59-a36c-322c8c9a7b8f)
 
+In the next exercise we have tried adding the drc rule for spacings between nres poly and diffusion. In this case we are not checking the diffusion rules, so that can be ignored for now. In the follwing example there exists errors for the spacing between poly and diffusion but no such error can be seen for the npoly res and diffusion.
+
+![Screenshot 2024-06-01 152029](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c3ff0faf-6460-45bf-8627-fc0c0b9d9d97)
+
+In order to add the error as per the documentation we have added the following error constrcut in the tech file which serves the error for all diffusion spacings.
+
+![Screenshot 2024-06-01 152507](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/17d63e20-3b5d-41cc-bc71-919de16b00a5)
+
+Now after going through similar process of loading the tech file again and checking the drc, the errors can be seen (Highlighted by yellow circles in the figure).
+
+![Screenshot 2024-06-01 152935](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f6ab5552-9047-45c3-a883-f285fa956c65)
+
+
 In the next few exercise we have dealt geometrical construct of drc rules and missing rules through the n-well structures defined in nwell.mag file. The below figure shows the part of the documentation which contains the drc rules for the n-well in sky130 nm pdk.
 
 ![Screenshot 2024-06-01 154922](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7a7fda54-80c5-47d6-83bd-1d7f84abe97d)
