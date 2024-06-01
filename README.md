@@ -522,12 +522,28 @@ After execxuting these codes we will get the following extracted files in our di
 ![OutputExtFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/15df62b3-1410-48db-a772-d51a31351b06)
 
 ## SPICE Deck Creation and Timing Characterization of the Inverter
+After extracting the SPICE netlist from the layout we modified it as following for the transient analysis and created the final SPICE deck for the inverter.
 
+![Screenshot 2024-06-01 055227](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/44711b2b-fee4-4c26-bc1a-bdebbe5d9c32)
 
+Then we simulated it through NGSPICE to obtains it output waveforms as well as to calculate timing characteristics.
 
+![Screenshot 2024-06-01 054747](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/586fefab-8ac7-4419-bbad-fd08b0d1c02f)
 
+![Screenshot 2024-06-01 054706](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/00f711ad-3419-48d5-b5b4-4db6c3380b46)
 
+Now the rise and fall delay of the output waveform was calculated at 20% (0.66) and 80% (2.64) values as well as the rise and fall propagation delay was calculated at 50% (1.65) values of both input and output.
 
+![Screenshot 2024-06-01 054637](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/86847f87-2733-4b81-9888-cb22eb5f5a0f)
+
+- Rise Delay = 2.23949e-09 - 2.17978e-09 = 0.05971ns
+- Fall Delay = 4.09326e-09 - 4.05065e-09 = 0.04261ns
+- Rise Propagation Delay = 2.20701e-09 - 2.14989e-09 = 0.05712ns
+- Fall Propagation Delay = 4.07529e-09 - 4.05057e-09 = 0.02472ns
+
+This values sums up the timing characterization of the standard library cell at a nominal temperature of 27 degree centigrade.
+
+## Magic Tool Options and DRC Rules
 
 
 
