@@ -544,7 +544,11 @@ Now the rise and fall delay of the output waveform was calculated at 20% (0.66) 
 This values sums up the timing characterization of the standard library cell at a nominal temperature of 27 degree centigrade.
 
 ## Magic Tool Options and DRC Rules
-In this section we will go through the DRC rules for the open source pdks. For this purpose we have referenced file from the website - http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz which contains information of the drc rules in magic.
+In this section we will go through the DRC rules for the open source pdks. The following figure represents the process stack diagram for the SkyWater 130nm process node. Further for more detailed information on the rules set visit https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root .
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/114ed88f-5354-4d8a-b2bb-973727b4e12b)
+
+To check and verify some of the rules as part of the exercise, we have sourced files from the website - http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz which contains various layout models in magic.
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6ea40030-172e-4512-a845-00daa54cd01c)
 
