@@ -712,10 +712,11 @@ Moreover, the observations can be listed as -
 - 2 Levels of buffers are present in the diagram
 - AT every level, each node is driving same load
 - Identical buffer at same level
-Note that the load capacitance of buffers are not equal to the output capacitances. Output capacitances are varying, hence it produces a variety of delays. So in order to create timing models a table is created between varying input capacitance (from 10-100ps) to the varying ouput capacitances (from 10-100fF) and the respective delay values are noted. This is called as the delay table which characterizes the delays of the buffers.
+Note that the load capacitance of buffers are not equal to the output capacitances. Output capacitances are varying, hence it produces a variety of delays. So in order to create timing models a table is created between varying input slew (from 10-100ps) to the varying ouput capacitances (from 10-100fF) and the respective delay values are noted. This is called as the delay table which characterizes the delays of the buffers.
 
-![Screenshot (1688)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fd66de50-9fac-4c73-8d37-e13f3e0d902d)
+![Screenshot (1689)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a0e5651a-de2e-417e-be15-8348709b9c03)
 
+From this delay table we can estimate the delays at each node and hence will be able to calculate the skew (The difference of arrival time of clock pulse between two FF/registers) produced at he end. It plays a crucial role during the static timing analysis as it may violate the setup and hold times.
 
 
 
