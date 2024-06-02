@@ -690,7 +690,7 @@ The LIB_SYNTH switch is used for the synthesis whereas LIB_FASTEST, LIB_SLOWEST 
 
 Moving on, invoke the openLANE tool and add these two command lines to consider the new LEF file in the tool and then run the synthesis.
 ```
-set lefs [glob $::env(DESIGN_DIR)/src/*lef]
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 ```
 ![Screenshot 2024-06-02 114950](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/60ce01e1-21ea-415b-b3d1-3bf04e57dcde)
