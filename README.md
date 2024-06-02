@@ -700,8 +700,21 @@ add_lefs -src $lefs
 
 Our synthesis is successful with adding the new standard cells. Now we will move the timing aspects of the cells and its effects.
 
+### Introduction to Delay Table
+Clock Tree Synthesis (CTS) is primarily aimed at distributing the clock signal from a single source to all the sequential elements (flip-flops and registers) in a chip. The goal of CTS is to ensure that the clock signal reaches all these elements with minimal skew and jitter, ensuring synchronized operation. For this purpose we use buffers in the path of clock nets. This in turn requires more power. So to reduce power consumption in CTS (also called as Power Aware CTS) we use techniques like clock blocking through AND gates and OR gates which turns on or off with an enable signal from the user. This is called as clock gating.
 
+Before adding the gates we need to evaluate the timing characteristics of the buffers of clock path. For exampl, for the calculation of timing of the belowe figure we have taken the following assumption-
+- c1 = c2 = c3 = c4 = 25fF
+- cbuf1 = cbuf2 = 30fF
+Therefore, total cap at node-A = 60fF, node-B = 50fF, node-C = 50fF
 
+Moreover, the observations can be listed as -
+- 2 Levels of buffers are present in the diagram
+- AT every level, each node is driving same load
+- Identical buffer at same level
+Note that the load capacitance of buffers are not equal to the output capacitances. Output capacitances are varying, hence it produces a variety of delays. So in order to create timing models a table is created between varying input capacitance (from 10-100ps) to the varying ouput capacitances (from 10-100fF) and the respective delay values are noted. This is called as the delay table which characterizes the delays of the buffers.
+
+![Screenshot (1688)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fd66de50-9fac-4c73-8d37-e13f3e0d902d)
 
 
 
