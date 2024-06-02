@@ -663,6 +663,7 @@ Now open the .lef file to see all the contents as we have assigned before. See t
 
 ![Screenshot 2024-06-01 232841](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1c6f10d1-deb7-4363-aa9a-39c81ecfe6c8)
 
+### Additon of New Std Cell to Library and Its Synthesis
 
 
 
