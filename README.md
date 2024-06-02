@@ -700,6 +700,14 @@ add_lefs -src $lefs
 
 Our synthesis is successful with adding the new standard cells. Now we will move the timing aspects of the cells and its effects.
 
+You can see at the end of the synthesis there are two parameters tns and wns are present. These represents the Total Negative Slack and Worst Negative Slack respectively. Slack is the difference of required time and arrival time for a cell. In order to reduce these timing violations we can take certain measures like delay and area balance, which means that we will improve the delay at the cost of area. 
+
+As discussed earlier, in the openLANE flow there exists some switches for every procedure. So we will try to implement it on the terminal to change the variables taken for area and anything that realtes to delays in the circuit.
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4c43a2e-1978-4d57-ae86-98627ff2b524)
+
+
+
 ### Introduction to Delay Table
 Clock Tree Synthesis (CTS) is primarily aimed at distributing the clock signal from a single source to all the sequential elements (flip-flops and registers) in a chip. The goal of CTS is to ensure that the clock signal reaches all these elements with minimal skew and jitter, ensuring synchronized operation. For this purpose we use buffers in the path of clock nets. This in turn requires more power. So to reduce power consumption in CTS (also called as Power Aware CTS) we use techniques like clock blocking through AND gates and OR gates which turns on or off with an enable signal from the user. This is called as clock gating.
 
