@@ -617,7 +617,7 @@ Till this point we discussed about the extraction of the layout of a standard ce
 
 Openlane is just a place and route tool and hence heavily dependent upon the LEF file. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. But the layout which we have extracted (.mag) contains extra informations like power, ground and logic implemented which is of no significant use in PnR. This is what makes extracting LEF file more important. 
 
-## Timing Modelling Using Delay Table
+## Synthesis and Timing Analysis of New Std Cell
 ### Conversion of Grid Info to Track Info
 Tracks are basically the paths through which the routing takes place. It connects the outside IO pins to cell's IO nodes. To get the track information of the sky130 pdk move to the directory "openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/" and open the "tracks.info file".
 
@@ -664,6 +664,41 @@ Now open the .lef file to see all the contents as we have assigned before. See t
 ![Screenshot 2024-06-01 232841](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1c6f10d1-deb7-4363-aa9a-39c81ecfe6c8)
 
 ### Additon of New Std Cell to Library and Its Synthesis
+For adding the standard cell to "picorv32" design directory copy the lef file of the cell to the source directory of the design library (openlane/designs/picorv32a/src/).
+
+![Screenshot 2024-06-02 083748](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/541d2585-0aad-4e08-8c9e-cbba1d6226b9)
+
+Now again repeat the steps for the technology library (typical, fast and slow corner) files from the "libs" directory of "vsdstdcelldesign" to the src folder of picorv32a. The library files contain the information of cells in different PVT corners such as tt,ff & ss .
+
+![Screenshot 2024-06-02 092935](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0c294637-6946-47e2-8826-ca55f46395a2)
+
+![Screenshot 2024-06-02 092159](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2d55b65f-96e3-4a21-b1ba-4c07e2d4435d)
+
+Once this is done modify the "config.tcl" of the picorv32a design by adding these paths or switches for the run -
+```
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEF) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+
+```
+![Screenshot 2024-06-02 095616](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8b6e8cba-2165-48dc-8c37-2c0b53d40f05)
+
+The LIB_SYNTH switch is used for the synthesis whereas LIB_FASTEST, LIB_SLOWEST & LIB_TYPICAL switches are used for STA analysis. The "EXTRA_LEF" switch adds the extra lef file for the process.
+
+Moving on, invoke the openLANE tool and add these two command lines to consider the new LEF file in the tool and then run the synthesis.
+```
+set lefs [glob $::env(DESIGN_DIR)/src/*lef]
+add_lefs -src $lefs
+```
+![Screenshot 2024-06-02 114950](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/60ce01e1-21ea-415b-b3d1-3bf04e57dcde)
+
+![Screenshot 2024-06-02 115654](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b1757779-fe35-4577-9141-8f569728b986)
+
+
+Our synthesis is successful with adding the new standard cells. Now we will move the timing aspects of the cells and its effects.
 
 
 
