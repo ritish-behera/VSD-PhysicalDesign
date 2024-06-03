@@ -765,6 +765,29 @@ Due to this jitter, another variable is added to the constraint of the combinati
 
 combinational delay(theta) = Clock Period(T) - Setup Time(S) - Jitter(SU)
 
+### Setup Time for Real Clock
+A real clock considers the delays of extra buffers present in the clock path hence producing the skew. Basically skew is the difference between arrival time of clock signal between flops. So in case of a real clock the constraint can be modified as - combinational delay(theta) + Delta1 < Clock Period(T) + Delta2  - SetupTime(S) - Jitter (SU)
+
+Delta1 and Delta2 are basically the delay of buffers present in the clock path of FF1 and FF2.
+
+![Screenshot (1694)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d524e66b-e6eb-4e7a-a474-3e1207b53569)
+
+The left hand side term is called as arrival time whereas the right hand side term is called as required time. The difference between required time and arrival time is called as setup slack.
+
+### Hold Time for Ideal Clock
+Hold Time is the minimum amount of time that the data input (D) must remain stable after the clock edge for the data to be reliably latched by a sequential element (like a flip-flop). It is produced due to 2nd MUX present in the capture flop which takes some amount of time to send out the data or latch the data. 
+
+![Screenshot (1695)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a145e9ca-90d9-4a23-af01-0862ac3238bf)
+
+It puts the constraint that the combinational delay should be greater than capture flop delay i.e. Combinational Delay (Theta) > Hold Time(H).
+
+But for ideal cases due to wire RC delays in clock path there might be skew between the clock edges like earlier cases as well as uncertainty due to PLL. So for real clock it can be stated as - combinational delay(Theta) + Delta1 > Hold Time(H) + Delta2 + Hold Uncertainty(HU)
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d02767d8-8812-430e-8dba-9373f8c70e9b)
+
+In this case also the left side term is reffered as the arrival time whereas the right side term is referred as required time. Only difference is the slack is defined as the differece of time between the arrival time and the required time for the flops. 
+
+
 ### Timing Analysis Using OpenSTA
 
 
