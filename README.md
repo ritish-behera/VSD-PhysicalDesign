@@ -744,7 +744,20 @@ Note that the load capacitance of buffers are not equal to the output capacitanc
 
 From this delay table we can estimate the delays at each node and hence will be able to calculate the skew (The difference of arrival time of clock pulse between two FF/registers) produced at he end. It plays a crucial role during the static timing analysis as it may violate the setup and hold times.
 
+## Timing Analysis With Ideal Clocks Using OpenSTA
+### Setup Time And Intro to FF Setup Time
+A flipflop is a basic sequential element which stores or pass data depending upon the clock edge. It consists of two MUX structures to perform the data storing activity according to the clock pulses. This in turn produces some delay before passing the data to output. This specific delay affects the clock period of the circuit containg it which is known as set up time.
 
+![Screenshot (1691)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9f448f0e-6da5-40fc-83fa-9eef59f981c7)
+
+In an ideal clock scenario where no clock tree or buffers are added, the combinational delay between launch and capture flipflop should be less than the clock period so as to synchronize the data. But due to the internal delay of the FFs,i.e. setup time (MUX 1 delay), the FFs take some time to settle down the data. This reduces the total clock period and hencce puts a constraint to the combinational delay.
+
+So the constraint can be expressed as, combinational delay(theta) = Clock Period(T) - Setup Time(S)
+
+![Screenshot (1690)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/481d5206-32ce-4c9a-b97f-716a67bf74e0)
+
+
+ 
 
 
 
