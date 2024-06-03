@@ -702,9 +702,27 @@ Our synthesis is successful with adding the new standard cells. Now we will move
 
 You can see at the end of the synthesis there are two parameters tns and wns are present. These represents the Total Negative Slack and Worst Negative Slack respectively. Slack is the difference of required time and arrival time for a cell. In order to reduce these timing violations we can take certain measures like delay and area balance, which means that we will improve the delay at the cost of area. 
 
-As discussed earlier, in the openLANE flow there exists some switches for every procedure. So we will try to implement it on the terminal to change the variables taken for area and anything that realtes to delays in the circuit.
+As discussed earlier, in the openLANE flow there exists some switches for every procedure. So we can try to implement it on the terminal to change the variables taken for area and anything that realtes to delays in the circuit.
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4c43a2e-1978-4d57-ae86-98627ff2b524)
+
+We can play around the following switches to reduce the slack but as of now our concern is to add the custom cell to library we will be focusing on this on static timing analysis part.
+
+![Screenshot 2024-06-03 082923](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ea667c32-655a-445f-8310-f9d5b64733ed)
+
+We can check that whether our custom inverter cell information is added or not by checking the "merged.lef" file in the "tmp" directory.
+
+![Screenshot 2024-06-03 084022](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5ee9383-6920-4369-abdd-4d7c7e161efb)
+
+Now run the floorplan followed by placement to see the results. Open the magic tool to view the placement statistics.
+
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1e9d7d57-d875-4069-a2ea-b1c541242854)
+
+![WhatsApp Image 2024-06-03 at 9 03 21 AM](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/30e88e96-fd4d-4d78-bba7-40306d10ac4c)
+
+We can see our custom cell (sky130_vsdInv) being placed on the figure with its layout.
+
+This indicates that we are successfull with placing our standarrd cell in the design and now can move to further otimizations. 
 
 
 
