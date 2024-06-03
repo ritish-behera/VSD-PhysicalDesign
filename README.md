@@ -788,8 +788,11 @@ Another problem which arises due to this is the signal integrity issue which is 
 
 Below figure describes both H-tree structure as well as clock tree buffers.
 
-![Screenshot 2024-06-03 145158](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/363d733d-04d1-46e3-b43d-75958e9b19a9)
+![Screenshot 2024-06-03 152533](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fa4d40fb-7b04-4557-a7d4-dbf78fbb1d20)
 
+You can see there is also a yellow line surrounding the clock nets. These are a part of clock net shielding. They are connected to either VDD or GND which doesnt switch. Basically what it does is it protects the critical clock nets from crosstalk issues which is basically produced due to the changing signal between nearby nets.
+
+Crosstalk is mainly due to the chargin and discharging of the capacitors associated with the critical nets. It leads to issues like glitches and delta delay which in turn detoriates the original signal. Therfore it is necessary to create the clock net shielding to help avoid this phenomenon. The only downpoint with this is it prevents crosstalk at the cost of more routing resources.
 
 
 
