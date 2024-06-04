@@ -824,8 +824,13 @@ SO upto this module we have dealt with synthesis, floorplan, routing, placement 
 Routing is basically the physical interconnection between cells and ports to drive signals and clocks. Our goal is to achieve the best possible route or path to connect the nets with less no of twist and turns which will allow us to use less routing resources. For this we use specific routing algorithms which takes measures to connect the nets by creating source and traget terminals and iterates the best possible path between them. One such algorithm is 'Lee's Maze Routing Algorthim'.
 
 ### Lee's Maze Algorithm
-This algorith starts with existing pre-placed cells during the floorplan which acts as the obstruts for routing. It creates a routing grid inside the core with standard dimension and defines the source and traget. Then it starts with labeling adjacent grid box with integers and keeps it increasing till it reaches the target with minimum cost.
+This algorith starts with existing pre-placed cells during the floorplan which acts as the obstruts for routing. It creates a routing grid inside the core with standard dimension and defines the source and traget. Then it starts with labeling adjacent grid box with integers and keeps it increasing till it reaches the target with minimum cost. Below we have taken an example of such labeling of grids till it reaches from source to target.
 
+![Screenshot (1698)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b5acf4c0-f959-4a2a-aa2b-c512890a93ef)
+
+Clearly we can see that it takes 9 minimum grid boxes to reach the target and hence now we have multiple paths to reach that point. But as we have discussed there should be minimum zigzag in path (due to lithography issues), the algorithm traces the path with minimum bends i.e. the 2nd figure . This concludes the Lee's algorithm. 
+
+There are also other routing algorithms like Steiner tree and line search algorithm which follows the same principle of shortest routing path while using less memory and time than the Lee's algorithm.
 
 
 # Appendix
