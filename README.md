@@ -7,7 +7,7 @@ Date : 22nd May 2024
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 4. Module-4 : Pre-layout Timing Analysis and Importance of Good Clock Tree 
-5. Module-5 :
+5. Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
 
 ## Introduction
 In the current scenario where using the commercial tools or software may feel expensive and difficult to master, the opensopurce EDA tools are trying to fill the gaps
@@ -817,7 +817,14 @@ You can see there is also a yellow line surrounding the clock nets. These are a 
 
 Crosstalk is mainly due to the chargin and discharging of the capacitors associated with the critical nets. It leads to issues like glitches and delta delay which in turn detoriates the original signal. Therfore it is necessary to create the clock net shielding to help avoid this phenomenon. The only downpoint with this is it prevents crosstalk at the cost of more routing resources.
 
+# Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
+SO upto this module we have dealt with synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now comes thew routing phase where we defines the best possible path to connect two elements in order to use less roting resources with minimum timing violations due to its RC effects. Further we will use the tritonRoute tool to do the routing in our previous design followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
 
+## Routing
+Routing is basically the physical interconnection between cells and ports to drive signals and clocks. Our goal is to achieve the best possible route or path to connect the nets with less no of twist and turns which will allow us to use less routing resources. For this we use specific routing algorithms which takes measures to connect the nets by creating source and traget terminals and iterates the best possible path between them. One such algorithm is 'Lee's Maze Routing Algorthim'.
+
+### Lee's Maze Algorithm
+This algorith starts with existing pre-placed cells during the floorplan which acts as the obstruts for routing. It creates a routing grid inside the core with standard dimension and defines the source and traget. Then it starts with labeling adjacent grid box with integers and keeps it increasing till it reaches the target with minimum cost.
 
 
 
