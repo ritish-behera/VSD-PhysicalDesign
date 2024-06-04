@@ -832,6 +832,27 @@ Clearly we can see that it takes 9 minimum grid boxes to reach the target and he
 
 There are also other routing algorithms like Steiner tree and line search algorithm which follows the same principle of shortest routing path while using less memory and time than the Lee's algorithm.
 
+### DRC Rules Associated with Routing
+While doing the routing step we also have to consider the DRCviolation due to the interconnect wires which is produced due to the lithography processes. Below we mentioned some of the DRC issues which needs to be taken care of :
+- Wire Width
+- Wire Pitch
+- Wire Spacing
+- Signal short
+- Via Widths
+- Via Spacings
+  
+![Screenshot 2024-06-04 112105](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/61dee48c-b24f-452b-a8fe-e46487ab7f63)
+
+
+
+
+
+
+
+
+
+
+
 
 # Appendix
 1. For more information visit https://github.com/efabless/openlane2
