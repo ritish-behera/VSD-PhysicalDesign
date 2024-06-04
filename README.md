@@ -841,7 +841,11 @@ While doing the routing step we also have to consider the DRCviolation due to th
 - Via Widths
 - Via Spacings
   
-![Screenshot 2024-06-04 112105](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/61dee48c-b24f-452b-a8fe-e46487ab7f63)
+![Screenshot 2024-06-04 112105](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c2fbf0fb-2b37-4159-ba8d-f9e2ab80e635)
+
+### Parasitic Extraction
+Another aspect of the routing is the resistance and capacitance produced by the variable widths and heights of the connecting wires. This leads to delay in the circuit. In order to measure this delay we perform the parasitic extraction which outputs the value of RC delay in SPEF format. This will be discussed more properly in the lab assessments.
+
 
 
 
