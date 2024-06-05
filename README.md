@@ -6,7 +6,7 @@ Date : 22nd May 2024
 1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
-4. Module-4 : Pre-layout Timing Analysis and Importance of Good Clock Tree 
+4. Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
 5. Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
 
 ## Introduction
@@ -612,7 +612,7 @@ Now we will check our updated tech file by loading it again and will run the drc
 ![Screenshot 2024-06-01 183728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f3e24948-d0b7-43fa-9c5a-6bfa245f2b9b)
 
 
-# Module-4 : Pre-layout Timing Analysis and Importance of Good Clock Tree 
+# Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
 Till this point we discussed about the extraction of the layout of a standard cell as well as calculated the timing characterization values for the cell. Our next goal is to plug in this newly designed standard cell to our working design "picorv32a" and check its functionality. In this module we will be focusing on how to import the data associated with the cell to the design library in form of LEF as well as make it ready for PnR stages.
 
 Openlane is just a place and route tool and hence heavily dependent upon the LEF file. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. But the layout which we have extracted (.mag) contains extra informations like power, ground and logic implemented which is of no significant use in PnR. This is what makes extracting LEF file more important. 
@@ -774,14 +774,14 @@ Delta1 and Delta2 are basically the delay of buffers present in the clock path o
 
 The left hand side term is called as arrival time whereas the right hand side term is called as required time. The difference between required time and arrival time is called as setup slack.
 
-### Hold Time for Ideal Clock
+### Hold Time for Ideal and Real Clock
 Hold Time is the minimum amount of time that the data input (D) must remain stable after the clock edge for the data to be reliably latched by a sequential element (like a flip-flop). It is produced due to 2nd MUX present in the capture flop which takes some amount of time to send out the data or latch the data. 
 
 ![Screenshot (1695)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a145e9ca-90d9-4a23-af01-0862ac3238bf)
 
 It puts the constraint that the combinational delay should be greater than capture flop delay i.e. Combinational Delay (Theta) > Hold Time(H).
 
-But for ideal cases due to wire RC delays in clock path there might be skew between the clock edges like earlier cases as well as uncertainty due to PLL. So for real clock it can be stated as - combinational delay(Theta) + Delta1 > Hold Time(H) + Delta2 + Hold Uncertainty(HU)
+But for real cases due to wire RC delays in clock path there might be skew between the clock edges like earlier cases as well as uncertainty due to PLL. So for real clock it can be stated as - combinational delay(Theta) + Delta1 > Hold Time(H) + Delta2 + Hold Uncertainty(HU)
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d02767d8-8812-430e-8dba-9373f8c70e9b)
 
@@ -789,6 +789,51 @@ In this case also the left side term is reffered as the arrival time whereas the
 
 
 ### Timing Analysis Using OpenSTA
+openSTA is a the open source tool used to perform the static timing analysis during various phases of the flow. In the first section we have configured the openSTA tool outside of the openLANE flow to better understand the requirements and output of the analyzer. This tool is used basically for the slack reduction through various switches available for the synthesis, placement and CTS. 
+
+A STA environment requires some necessary files to execute it process which includes -
+- Synthesized netlist (.v file)
+- Library Files (.lib)
+- Constraints (.sdc file)
+
+To load our design we need to create a script cotaining our design and the following library files for min, max and typical corner analysis. In this flow we have created a "pre_sta.conf" file for the same containing the verilog data, min/max analysis, linking design, reading sdc followed by reports for tns and wns (slack information). We have creted this file in the /openlane directory.
+
+![Screenshot (1732)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/aff81c71-8f6d-458c-b6ff-5fa090ef5cdb)
+
+Followed by creating this file we have created the constraints file linked with it (similar to base.sdc file for openLANE flow) which contains the information of clock definitions, input output delays and max fanout along with some additional data like clock port, clock period, driving cell & its pin and load capacitance specific to our design. We have named the file as "my_base.sdc" in the "openlane/designs/picorv32a/src" directory.
+
+![Screenshot (1731)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3146cf75-bbcb-4ee2-93b4-f7f3ae25fc33)
+
+After the files for the tool are configured run the "sta pre_sta.conf" command to execute the flow.
+
+![Screenshot (1702)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ab72e913-1122-4f62-b3fa-6bf977776e1d)
+
+We can see after the STA analysis there is slack violation is present in the design and hence we need to fix it to some extent before CTS which adds buffers to meet the timings. 
+
+So first we tried to look out for the cells with high fanout which were causing the delays and checked it characteristics throught the command -
+```
+report_net -connections (net_number)
+```
+![Screenshot 2024-06-05 132522](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5c907cd0-81ec-4eb0-9292-cda129765a50)
+
+As these were having high fanouts of 5 and 6, we limited the max fanout number and ran the synthesis again for updated netlist. 
+```
+set ::env(SYNTH_MAX_FANOUT) "value"
+run_synthesis
+```
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6379dc50-e9b5-408a-9da9-ae7fb56942b9)
+
+Again we increased the drive strength of few cells with higher capacitances values to reduce the overall value. We replaced the existing cells with their respective upsized cells for this purpose and again executed the sta analysis with report checks.
+
+```
+replace_cell (InstanceNumber) (LibraryCell)
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/83526898-bab3-441d-bf75-05ddf0f33f85)
+
+After the modifications now we can see a slightly reduced slack and now we can move further to the CTS step.
+
+![Screenshot 2024-06-05 142315](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3af8d89a-fd55-4dcb-8e3b-44bd2cd1322d)
 
 
 
