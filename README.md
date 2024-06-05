@@ -909,8 +909,49 @@ Now we can see the updated timing results and clearly the slack is met, which is
 The only problem with this analysis is that we have considered the slowest and fastest corner library and as of now the TritonCTS is not yet optimized for that corners as it is still in devlopment as an opensource tool. But is is quite optimized for the typical library and hence we will test it again by chnaging te library files.
 
 ```
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+```
+*The "LIB_SYNTH_COMPLETE" switch redirects to the typical library.
 
+![Screenshot (1721)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b3eee235-9eed-4c90-9fad-0aa7f9a71f96)
 
+Now we see the slack value for the typical corner and it is met in the end.
+
+![Screenshot (1722)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e1a54454-11b2-490f-88e2-ec9b6dd6c7f5)
+
+Now as part of the assessment, we have tried looking at the impact of bigger CTS buffer on setup and hold time by removing the lower drive strength buffer from the available buffer list and running the CTS.
+
+Use the following command to check the buffer list-
+```
+echo $::env(CTS_CLK_BUFFER_LIST)
+```
+To remove the specific buffer from the list the following command along with the index of the buffer twice -
+```
+set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0 ]
+```
+Now run the CTS.
+*One thing to note is that we have to change the def file to "picorv32a.placement.def" as we are performing CTS which is followed by placement stage.
+
+![Screenshot (1725)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c1aaba7c-a96c-40ce-a094-751f71b9c48d)
+
+Now invoke the openROAD flow for STA analysis while repeating all the previous steps.
+
+![Screenshot (1726)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4fc7dc9-3ccb-43d5-8c48-85fdf0f36481)
+
+![Picture1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/74e55bc4-8df9-451f-b042-73cb2c693fe6)
+
+Clearly slack value is reduced and also we have checked the setup and hold time for the same using the commands-
+```
+report_clock_skew -hold
+report_clock_skew -setup
+```
+Note: To add the removed buffer again we can use the following command-
+```
+set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd_clkbuf_1]
+```
+![Screenshot (1729_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/972f8ac4-9e0f-4040-aaf0-501714fec2ff)
+
+This sums up the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage and hence will sign off the RTL2GDS flow. 
 
 
 # Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
