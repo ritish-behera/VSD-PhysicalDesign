@@ -1004,13 +1004,40 @@ The gen_pdn  performs the following operations-
 
 ![Screenshot 2024-06-05 235004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9fee1ef5-deb8-4f41-8844-318dd5e1e029)
 
-![Uploading Screenshot 2024-06-06 001004.png…]()
+![Screenshot 2024-06-06 001004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a63d36f1-fa2f-4cf7-a1a0-7f135eac9794)
 
 ## Routing Through TritonRoute
+Basically the routing is divided into two sectons-
+- Global Routing : Rectangular coarse grid structures with routing guides generation
+- Detail Routing : Uses the global routes to realize segments and vias, creating fine grid structures for connectivity between points (uses various algorithms)
 
+The global routing is done by the "FastRoute" whereas the data is then being used by "TritonRoute" tool for the detailed routing.
 
+TritonRoute is an open-source detailed routing tool that is part of the OpenROAD project. Detailed routing involves defining the precise paths for interconnections within an integrated circuit design, ensuring that all signals are correctly routed without violations.
 
+We can see the switches for the TritonRoute in the "/openroad/configurations" directory as follows-
 
+![Screenshot 2024-06-06 005501](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/44e57fb9-0653-4de1-a553-3efe2478978a)
+
+Now we can run the routing process after the pdn has been created. Use the command ``` run_route``` for the execution.
+
+We can check the optimization factors of the routing through using the switches ```echo $::env(ROUTING_CORES)``` and ```echo $::env(ROUTING_OPT_ITERS)``` which will ensure the optimization factor as well as the memmory and runtime taken by the routing tool.
+
+![Screenshot 2024-06-06 005837](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2610119b-5bcd-42df-b59e-1debd4d94832)
+
+One thing to notice in the run is that it automatically extracts the post-route parasitics in the design into a .spef file which can be found in the "results/routing/" directory. Parasitic extraction identifies the parasitic resistances and capacitances associated with the interconnections in the design, which is then used for accurate timing analysis, power analysis, and signal integrity verification.
+
+![Screenshot (1736)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/68c055e6-5e65-4aa2-b680-b3820ffabc86)
+
+After all this runs, the final design layout was viewed through Magic and it happens to be something like this -
+
+![Screenshot 2024-06-06 011416](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/110198a7-6276-4f51-9a1f-9f40be6f9bd0)
+
+![Screenshot 2024-06-06 011524](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b36c94eb-bb1b-4107-94af-0b5626d13506)
+
+![Screenshot 2024-06-06 011910](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d314392e-d549-46a0-a169-1daea2703f15)
+
+This concludes the total PnR flow of the picorv32a design while adding the custom library cell.
 
 
 # Appendix
