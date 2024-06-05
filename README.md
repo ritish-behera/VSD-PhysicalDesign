@@ -835,32 +835,83 @@ After the modifications now we can see a slightly reduced slack and now we can m
 
 ![Screenshot 2024-06-05 142315](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3af8d89a-fd55-4dcb-8e3b-44bd2cd1322d)
 
+Now overwrite the current design file (picorv32a.synthesis.v) with the new modified netlist which includes the replaced cells with larger drive strength using the below command and afterwards run floorplan and placement to update the correspondinf def files.
 
+```
+write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/04-06_12-17/results/synthesis/picorv32a.synthesis.v
+```
 
-
-
-
-
-
-
-
-
-
-
-## Clock Tree Synthesis TritonCTS and Signal Integrity
+## Clock Tree Synthesis and Signal Integrity
 A clock tree is a network of interconnections in the design that distributes the clock signal from a single source to various parts of the circuit. Furthermore, the variation in the arrival times of the clock signal at different points in the circuit is called as the clock skew. Minimizing clock skew is essential for maintaining synchronization and hence the main goal of clock tree synthesis.
 
 To achieve this a clock tree topology is implemented called as H-tree structure or algorithm which connects the midpoints of paths between two element which in turn help reducing the skew.
 
 Another problem which arises due to this is the signal integrity issue which is produced due to the wire resistance and capacitance of the clock net. To overcome this challenge we use repeaters or buffers over the clock network which amplifies the signal over long distances.
 
-Below figure describes both H-tree structure as well as clock tree buffers.
+Below figure describes both H-tree structure as well as insertion of clock tree buffers.
 
 ![Screenshot 2024-06-03 152533](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fa4d40fb-7b04-4557-a7d4-dbf78fbb1d20)
 
 You can see there is also a yellow line surrounding the clock nets. These are a part of clock net shielding. They are connected to either VDD or GND which doesnt switch. Basically what it does is it protects the critical clock nets from crosstalk issues which is basically produced due to the changing signal between nearby nets.
 
 Crosstalk is mainly due to the chargin and discharging of the capacitors associated with the critical nets. It leads to issues like glitches and delta delay which in turn detoriates the original signal. Therfore it is necessary to create the clock net shielding to help avoid this phenomenon. The only downpoint with this is it prevents crosstalk at the cost of more routing resources.
+
+### CTS Using TritonCTS Tool
+TritonCTS is an open-source tool designed for this clock tree synthesis purpose. In this section we have performed CTS for the previous deisgn with STA analysis.
+
+Before diving into the flow we will look at the switches available for the CTS flow which can be found in  "README.md" file in the "/openlane/configurations" directory which can be used for optimization purpose if necessary.
+
+![Screenshot (1705)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3e191fb8-4c17-4247-9471-a58371c8722c)
+
+PS : Moreover, we can also look for the TCL proc for each step like synthesis, FP, place, CTS in the "openlane/scripts" directory under tcl_commands folder. Basically proc is behind the steps code that gets executed when we run a specific program. For example we have taken an instance for the "run_cts" command which goes through a set of stages for checking necessary files and hands over the control to openROAD tool for execution.
+
+![Screenshot (1709)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c38cd7a9-699a-45c2-8b9d-7dd6eb329011)
+
+Once these checkings are done we can move to perform CTS in openlane flow using our previous design. 
+
+After the placement is done, run the "run_cts" command in the terminal.
+
+![Screenshot (1706)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3ac6ed3a-faa8-4d98-a87e-52287b9abcdf)
+
+As in this step the tool adds the extra buffers to the design in order to meet the timing constaints, a new design file "picorv32a.synthesis_cts.v" is created in the synthesis folder. From now on this new netlist will be used for the future purposes.
+
+![Screenshot (1707_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e3d62d2c-aa34-4364-a964-31e81121efee)
+
+ As the new buffers are being added to the netlist, it will have impact to the skew values and hence the STA analysis needs to be done one more time for this ideal clock scenario. 
+
+ This time we will analyze the timings through invoking the openROAD flow rather than invoking the openSTA outside of the original flow. OpenROAD includes the openSTA project which helps us performig the analysis. But for this we have to, like earlier, define library and constraints files as well as have to create a ".db" file by merging the .lef and .def file. We have created the file named as "pico_cts.db" for the same purpose and has executed it.
+
+ In the first part we have created the db file -
+ ```
+read_lef (directory)
+read_def (directory)
+
+write_db pico_cts.db
+```
+![Screenshot (1715)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/36edb643-5e18-4d2c-946f-bfe8f8ef5e7d)
+
+In the next part we have read the db file along with new netlist, min/max libraries and sdc file and performed the report checks for timing analysis.
+```
+read_db pico_cts.db
+read_verilog (directory)
+read_liberty -max (directory)
+read_liberty -min (directory)
+read_sdc (directory)
+set_propagated_clock [all_clocks]
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+```
+![Screenshot (1716)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5b6027df-9603-4038-87cc-498b0fb6e507)
+
+Now we can see the updated timing results and clearly the slack is met, which is a good sign for us. 
+
+![Screenshot (1717)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/48094ee0-42da-442c-b974-a395343bc8ce)
+
+The only problem with this analysis is that we have considered the slowest and fastest corner library and as of now the TritonCTS is not yet optimized for that corners as it is still in devlopment as an opensource tool. But is is quite optimized for the typical library and hence we will test it again by chnaging te library files.
+
+```
+
+
+
 
 # Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
 SO upto this module we have dealt with synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now comes thew routing phase where we defines the best possible path to connect two elements in order to use less roting resources with minimum timing violations due to its RC effects. Further we will use the tritonRoute tool to do the routing in our previous design followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
