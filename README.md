@@ -938,7 +938,7 @@ Now invoke the openROAD flow for STA analysis while repeating all the previous s
 
 ![Screenshot (1726)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4fc7dc9-3ccb-43d5-8c48-85fdf0f36481)
 
-![Picture1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/74e55bc4-8df9-451f-b042-73cb2c693fe6)
+![Screenshot 2024-06-05 231728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/03de81a6-3626-4c86-80f6-a6c93b6db3da)
 
 Clearly slack value is reduced and also we have checked the setup and hold time for the same using the commands-
 ```
