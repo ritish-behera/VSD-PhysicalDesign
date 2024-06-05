@@ -995,6 +995,11 @@ As the CTS is now completed, the current def file will be used to produce the PD
 ```
 gen_pdn
 ```
+The gen_pdn  performs the following operations-
+- writes lef
+- reads def
+- creates power and ground stripes
+
 ![Screenshot 2024-06-05 234815](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a1ffa98e-e194-4d78-bd6d-b87e843b1f64)
 
 ![Screenshot 2024-06-05 235004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9fee1ef5-deb8-4f41-8844-318dd5e1e029)
