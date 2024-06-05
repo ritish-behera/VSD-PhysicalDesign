@@ -983,12 +983,25 @@ While doing the routing step we also have to consider the DRCviolation due to th
 ### Parasitic Extraction
 Another aspect of the routing is the resistance and capacitance produced by the variable widths and heights of the connecting wires. This leads to delay in the circuit. In order to measure this delay we perform the parasitic extraction which outputs the value of RC delay in SPEF format. This will be discussed more properly in the lab assessments.
 
-## Power Distribution Network Through openLANE
+## Power Distribution Network
+Before moving into the routing stage we have to deploy the power and ground straps for power delivery along the cells. generally this is a step which is done just after the floorplan but due to the openLANE flow adjustment, this is created after the CTS step.
 
+![Screenshot 2024-06-04 120142](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e753eadc-458d-429f-a5cc-d1df7eb869ca)
 
+We can visualize through the above figure that the power and ground lines enter the core through the specific power/grand pads creating a ring structure around it. Later on these lines are distributed along the core using the straps (vertical lines). The standard cell rows and other macros (like memory cell) are then supplied power with the horizontal lines creating a mesh structure. A robust Power Distribution Network (PDN) is crucial for ensuring the reliable operation of an integrated circuit.
 
+### PDN Through OpenLANE
+As the CTS is now completed, the current def file will be used to produce the PDN network in the design. To run the generation of pdn use the command-
+```
+gen_pdn
+```
+![Screenshot 2024-06-05 234815](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a1ffa98e-e194-4d78-bd6d-b87e843b1f64)
 
+![Screenshot 2024-06-05 235004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9fee1ef5-deb8-4f41-8844-318dd5e1e029)
 
+![Uploading Screenshot 2024-06-06 001004.png…]()
+
+## Routing Through TritonRoute
 
 
 
