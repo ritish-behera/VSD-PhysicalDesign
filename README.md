@@ -7,7 +7,7 @@ Date : 22nd May 2024
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 4. Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
-5. Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
+5. Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
 
 ## Introduction
 In the current scenario where using the commercial tools or software may feel expensive and difficult to master, the opensopurce EDA tools are trying to fill the gaps
@@ -954,7 +954,7 @@ set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_
 This sums up the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage and hence will sign off the RTL2GDS flow. 
 
 
-# Module-5 : Final Steps for RTL2GDS Using triton-ROUTE and openSTA
+# Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
 SO upto this module we have dealt with synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now comes thew routing phase where we defines the best possible path to connect two elements in order to use less roting resources with minimum timing violations due to its RC effects. Further we will use the tritonRoute tool to do the routing in our previous design followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
 
 ## Routing
