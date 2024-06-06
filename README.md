@@ -127,7 +127,6 @@ When a cell is located too far from the main power source, the switching signal 
 
 The power issue of local cells or local communication is solved by de-cap cells but there still exists power issue in global communication that is between macros(with de-cap cells) which are connected together (Driver-Load Configuration) through wires and requires switching simultaneously. In order to solve this we use the powerplanning stage.
 
-
 ## Powerplanning
 During simultaneous switching, two primary issues in global communication arise:
 1. Ground Bounce - Problem due to discharging of multiple cells through a single ground line and hence creating a voltage bump/spike
@@ -155,15 +154,15 @@ Before executing the floorplan command, it's crucial to understand the default c
 
 ![334467819-09950797-7653-4aff-8005-50b83fe3dd6a](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0d90c2b0-8a50-4c9e-8156-9673b9500945)
 
-The README.md file contains switches for all the flow stages. We will be focusing on floorplan here.
+- The README.md file contains switches for all the flow stages. We will be focusing on floorplan here.
 
 ![334468114-e937fc22-9ae5-440b-b7f8-f4fd40e3f45e](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9f241809-d449-4e8b-9180-26187e171ada)
 
-The "floorplan.tcl" file contains default values such as core utilization, number of horizontal and vertical metal lines, and other parameters.
+- The "floorplan.tcl" file contains default values such as core utilization, number of horizontal and vertical metal lines, and other parameters.
 
 ![FloorplanDefualtTCL](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89640b4c-963a-498c-974a-373c2c64cac1)
 
-*Note : In openLANE flow floorplanning stage the vmetal and hmetal is always one more than what is specified in the config file.
+*Note : In openLANE flow floorplanning stage, the vmetal and hmetal is always one more than what is specified in the config file.
 
 Precedence of Parameters : The floorplan follows a speicifc precedance order for parameters having least priority to system defualts-
 - ```configuration/floorplan.tcl``` (least priority)
@@ -176,7 +175,7 @@ Running the Floorplan Command : Now use the ```run_floorplan``` command in the o
 
 Floorplan Output : After the run is completed, the results and reports are stored in ```openlane/designs/picorv32a/runs```.
 
-Key Outputs : DEF file- Located in ```runs/results/floorplan``` directory, named ```picorv32a.design.def```.  The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan layout through "Magic" tool using the def file.
+Key Outputs : DEF file- Located in ```runs/results/floorplan``` directory, named ```picorv32a.floorplan.def```.  The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan layout through "Magic" tool using the def file.
 
 ![334469626-0050f92e-bb03-4918-ada1-f2a6d1acb8fe](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e342a5a5-093e-4209-8444-b084f28ebcee)
 
