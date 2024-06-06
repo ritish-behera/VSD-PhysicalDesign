@@ -313,7 +313,7 @@ At last all these data output is fed to the "GUNA" characterization tool which o
 
 The following figures define some of the timing characterization values of cells which helps calculating propagation delay and transition time.
 
-![334233546-291f7017-94f4-4e71-93b8-67b0bb920e0f](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d1417259-3213-4bf9-a4f0-0333e90f7544)
+![download (13)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ff8930ce-af9f-446c-966e-f1abe197a8e6)
 
 Propagation delay = Out_time_threshold - In_time_threshold
 
@@ -323,8 +323,7 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 - Transition time is calculated by the difference of time between 80% & 20% point of the same waveform. 
 
-![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f9320abb-3c7e-4a44-a3cf-e76c6b56035a)
-
+![download (14)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cb451a4-c89c-432c-84a0-25e4083811c2)
 
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further as part of the cell characterization we will anylyze the timings i.e. rise, fall and propagation delay of the inverter through Magic and later on we will import this complete design to our library "picrov32a" generating the lef files.
