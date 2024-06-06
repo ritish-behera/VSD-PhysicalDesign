@@ -146,38 +146,43 @@ The pins include both data pins and clock pins with the clock pins slightly bigg
 
 Moreover, in order to not to place any logic blocks and routing channels in the pin area, logical cell blockage is used which reserves the pin locations.
 
-![Screenshot (1606)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/374439ec-9ccc-4694-b803-429ed93ab221)
+![download (12)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c1345860-16ca-4ef4-8f49-8a62f6d8e986)
 
 ## Floorplanning through OpenLANE
-In the previous steps, we have already invoked the openlane tool and synthesized the netlist into specific gate configurations. Now we will move forward to run the floorplan command in the terminal.
+After synthesizing the netlist using OpenLANE, the next step is floorplanning. This involves arranging the various blocks and cells of the synthesized netlist into a defined area on the chip, optimizing for performance, power, and area.
 
-Before diving into the execution, we should be aware of the switches and the default configurations of the floorplan during the execution through openLANE. These can be found in the "openlane/configuration/" directory.
+Before executing the floorplan command, it's crucial to understand the default configuration settings and switches available in OpenLANE floorplan flow. These can be found in the ```openlane/configuration/``` directory.
 
 ![configurationFoldr](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/09950797-7653-4aff-8005-50b83fe3dd6a)
 
-To view the list of switches that can be used along the floorplan command, open the "README.md" file from the list.
+The README.md file contains switches for all the flow stages. We will be focusing on floorplan here.
+
+The "floorplan.tcl" file contains default values such as core utilization, number of horizontal and vertical metal lines, and other parameters.
 
 ![switchesFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e937fc22-9ae5-440b-b7f8-f4fd40e3f45e)
 
-The "floorplan.tcl" file includes all the default values for the run such as core utilization, no of horizontal metal lines, no of vertical metal lines in the grid and many more that can be seen in this figure. One more thing to note about the openLANE flow floorplanning is that the vmetal and hmetal is always one more than what is specified in the config file.
-
 ![FloorplanDefualtTCL](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89640b4c-963a-498c-974a-373c2c64cac1)
 
-Note: The floorplan follows a speicifc precedance order for parameters with respect to files having least priority to system defualts i.e. "configuration/floorplan.tcl" then "designs/picorv32a/config.tcl" and with highest priority to "designs/picorv32a/sky130A_sky130_fd_sc_hd_config.tcl" file.  
+*Note : In openLANE flow floorplanning stage the vmetal and hmetal is always one more than what is specified in the config file.
 
-Now use the "run_floorplan" command in the openlane window to execute the synthesized netlist.
+Precedence of Parameters : The floorplan follows a speicifc precedance order for parameters having least priority to system defualts-
+- ```configuration/floorplan.tcl``` (least priority)
+- ```designs/picorv32a/config.tcl```
+- ```designs/picorv32a/sky130A_sky130_fd_sc_hd_config.tcl``` (highest priority)  
+
+Running the Floorplan Command : Now use the ```run_floorplan``` command in the openlane terminal to execute the synthesized netlist.
 
 ![floorplanCommand](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/89f7b882-ea76-4e79-9ac5-e2a0f25cfc1f)
 
-Once the run is completed, all the reports and results are stored in the "openlane/designs/picorv32a/runs" directory.
+Floorplan Output : After the run is completed, the results and reports are stored in ```openlane/designs/picorv32a/runs```.
 
-Move to the "results/floorplan" directory to get the def (Design Exchange Format) file named "picorv32a.design.def" which provides guidelines for the distribution of power and ground connections implemented on the floorplan. The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan through "Magic" tool using the def file.
+Key Outputs : DEF file- Located in ```runs/results/floorplan``` directory, named ```picorv32a.design.def```.  The def file basically translates the logical designs into physically manufacturable layouts. In further steps we will see how to view this floorplan layout through "Magic" tool using the def file.
 
 ![floorplandefFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0050f92e-bb03-4918-ada1-f2a6d1acb8fe)
 
-Here the UNITS DISTANCE MICRON 1000 represents that 1 micron is equal to 1000 data base points.
-
-And the dimesion of the core is given as follows ( 0 0 ) ( 660685 671405 ) where the first coordinate represents the bottom left corner of die and second coordinate represents top right corner of the die.
+Now coming to the assessment, 
+- UNITS DISTANCE MICRON 1000 : 1 micron is equal to 1000 data base points.
+- CORE DIMENSION : ( 0 0 ) ( 660685 671405 ) where the first coordinate represents the bottom left corner of die and second coordinate represents top right corner of the die.
 
 Hence, the dimension of the core in micron units can be calculated from the above values as -
 1. Height = ( 671405 - 0 )/1000 = 671.405 microns
@@ -185,17 +190,18 @@ Hence, the dimension of the core in micron units can be calculated from the abov
 
 So, the area of die = 671.405 x 660.685 = 443587.212425 sq. microns
 
-To get the data of core utilization and aspect ratio of the cells, open the "config.tcl" file located in the runs directory. Additionally this file gives more informationtion such as core margin, IO hmetal, IO vmetal, target density, endcap cell etc.
+Additional Configurations :
+- config.tcl : Located in the ```picorv32a/runs/``` directory, this file contains core utilization, aspect ratio, core margin, IO metal layers, target density, etc.
+  ![configTCLfile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ea4b6642-f376-46f0-a669-6f1d3f9f5b6d)
+- Logs : Found in ```logs/floorplan/``` directory, these logs contain detailed information about the floorplan run.
+  ![logListFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/22cc2578-0768-446e-8296-cddf79311b64)
 
-![configTCLfile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ea4b6642-f376-46f0-a669-6f1d3f9f5b6d)
+We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run. You can verify the number of metal layers from the "ioPlacer.log" file after the run with the "config.tcl" before the run. 
 
-Also check the "logs/floorplan" directory to get all the informations regarding the floorplan run. We can also compare the switch precedance that we earlier discussed through this directory as it stores the data of IO metal layers, vmetal and hmetal data of the specific run. You can verify the number of metal layers from the "ioPlacer.log" file after the run with the "config.tcl" before the run. 
+Visualizing the Floorplan : To view the floorplan layout, use the Magic tool with the DEF file data:
 
-![logListFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/22cc2578-0768-446e-8296-cddf79311b64)
-
-Once all the data are verified now move to view the actual layout of the floorplan in the "Magic" tool window.
-
-To invoke the magic tool within the current directory of floorplan use the following command to get the def file data plotted on Magic tool window-
+To invoke the Magic tool within the current directory, locate the technology file for Magic and provide the LEF and DEF file information as follows -
+```magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &```
 
 ![FloorplanCommand (1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/733ef30c-3374-4977-a2f4-883830dfcb25)
 
@@ -203,25 +209,28 @@ To invoke the magic tool within the current directory of floorplan use the follo
 
 ![FP2](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/194a2c80-1a11-4b63-9008-649919b2340e)
 
-We can now verify all the data through the layout.
+Layout Checks : We can now verify all the data through the layout.
 
-For example, as we have set the "IO PIN MODE = 1" it represents all the pins in the die are equidistant from each other which can be seen in the figure. Also as we have have mentioned the clock pins are slightly wider than the data pins so as to facilitate the drive strength.
-
-To get the information about the utilization factor and metla layers, type "what" in the magic command window. 
+- "IO PIN MODE = 1" represents all the pins in the die are equidistant from each other which can be seen in the figure.
+- Clock Pins : The clock pins are slightly wider than the data pins so as to facilitate the drive strength.
+- Type "what" in the magic command window to get the data of utilization factor and metal layers 
 
 ![FP5](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/15810110-232f-48e6-afbe-ec88b1ee455e)
 
-Also notice that, decap cells are present near the boundries whereas tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other. Note that flloorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
+- Decap cells are present near the boundries
+- Tap cells (which help avoid latchup conditions) are placed at the middle with diagonnaly equidistant from each other.
+
+*Note : Floorplan doesnt take into consideration of standard cells but it can still be seen in the lower left corner of the layout which will be later on get placed in their respective position in the "Placement" stage.
 
 ![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
 
-Again, in the openLANE floe we can change the parameter of certain floorplan variable on the fly and run it again. For example we can change the pin placement strategy by providing the following switch in the openlane terminal-
+Adjusting Parameters : In the openLANE flow the parameters of certain floorplan variable can bechanged on the fly . For example, change the pin placement strategy using the following switch to see the diffeence-
 ```
 set ::env(FP_IO_MODE) 2
 2
 % run_floorplan
 ```
-This will produce the following floorplan with uneven pin assignment in the die.
+This will generate a floorplan with pins unevenly distributed across the die.
 
 ![UnevenPin](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5d2d4e4b-c928-4c44-b321-ae120e7ba3f3)
 
