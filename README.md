@@ -95,7 +95,7 @@ Afterwards, we have moved to powerplanning, pin assignment and placement steps a
 ## Floorplanning
 Floorplanning typically invovles the ordering or arrangement of IPs which also could be referred as pre-placed cells in the power-ground mess of core of the chip.
 
-![Screenshot (1590)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d0c738bb-ec7c-4ee6-97e6-bdd9ab459577)
+![Picture3](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/4d7a05fe-58d1-4007-9315-2ba8d8deba96)
 
 The core of chip is the portion where all the logic blocks are assembled or fabricated whereas the die suurounds the core as well as provides extra area for IO pin assignment. During floorplan stage in order to provide some space for routing and standard cell placement in further steps, we need to set some parameters for it which will be implemented by the tool during the execution.
 
@@ -111,29 +111,26 @@ The aspect ratio represents the shape and size of the cell i.e it is the ratio b
 
 An aspect ratio of 1 refers to a square shape and rectangles for other values.
 
-![Screenshot (1593)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/73ab5e44-f5ea-4a4b-b3f0-6459219c1d9d)
 
 ### Concept of Pre-placed cells
-Basically macros are the pre-placed cells which we implement in floorplanning stage before placement and routing. Macros can be either large memories or special IPs which is implemented once and is repeated throughout the chip for further use with the same functionality. These are placed in user defined locations which is automated through place and route tool.
+Macros (also called hard macros) are large, pre-designed blocks that perform specific functions within the chip. these are characterized by having a fixed layout and cannot be easily resized or reshaped. Macros can be either large memories or special IPs (DSP, ADC, DAC) which is implemented once and is repeated throughout the chip for further use with the same functionality. These are placed in user defined locations which is automated through place and route tool.
 
-The macors actually go through a step called "Partition" where the large logic is granualirized into separate blocks of small logics with same functionality as a whole. This helps in floorplanning as the same netlist can be repeated multiple times to be placed at different locations.
+Pre-placed cells refer to smaller, often critical cells that are strategically placed during the floorplanning stage. These can include standard cells or specialized logic cells that need to be fixed in position early in the design process.Pre-placed cells, such as clock buffers or critical logic gates, might be positioned near the macros to optimize timing and minimize signal delay.
 
-![Screenshot (1595)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/09e11f6b-eeab-40a3-a067-c3b37b989667)
+The process where pre-placed cells undergo steps called "Partition" involves breaking down a large logical block into smaller blocks, each performing the same function as the original block. This granular approach aids in floorplanning by enabling the reuse and placement of the same netlist across different areas of the chip, facilitating lower design effort and layout efficiency.
 
-![Screenshot (1596)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/63f672e6-e9da-4fc4-9556-cd944846bf25)
+![download (5)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ac7bc3bd-e823-4ac2-b156-34ba85d437a2)
+
 
 ### De-Cap Cells
-Another type of cell which are placed during the floorplanning state is the de-cap cells or de-coupling capacitor cells. As the name suggests the extra capacitor integrated with the cells decouples the actual voltage source from the cell and act itself as the source during switching.
+Another type of cell placed during the floorplanning stage is the de-coupling capacitor cells (de-cap cells). As their name implies, these cells contain additional capacitors that decouple the actual voltage source from the cell. During switching, the capacitor in the de-cap cell acts as the immediate voltage source, stabilizing the supply voltage for the cell.
 
-![Screenshot (1597)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/cde30678-0851-4d3c-9206-be0d75166420)
+![Picture4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/aa68be1d-3e3e-4ae5-b34b-c2821fe77f1e)
 
-Basically, what happens when a cell is too far from the main source the switching signal gets detoriated before reaching the cells due to the resistive and inductive effect of the interconnects or wires. This leads to noise in the signal and affects the switching of the cells. In order to counter this we add extra capacitors parallel to the cell which charge itself to the same voltage as the source during non-switching activities and acts as a virtual source during the switching activities. These are implemented near the cells with high switching acitivities.
-
-![Screenshot (1598)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8ca1ea4c-7305-4bf9-9da9-a1c853faccbc)
+When a cell is located too far from the main power source, the switching signal can deteriorate before reaching the cell due to the resistive and inductive effects of the interconnects. This degradation introduces noise into the signal and affects the cell's switching performance. To counteract this issue, additional capacitors are placed in parallel with the cell. These capacitors charge to the same voltage as the power source during idle periods and act as a local power source during switching activities. This approach is particularly useful near cells with high switching activity.
 
 The power issue of local cells or local communication is solved by de-cap cells but there still exists power issue in global communication that is between macros(with de-cap cells) which are connected together (Driver-Load Configuration) through wires and requires switching simultaneously. In order to solve this we use the powerplanning stage.
 
-![Screenshot (1602)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/27a72e06-7053-4d04-bef7-c710bdad8726)
 
 ## Powerplanning
 During simultaneous switching, the two main issues which arises in the global communications are-
