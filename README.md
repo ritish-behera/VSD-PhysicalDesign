@@ -1,7 +1,9 @@
 # VSD- Physical Design Using OpenSource Tools
 This repository details the report of all the technical works performed during the VSD- Physical Design workshop through OpenSource tools.
 PDK Used : SKyWater 130nm
+
 Date : 22nd May 2024
+
 ## Contents
 1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
