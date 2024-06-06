@@ -51,7 +51,7 @@ $ ./flow.tcl -interactive
 ```
 The -interactive switch enables step-by-step execution of the flow, allowing users to intervene at various stages if necessary. By default, the flow executes all steps automatically, but with -interactive, users have the option to execute each step manually, providing greater control and flexibility throughout the design process.
 
-![Screenshot from 2024-05-26 00-28-42](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/be2d9e99-fd10-4f57-87f0-ede688cbe389)
+![333826538-be2d9e99-fd10-4f57-87f0-ede688cbe389](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e141fba4-b138-4427-9af8-636ac933b580)
 
 Following the tool initialization, the next step involved installing additional packages using the command-
 ```
