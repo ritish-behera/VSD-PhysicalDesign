@@ -40,25 +40,24 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 The primary objective of this module was to commence the openLANE flow, thereby initiating the logic or RTL synthesis of the design through YOSYS and ABC. Besides a supplementary task involving the calculation of the flop ratio for the synthesized design was introduced at a later stage as part of the assignments.
 
 To invoke the tool the, it's essential to set up the Docker environment.
-
-```docker```
-
+```
+docker
+```
 This command launches the openLANE Docker container and mounts the current working directory to the /openLANE_flow directory inside the container. It then sets the working directory to /openLANE_flow.
 
 Following the Docker setup, the flow.tcl file is executed using the Tcl command:
-
-```./flow.tcl -interactive```
-
+```
+./flow.tcl -interactive
+```
 The -interactive switch enables step-by-step execution of the flow, allowing users to intervene at various stages if necessary. By default, the flow executes all steps automatically, but with -interactive, users have the option to execute each step manually, providing greater control and flexibility throughout the design process.
 
 ![Screenshot from 2024-05-26 00-28-42](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/be2d9e99-fd10-4f57-87f0-ede688cbe389)
 
 Following the tool initialization, the next step involved installing additional packages using the command-
-
 ```
 package require openlane 0.9
 ```
-Before proceeding with synthesis, it's essential to complete the design setup stage, which involves preparing all necessary directories for executing the specific design. In this case, the "picorv32a" design was selected for synthesis, located in the "openlane/designs" directory.
+Before proceeding with synthesis, it's essential to complete the design setup stage, which involves preparing all necessary directories for executing the specific design. In this case, the ```picorv32a``` design was selected for synthesis, located in the ```openlane/designs``` directory.
 
 Use the following command to prepare the design:
 ```
@@ -70,7 +69,7 @@ Once the setup is ready we run the synthesis through ```run_synthesis``` command
 
 ![Screenshot from 2024-05-26 00-30-55](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8e81f420-7c7e-413e-87f0-a1fd25551e72)
 
-After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports and cell utilisation report can be found inside these directories.  
+After the synthesis, the files are stored inside the ```/picorv32a/runs/results``` and ```/picorv32a/runs/reports``` directory under the ```designs``` directory. All the timing reports and cell utilisation report can be found inside these directories.  
 
 ![Screenshot from 2024-05-26 00-34-56](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e1583f55-2802-41e4-9e6d-b642848216a6)
 
@@ -78,11 +77,11 @@ After the synthesis, the files are stored inside the "results" and "reports" dir
 
 Flop ratio represents the ratio between total no of D-flipflops used to the total no of cells present in the synthesized design.
 
-These data can be found inside the "yosys.stat.rpt" file (/runs/reports/yosys.stat.rpt) which assembles all the data of logic block used in the design.
+These data can be found inside the ```yosys.stat.rpt``` file inside ```picorv/runs/reports/``` which assembles all the data of logic block used in the design.
 
 ![Screenshot from 2024-05-26 00-37-09](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5bc94db-8ecd-4e64-b775-ac2f6d04e939)
 
-The number of D-flipflops are represented by "sky_fd_sc_hd_dfxtp_2" and it was divided by the total number of cells in the design to get the flop-ratio.
+The number of D-flipflops are represented by ```sky_fd_sc_hd_dfxtp_2``` and it was divided by the total number of cells in the design to get the flop-ratio.
 
 Flop Ratio = 1613 / 14876 = 0.10842
 
