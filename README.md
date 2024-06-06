@@ -41,13 +41,13 @@ The primary objective of this module was to commence the openLANE flow, thereby 
 
 To invoke the tool the, it's essential to set up the Docker environment.
 ```
-docker
+$ docker
 ```
 This command launches the openLANE Docker container and mounts the current working directory to the /openLANE_flow directory inside the container. It then sets the working directory to /openLANE_flow.
 
 Following the Docker setup, the flow.tcl file is executed using the Tcl command:
 ```
-./flow.tcl -interactive
+$ ./flow.tcl -interactive
 ```
 The -interactive switch enables step-by-step execution of the flow, allowing users to intervene at various stages if necessary. By default, the flow executes all steps automatically, but with -interactive, users have the option to execute each step manually, providing greater control and flexibility throughout the design process.
 
@@ -55,13 +55,13 @@ The -interactive switch enables step-by-step execution of the flow, allowing use
 
 Following the tool initialization, the next step involved installing additional packages using the command-
 ```
-package require openlane 0.9
+% package require openlane 0.9
 ```
 Before proceeding with synthesis, it's essential to complete the design setup stage, which involves preparing all necessary directories for executing the specific design. In this case, the ```picorv32a``` design was selected for synthesis, located in the ```openlane/designs``` directory.
 
 Use the following command to prepare the design:
 ```
-prep -design picorv32a
+% prep -design picorv32a
 ```
 Once the setup is ready we run the synthesis through ```run_synthesis``` command which generates synthesized design output and stores inside the picorv32a design directory.
 
