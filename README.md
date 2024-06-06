@@ -259,8 +259,7 @@ In this step, congestion-driven placement is performed, leaving timing-driven pl
 ```
 run_placement
 ```
-
-![Screenshot from 2024-05-28 10-11-32](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9c1da2b7-6064-4b5b-a404-d1d1b725b037)
+![334473681-9c1da2b7-6064-4b5b-a404-d1d1b725b037](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/88a8b0f1-42a7-4daf-95ee-d640366554a7)
 
 There are two section of the placement step-
 1. Global Placement - Course grain placement with no legalisation
