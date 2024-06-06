@@ -35,7 +35,7 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 
  The chip featured a Quad Flat No-Leads (QFN) die package with 48 pins occupying an area of 7mm x 7mm. The SoC comprised of a CPU with GPIO bank designed on RISC-V ISA. Moreover, it included various foundry IPs such as PLL, SRAM, ADC & DAC all interconnected to the IO pads via wire bonds to ensure the chip's functionality.
 
-![RISC_processor](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a91cd38b-6c45-433b-a0ae-86eb4aba32b0)
+![Uploading download (1).png…]()
 
 The primary objective of this module was to commence the openLANE flow, thereby initiating the logic or RTL synthesis of the design through YOSYS and ABC. Besides a supplementary task involving the calculation of the flop ratio for the synthesized design was introduced at a later stage as part of the assignments.
 
