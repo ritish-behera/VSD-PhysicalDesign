@@ -20,7 +20,7 @@ to reach the mass of semiconducter enthusisat. Opensource tools are great way to
 ## Objective
 The following workshop involved the complete RTL to GDSII design flow of a RISC-V processor architecture considering all the steps- RTL synthesis, static timing analysis, DFT, floorplan, placement, CTS, routing, physical verification as well as sign-off of the chip through the openLANE ASIC design flow with the Skywater 130nm PDK for all model libraries.
 
-![Screenshot (1586)Cropped](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a3b1d2b0-53e9-4f7d-ad24-76d5da502d64)
+![RISC_processor](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a91cd38b-6c45-433b-a0ae-86eb4aba32b0)
 
 The openLANE ASIC design flow involves the following opensource tools for different processes-
 1. YOSYS & ABC : Logic Synthesis
