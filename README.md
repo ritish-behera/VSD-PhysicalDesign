@@ -323,7 +323,7 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 - Transition time is calculated by the difference of time between 80% & 20% point of the same waveform. 
 
-![download (14)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cb451a4-c89c-432c-84a0-25e4083811c2)
+![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d3e2be6b-1a30-497a-8714-1534023c645d)
 
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further as part of the cell characterization we will anylyze the timings i.e. rise, fall and propagation delay of the inverter through Magic and later on we will import this complete design to our library "picrov32a" generating the lef files.
