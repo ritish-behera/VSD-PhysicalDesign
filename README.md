@@ -203,7 +203,7 @@ Visualizing the Floorplan : To view the floorplan layout, use the Magic tool wit
 
 To invoke the Magic tool within the current directory, locate the technology file for Magic and provide the LEF and DEF file information as follows -
 ```
-magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+$ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
 ```
 ![334470416-733ef30c-3374-4977-a2f4-883830dfcb25](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1a5c868c-4c2d-474b-acaf-8700f1e62057)
 
@@ -227,7 +227,7 @@ Layout Checks : We can now verify all the data through the layout.
 
 Adjusting Parameters : In the openLANE flow the parameters of certain floorplan variable can be changed on the fly . For example, change the pin placement strategy using the following switch to see the diffeence-
 ```
-set ::env(FP_IO_MODE) 2
+% set ::env(FP_IO_MODE) 2
 2
 % run_floorplan
 ```
@@ -257,7 +257,7 @@ Solutions:
 ## Congestion Aware Placement using RePlAce
 In this step, congestion-driven placement is performed, leaving timing-driven placement for later stages. To start the flow on the openlane terminal post floorplan, run the command 
 ```
-run_placement
+$ run_placement
 ```
 ![334473681-9c1da2b7-6064-4b5b-a404-d1d1b725b037](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/88a8b0f1-42a7-4daf-95ee-d640366554a7)
 
@@ -267,7 +267,7 @@ There are two section of the placement step-
 
 *Note : Legalisation refers to the placement of standard cells in exact rows of the grid without any overlaps.
 
-For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HOWL) method to define the location of the cells. The parameters for this method can be seen in the ```config.tcl``` file in the ```picorv32a/runs/``` directory. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
+For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HPWL) method to define the location of the cells. The parameters for this method can be seen in the ```config.tcl``` file in the ```picorv32a/runs/``` directory. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
 
 Visualization of Placement : To view the placement layout in Magic, invoke the tool in the placement directory and use the ```picorv32a.placement.def``` file as the input argument. (Similar to floorplan steps)
 
@@ -283,17 +283,17 @@ By following these steps, the placement phase in the OpenLANE flow is completed,
 ## Cell Design and Characterization Flow
 Moving a bit apart from the flow in openLANE, we will discuss about the library cell characterization and respective design flow as cells are the basic block behind all the netlist,floorplan and placement. 
 
-A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) with different dimension and threshold voltage as well as various macros, IPs and decap cells, with timing information. The designing of a cell to add it to the library involves the following-
+A library file contains all the standard cells (AND,OR,NOT,Buffer,latch,ICG) with different dimensions and threshold voltage as well as various macros, IPs and decap cells, with timing information. The specific cell design process to add it to the library involves the following-
 1. Inputs
-   - Process Design Kits (PDKs) obtained from foundries
-   - DRC, LVS Rule with lambda-based design rules
-   - SPICE model which involves the parameter of PMOS and NMOS
-   - User defined specs (cell height, cell width, supply voltage, metal layers, drwan gate length etc)
+   - Process Design Kits (PDKs) : Provided by foundries, containing technology-specific data
+   - DRC, LVS Rule with lambda-based design rules : Ensure the physical layout meets manufacturing constraints and matches the schematic.
+   - SPICE model : Include parameters for PMOS and NMOS transistors.
+   - User defined specs : Define cell dimensions, supply voltage, metal layers, drawn gate length, etc.
 
 2. Design Steps
-   - Circuit Design
-   - Layout Design
-   - Characterization
+   - Circuit Design : Create the transistor-level schematic.
+   - Layout Design : Develop the physical layout of the cell.
+   - Characterization : Analyze timing, power, and noise characteristics.
 
 3. Outputs
    - CDL (Circuit Description Language)
@@ -301,7 +301,7 @@ A library file contains all your standard cells (AND,OR,NOT,Buffer,latch,ICG) wi
    - Timing, Noise, power (.libs)   
    
 ### Characterization Flow
-Characterization of a cell is the most important aspect of a library cell generation which includes timing, power and noise analysisof the cell. The characterization typically involves the following steps-
+Characterization of a cell is the most important aspect of a library cell generation which includes timing, power and noise analysis of the cell. The characterization typically involves the following steps-
 - Reading the SPICE models (pmos & nmos model files)
 - Reading extracted SPICE netlist (RC values)
 - Recognizing the behaviou of the circuit and reading its subcircuit
@@ -313,7 +313,7 @@ At last all these data output is fed to the "GUNA" characterization tool which o
 
 The following figures define some of the timing characterization values of cells which helps calculating propagation delay and transition time.
 
-![Screenshot (1615)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/291f7017-94f4-4e71-93b8-67b0bb920e0f)
+![334233546-291f7017-94f4-4e71-93b8-67b0bb920e0f](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d1417259-3213-4bf9-a4f0-0333e90f7544)
 
 Propagation delay = Out_time_threshold - In_time_threshold
 
@@ -323,10 +323,7 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 - Transition time is calculated by the difference of time between 80% & 20% point of the same waveform. 
 
-![Screenshot (1617)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/cec2a8af-c86e-4009-8652-05d9a53af350)
-  
-![Screenshot (1622)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8a5d0f17-39e3-4001-9afa-0289bc704c85)
-
+![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f9320abb-3c7e-4a44-a3cf-e76c6b56035a)
 
 
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
