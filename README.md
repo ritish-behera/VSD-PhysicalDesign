@@ -225,7 +225,7 @@ Layout Checks : We can now verify all the data through the layout.
 
 ![FP4](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c87836b8-cb9b-4853-ba43-deee56263862)
 
-Adjusting Parameters : In the openLANE flow the parameters of certain floorplan variable can bechanged on the fly . For example, change the pin placement strategy using the following switch to see the diffeence-
+Adjusting Parameters : In the openLANE flow the parameters of certain floorplan variable can be changed on the fly . For example, change the pin placement strategy using the following switch to see the diffeence-
 ```
 set ::env(FP_IO_MODE) 2
 2
@@ -239,19 +239,26 @@ This will generate a floorplan with pins unevenly distributed across the die.
 ## Placement
 Placement involves the arrangement of standard cells in their specific position on the power-ground grid of the core.
 
-In this step we bind the netlist with physical cells having specific dimensions i.e. fixed height and varible width for standard cells. Moreover these cells are library specific which contains physical cells with variable dimensions, timing informations, venn condition etc. 
+Binding Netlist with Physical Cells : During this step the netlist is bound/mapped with physical cells having specific dimensions i.e. fixed height and varible widths.  These cells are library-specific and come with detailed information, including dimensions, timing data, and setup conditions. 
 
-During the placement phase the physical cells are placed on the prvious floorplan which indeed gives the distibution of cells. The cells should be placed near to their respective input/output ports to help maintain the timing constraints.
+Key Objectives:
+- Distribution of Cells: Cells are placed on the floorplan created in the previous step.
+- Proximity to I/O Ports: Cells should be placed close to their respective input/output ports to meet the timing constraints.
 
 ### Optimization of Placement Using Estimated Wirelength and Capacitances
 To start from the last point of the last section, we often face the challenge of not able to place the cells near to their respective IO ports. Sometimes the cells are far away from the port due to previous floorplans or other reasons which leads to more wiring cost. The more the wiring, the more resistance and capacitance effect it will have, leading to signal noise issues and greater slew values.
 
-In order to fix these issues there are couple of ways which includes placing repeaters or buffers in between port and the cells. This help maintains the signal integrity and replicates the original signal at the cost of some area. Once the repeaters are placed, check the datapath at ideal condition of clock as well check the set up condition to verify the placement. 
+Solutions:
+- Repeaters/Buffers: Placing repeaters or buffers between ports and cells can maintain signal integrity by replicating the original signal, though at the cost of some additional area.
+- Datapath Checking: Verify the datapath under ideal clock conditions and setup conditions to ensure proper placement.
 
 ![Screenshot (1609)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fcd46fa0-7675-41c6-81a6-013e41ca6abb)
 
 ## Congestion Aware Placement using RePlAce
-During the current step we have done only congestion driven placement leaving the timing driven placement for later. To start the flow run the command "run_placement" on the openlane window after the floorplan is done.
+In this step, congestion-driven placement is performed, leaving timing-driven placement for later stages. To start the flow on the openlane terminal post floorplan, run the command 
+```
+run_placement
+```
 
 ![Screenshot from 2024-05-28 10-11-32](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9c1da2b7-6064-4b5b-a404-d1d1b725b037)
 
@@ -259,11 +266,11 @@ There are two section of the placement step-
 1. Global Placement - Course grain placement with no legalisation
 2. Detail Placement - Fine grain placement with legalisation
 
-Note : Legalisation refers to the placement of standard cells in exact rows of the grid with no overlaps
+*Note : Legalisation refers to the placement of standard cells in exact rows of the grid without any overlaps.
 
-For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HOWL) method to define the location of the cells. The parameters for this method can be seen in the config.tcl file in the runs section. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
+For congestion driven placement, the goal is to reduce the wirelength and openlane tool uses Half Perimeter Wire Length (HOWL) method to define the location of the cells. The parameters for this method can be seen in the ```config.tcl``` file in the ```picorv32a/runs/``` directory. Again, one thing to note in the file is that the OVFL value that represents the overflow condition should converge during the simulation.
 
-For viewing the placement layout in Magic we will follow the similar method as floorplan, invking the magic tools in the placement directory and hence putting the "picorv32a.placement.def" file as the input argument.
+Visualization of Placement : To view the placement layout in Magic, invoke the tool in the placement directory and use the ```picorv32a.placement.def``` file as the input argument. (Similar to floorplan steps)
 
 ![place1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/91a645ae-1aae-4cb4-a503-f46d1fdd5f35)
 
@@ -272,7 +279,7 @@ For viewing the placement layout in Magic we will follow the similar method as f
 ![place3](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7818c094-6238-4e35-aa24-dc0cce6b3a4e)
 
 
-This ends the placement phase of the flow.
+By following these steps, the placement phase in the OpenLANE flow is completed, ensuring that cells are optimally arranged to meet design specifications and constraints.
 
 ## Cell Design and Characterization Flow
 Moving a bit apart from the flow in openLANE, we will discuss about the library cell characterization and respective design flow as cells are the basic block behind all the netlist,floorplan and placement. 
