@@ -5,7 +5,7 @@ PDK Used : SKyWater 130nm
 Date : 22nd May 2024
 
 ## Contents
-1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
+1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs
 2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 4. Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
@@ -30,8 +30,10 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 5. MAGIC & NETGEN : Cell Characterization & Physical Verification
 
 
-# Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
- This module provided the foundation for the chip to be designed alongside introduced the OpenLANE ASIC design flow and Skywater 130 nm openPDK.
+# Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs
+The development and adoption of open-source EDA tools provide a cost-effective, accessible alternative to proprietary softwares. Projects such as OpenLANE, which integrates multiple open-source tools into a cohesive flow, brings greater functionality and ease of use to the design process. In the open-source hardware movement, the SkyWater 130 nm Process Design Kit (PDK) represents a significant milestone providing comprehensive documentation, design rules, and process parameters. 
+
+ This module provides the foundation for the chip to be designed alongside introduced the OpenLANE ASIC design flow and Skywater 130 nm openPDK.
 
  The chip featured a Quad Flat No-Leads (QFN) die package with 48 pins occupying an area of 7mm x 7mm. The SoC comprised of a CPU with GPIO bank designed on RISC-V ISA. Moreover, it included various foundry IPs such as PLL, SRAM, ADC & DAC all interconnected to the IO pads via wire bonds to ensure the chip's functionality.
 
