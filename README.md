@@ -18,7 +18,7 @@ to reach the mass of semiconducter enthusisat. Opensource tools are great way to
   In this report, I have documented all my learnings as part of completion of "VSD-Physical design through opensource tools" workshop as well as tried to add a small contribution towards the community which I hope will be helpful for new learners.
 
 ## Objective
-The following workshop involved the complete RTL to GDSII design flow of a RISC-V procesor architecture considering all the steps from logic or RTL synthesis, static timing analysis, DFT to floorplan, placement, CTS, routing, physical verification as well as sign-off of the chip through the openLANE ASIC design flow.Skywater 130nm PDK is used for all the model libraries.
+The following workshop involved the complete RTL to GDSII design flow of a RISC-V processor architecture considering all the steps- RTL synthesis, static timing analysis, DFT, floorplan, placement, CTS, routing, physical verification as well as sign-off of the chip through the openLANE ASIC design flow with the Skywater 130nm PDK for all model libraries.
 
 ![Screenshot (1586)Cropped](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a3b1d2b0-53e9-4f7d-ad24-76d5da502d64)
 
@@ -27,45 +27,60 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 2. OpenSTA : Static Timing Analysis
 3. FAULT : DFT
 4. OpenROAD : Physical Design (FP, PP, Placement, Routing)
-5. MAGIC & NETGEN : Physical Verification
+5. MAGIC & NETGEN : Cell Characterization & Physical Verification
 
 
 # Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm PDK
- This module gave the foundation of the chip that has to be designed as well as introduced the OpenLANE ASIC design flow and SKywater 130 nm openPDK.
+ This module provided the foundation for the chip to be designed alongside introduced the OpenLANE ASIC design flow and Skywater 130 nm openPDK.
 
- The chip contained 48 pins with Quad Flat No-Leads (QFN) die package carrying an area of 7mm x 7mm. The SoC consisted of a CPU with GPIO bank which has to be designed on RISC-V ISA. Apart from this it included various foundry IPs such as PLL, SRAM, ADC & DAC all connected to the IO pads through the wire bonds for the functioning of the chip.
+ The chip featured a Quad Flat No-Leads (QFN) die package with 48 pins occupying an area of 7mm x 7mm. The SoC comprised of a CPU with GPIO bank designed on RISC-V ISA. Moreover, it included various foundry IPs such as PLL, SRAM, ADC & DAC all interconnected to the IO pads via wire bonds to ensure the chip's functionality.
 
 ![Screenshot (1574)Cropped](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/33608c68-87c2-43bd-96e5-c97809d62dad)
 
-The first task of this module involved the initiation of the openLANE flow and hence the logic or RTL synthesis of the design through YOSYS and ABC. Besides a minor task of calculating the flop ratio of the synthesized design was added later.
+The primary objective of this module was to commence the openLANE flow, thereby initiating the logic or RTL synthesis of the design through YOSYS and ABC. Besides a supplementary task involving the calculation of the flop ratio for the synthesized design was introduced at a later stage as part of the assignments.
+
+To invoke the tool the, it's essential to set up the Docker environment.
+
+```docker```
+
+This command launches the openLANE Docker container and mounts the current working directory to the /openLANE_flow directory inside the container. It then sets the working directory to /openLANE_flow.
+
+Following the Docker setup, the flow.tcl file is executed using the Tcl command:
+
+```./flow.tcl -interactive```
+
+The -interactive switch enables step-by-step execution of the flow, allowing users to intervene at various stages if necessary. By default, the flow executes all steps automatically, but with -interactive, users have the option to execute each step manually, providing greater control and flexibility throughout the design process.
 
 ![Screenshot from 2024-05-26 00-28-42](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/be2d9e99-fd10-4f57-87f0-ede688cbe389)
 
-To invoke the tool the flow.tcl file was executed through tcl command in the terminal inside the working directory. It initiated the entire flow of RTL to GDSII without human interaction. The "-interactive" switch can be used to counter the execution of entire flow at once to step by step execution by the user.
+Following the tool initialization, the next step involved installing additional packages using the command-
 
+```
+package require openlane 0.9
+```
+Before proceeding with synthesis, it's essential to complete the design setup stage, which involves preparing all necessary directories for executing the specific design. In this case, the "picorv32a" design was selected for synthesis, located in the "openlane/designs" directory.
+
+Use the following command to prepare the design:
+```
+prep -design picorv32a
+```
+Once the setup is ready we run the synthesis through ```run_synthesis``` command which generates synthesized design output and stores inside the picorv32a design directory.
 
 ![Screenshot from 2024-05-26 00-30-06](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/611c0011-a309-4f2c-a89c-ac9f6885acfc)
 
-After the initialisation of the tool, to install the additional packages the "package require openlane 0.9" command was used. 
-
-Before synthesis we have to go through design setup stage which creates all the directories for the excution og the speciic design as well as prepares the files. Here we are using "picorv32a" design for our synthesis which is available in the openlane work directory. For design prepartion "prep -design picorv32a" command was used.
-
-Once the setup is ready we run the synthesis through "run_synthesis" command which generates synthesized design output and stores inside the picorv32a design directory.
-
 ![Screenshot from 2024-05-26 00-30-55](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8e81f420-7c7e-413e-87f0-a1fd25551e72)
-
-![Screenshot from 2024-05-26 00-34-56](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e1583f55-2802-41e4-9e6d-b642848216a6)
-
 
 After the synthesis, the files are stored inside the "results" and "reports" directory under "runs" folder of picorv32a design. All the timing reports and cell utilisation report can be found inside these directories.  
 
-![Screenshot from 2024-05-26 00-36-14](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/43c7c8c1-7c3c-4e9a-b31b-e71aa96ef595)
+![Screenshot from 2024-05-26 00-34-56](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e1583f55-2802-41e4-9e6d-b642848216a6)
 
-![Screenshot from 2024-05-26 00-37-09](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5bc94db-8ecd-4e64-b775-ac2f6d04e939)
+![Screenshot from 2024-05-26 00-36-14](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/43c7c8c1-7c3c-4e9a-b31b-e71aa96ef595)
 
 Flop ratio represents the ratio between total no of D-flipflops used to the total no of cells present in the synthesized design.
 
 These data can be found inside the "yosys.stat.rpt" file (/runs/reports/yosys.stat.rpt) which assembles all the data of logic block used in the design.
+
+![Screenshot from 2024-05-26 00-37-09](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5bc94db-8ecd-4e64-b775-ac2f6d04e939)
 
 The number of D-flipflops are represented by "sky_fd_sc_hd_dfxtp_2" and it was divided by the total number of cells in the design to get the flop-ratio.
 
