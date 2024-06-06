@@ -65,9 +65,10 @@ Use the following command to prepare the design:
 ```
 Once the setup is ready we run the synthesis through ```run_synthesis``` command which generates synthesized design output and stores inside the picorv32a design directory.
 
-![Screenshot from 2024-05-26 00-30-06](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/611c0011-a309-4f2c-a89c-ac9f6885acfc)
+![333826581-611c0011-a309-4f2c-a89c-ac9f6885acfc](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/01afaf0e-ef81-41f0-a29c-b3e1924993cb)
 
-![Screenshot from 2024-05-26 00-30-55](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8e81f420-7c7e-413e-87f0-a1fd25551e72)
+![333826680-e1583f55-2802-41e4-9e6d-b642848216a6](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a4ba1097-7511-444f-8d7e-8ce72eee8301)
+
 
 After the synthesis, the files are stored inside the ```/picorv32a/runs/results``` and ```/picorv32a/runs/reports``` directory under the ```designs``` directory. All the timing reports, synthesized netlist and cell reports can be found inside these directories.  
 
@@ -77,9 +78,7 @@ Coming to the assignment part, the flop ratio represents the ratio between total
 
 These data can be found inside the ```yosys.stat.rpt``` file inside ```picorv/runs/reports/``` which assembles all the data of logic block used in the design.
 
-![Screenshot from 2024-05-26 00-36-14](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/43c7c8c1-7c3c-4e9a-b31b-e71aa96ef595)
-
-![Screenshot from 2024-05-26 00-37-09](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5bc94db-8ecd-4e64-b775-ac2f6d04e939)
+![Picture1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9ab2048f-2021-4549-bf77-30b482fec933)
 
 The number of D-flipflops are represented by ```sky_fd_sc_hd_dfxtp_2``` and it was divided by the total number of cells in the design to get the flop-ratio.
 
