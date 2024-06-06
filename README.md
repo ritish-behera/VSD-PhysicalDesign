@@ -100,14 +100,10 @@ Floorplanning typically invovles the ordering or arrangement of IPs which also c
 The core of chip is the portion where all the logic blocks are assembled or fabricated whereas the die suurounds the core as well as provides extra area for IO pin assignment. During floorplan stage in order to provide some space for routing and standard cell placement in further steps, we need to set some parameters for it which will be implemented by the tool during the execution.
 
 The two essential parameters are 
-1. Utilization Factor
-2. Aspect Ratio
-
-The utilization factor refers to the area occupied by the synthesized netlist to the total area of the core i.e. Utilizatiion Factor = Area Occupie by Netlist / Total Area of Core
+1. Utilization Factor : The utilization factor refers to the area occupied by the synthesized netlist to the total area of the core i.e. Utilizatiion Factor = Area Occupie by Netlist / Total Area of Core
+2. Aspect Ratio : The aspect ratio represents the shape and size of the cell i.e it is the ratio between height and width of the cell. Aspect ratio = Height of Cell/Width of Cell
 
 A utilization factor of 1 which 100% represents that the total area of core is occupied leaving no space for extra logic. Therefore, in practical cases we consider 50-60% of core utilization to leave some space for extra buffers which helps in fixing timing violations as well as maintains signal integrity.
-
-The aspect ratio represents the shape and size of the cell i.e it is the ratio between height and width of the cell. Aspect ratio = Height of Cell/Width of Cell
 
 An aspect ratio of 1 refers to a square shape and rectangles for other values.
 
@@ -119,7 +115,7 @@ Pre-placed cells refer to smaller, often critical cells that are strategically p
 
 The process where pre-placed cells undergo steps called "Partition" involves breaking down a large logical block into smaller blocks, each performing the same function as the original block. This granular approach aids in floorplanning by enabling the reuse and placement of the same netlist across different areas of the chip, facilitating lower design effort and layout efficiency.
 
-![download (5)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ac7bc3bd-e823-4ac2-b156-34ba85d437a2)
+![download (5)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3385fb6a-5778-4314-a10e-4c9c286e95fd)
 
 
 ### De-Cap Cells
@@ -133,19 +129,15 @@ The power issue of local cells or local communication is solved by de-cap cells 
 
 
 ## Powerplanning
-During simultaneous switching, the two main issues which arises in the global communications are-
-1. Ground Bounce - Problem due to discharging of multiple cells through a single ground line and hence creating a voltage bump
-2. Voltage Droop - problem due to demand of charging multiple cells at the same time through a single vdd line creating a voltage trough
+During simultaneous switching, two primary issues in global communication arise:
+1. Ground Bounce - Problem due to discharging of multiple cells through a single ground line and hence creating a voltage bump/spike
+2. Voltage Droop - Problem due to demand of charging multiple cells at the same time through a single vdd line creating a voltage drop/trough
 
-![Screenshot (1600)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/398ffdcc-32db-46d1-8c33-225e00aa29e6)
+![picture5](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/832f15a0-0331-4447-85ca-a7e9908259fd)
 
-![Screenshot (1601)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0510bc8b-d41b-47c7-967c-8e808f1f222f)
+To mitigate these issues, a grid or mesh of power and ground lines is implemented across the core in the power planning stage. This network provides the necessary charge close to the cells, stabilizing the voltage .
 
-In order to mitigate this problem we use a grid or mess of power and ground line running across the core parallelly to provide the required charge near to the cell. This step is done in the power planning stage.
-
-![Screenshot (1603)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4dfe341-edbd-4152-b1f6-cdcac1e00c86)
-
-![Screenshot (1604)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8867808d-8d9b-4b6f-8000-7104ef7ac710)
+![Picture6](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/87be7110-18cd-4a72-8fc8-1ddf2beb3749)
 
 ### Pin Assignment and Logic Cell Blockage 
 Apart from the core area, to connect the input and output nodes of the netlist to external environment, pins are assigned at the boundary of the die. This requires handshkaing between frontend and backend VLSI design as the input/output pins should be placed near to the input/output nodes of the logic which rersults in random distribution of pins around the die.
