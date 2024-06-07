@@ -1,4 +1,4 @@
-# VSD- Physical Design Using OpenSource Tools
+![download (25_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/eaccb1ad-247c-4e51-96a8-c4dad6036dbf)# VSD- Physical Design Using OpenSource Tools
 This repository details the report of all the technical works performed during the VSD- Physical Design workshop through OpenSource tools.
 PDK Used : SKyWater 130nm
 
@@ -406,25 +406,22 @@ photo-resist. Part of resist is exposed to UV light, which gets washed away givi
 ### Selecting a Substrate
 We start with choosing a substrate as a base for fabrication. In general a lightly doped (~10^15 cm-3) P-type silicon substrate with high resistivity (5 ~ 50 ohm) is selected.
 
-![Screenshot (1631)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8594a9be-191c-475b-9ecf-c342d85b1634)
+![download (19_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/bce3d333-af8d-4a59-9592-87e86ae4dbbd)
 
 ### Creating Active Region for Transistor
 An isoltaion over active area is created by growing a thin layer of (~40nm) silicon oxide (SiO2) followed by a layer of (~80nm) of silicon nitride (Si3N4) and photoresist (~1um) for photolithography process ( Action between UV light and photoresist). Then the hard mask is placed over the photoresist help avoid the area which will be etched out. This mask is reffered to as the mask-1 .
 
-![Screenshot (1632)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2178dd01-942c-4964-bbf3-697f102ec6ed)
+![download (23_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8d68323e-1ebe-48df-a344-8de11daa65c0)
 
 Once this is done we expose it to UV light and use the developing solution to dissolve and remove the exposed region. Then remove the mask and etch off Si3N4 followed by removing the phototresist which was below the mask. To create an isolation between the two active rgions where pmos and nmos will be fabricated, we put it again in a oxidation furnace which grows a second layer of SiO2 in the gaps .This process is called as "LOCOS" or "Local Oxidation of Silicon" and the structure of oxide is referred as "bird's beak". Finally the remaing Si3N4 is etched out to get only the oxidised layer on the top.
 
-![Screenshot (1633)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/98dbf3c4-1bff-49ef-aadc-4eef7d8caf46)
 
 ### N-Well and P-Well Formation
 Once the isolation is done between active regions, we again grow the photoresist layer over it and put the mask-2 at the other region where we want create the well.Expose it to the UV light to remove the exposed area and take out the mask. Now through ion implantation process we diffuse boron into the substrate at 200Kev to create the p-well.  
 
-![Screenshot (1634)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d6924f38-bb5a-4e74-b1a3-93fd0021c3a3)
+![download (21_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a8976557-7dd5-4d80-8633-7089bff9507e)
 
 Similarly, to create the n-well we use the photoresist and the 3rd mask followed by diffusion of phosphorous into substrate at 400KeV. This require more enrgy as phosphorus is a heavy metal.
-
-![Screenshot (1635)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/285f4741-f783-4a0c-8d91-4db1baa0946b)
 
 Later to improve the depth of diffusion of the wells, the wafer undergoes a high-temperature annealing process in a furnace. This step is known as "drive-in diffusion". The high temperature causes the dopant atoms to move from areas of high concentration (surface) into the silicon lattice, spreading out to create a uniform dopant distribution at the desired depth. This whole process is also known as "Twin Tub Process" as we create both p-well and n-well.
 
@@ -433,21 +430,15 @@ Later to improve the depth of diffusion of the wells, the wafer undergoes a high
 ### Formation of Gate Terminal
 The threshold voltage Vt of a device is highly dependent upon the doping concentraion of p and n region as well as oxide capacitance. In order the control both, before gate formation we modify the doping concentraion of p-well by depositing photoresist and creating mask-4 followed by boron diffusion at low energy (~60KeV). This facilitates the desired concentration of p-region.
 
-![Screenshot (1661)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6397ca1c-c842-4716-8149-162db25cd9f5)
-
-![Screenshot (1662)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/85eefe9a-e52c-4459-915c-7f9fb8c66a99)
+![download (25_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3f052baf-27be-4a6a-8f89-a976e8df9097)
 
 Similar steps are taken for the n-region creating the mask-5 and diffusing arsenic afterwards at a low temperature.
 
 Again to control the oxide capacitance we etch off the damaged silicon oxide (because of repeated ion implantation) by dissolving it into HF solution followed by growing a thin layer (~10nm) of high quality SiO2 which controls the threshold voltage Vt.
 
-Now for gate formation, we use a polysilicon layer(0.4um) over it and then the photoresist and mask-6 (also referred as polysilicon mask) for the pattern generation. In most cases, bfore etching out the photoresist, we dope it with n-type ion implant for low gate resistance of the device.
+Now for gate formation, we use a polysilicon layer(0.4um) over it and then the photoresist and mask-6 (also referred as polysilicon mask) for the pattern generation. In most cases, bfore etching out the photoresist, we dope it with n-type ion implant for low gate resistance of the device. Once the UV exposer and removal of photoresist is done, we get the following structure of the gate (right one)-
 
-![Screenshot (1663)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c118d51f-f744-47c7-9145-23a43831e74d)
-
-Once the UV exposer and removal of photoresist is done, we get the following structure of the gate- 
-
-![Screenshot (1664)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3d4c9b72-a25e-4537-a4ee-fa64785147bd)
+![download (27_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b59e2944-7ab4-4c46-a985-eb3b170b3f2b)
 
 ### Lightly Doped Drain (LDD) Formation
 We want to achieve a doping profile of P+,P-,N in nmos and N+,N-,P in pmos region. The P+ & N+ represent the source drain doping whereas N and P rpresnt the substrate dopings. The profile P- & P+ represents the lightly doped drain in the well. So basically there are two reasons for this extra LDD formation -
@@ -458,16 +449,11 @@ Therefore in order to avoid these phenomenon we use the LDD formation technique.
 
 It has similar process of photoresist deposition and mask-7 creation as well as phosphorous (N-) diffusion for nmos. For pmos we use the mask-8 with diffusion of boron (P-) for LDD formation.
 
-![Screenshot (1665)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7ea394cd-8df7-47d5-ae0e-085530ed8caa)
-
-![Screenshot (1640)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fb02d80b-5aa4-4c07-9762-770d5f0b6fff)
-
+![download (29_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2e4fa6ac-d72d-4f66-8470-6b3400d3686f)
 
 In order to protect the LDD in later processes of formation of source and drain with N+ or P+ dopings, we need to create the side-wall spacers. A thick layer (~0.1um) of Si3N4 or SiO2 is deposited over the surface and hence  plasma anisotropic etching is carried out which forms the side-wall spacers around the gates which protect from the exposer of diffusion into LDD.
 
-![Screenshot (1639)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a6af7172-c044-46e2-9841-5fcc944b2d39)
-
-![Screenshot (1638)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/440d821d-0a82-40c4-a03f-cd0be4cb85c5)
+![download (31_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/40fb63f1-44b5-47a5-848a-30326ec40df9)
 
 ### Source Drain Formation 
 Before the source and drain formation, a thin layer of screen oxide is deposited over the surface in order to avoid channeling during the implantation.
@@ -483,16 +469,11 @@ Contacts are the only thing that can be accessed by the user to control the pmos
 
 First of all remove the the thin screen oxide by dissolving it in HF solution. Now deposit the titanium on the wafer by the process of sputtering which acts as a low resistant contact. Further the wafer is heated at about 650-700 degree centigrade in N2 ambient condition to form the local contact TiSi2. Again due to this another material TiN is formed which is used for the local communication interconnect.
 
-![Screenshot (1643)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/02b3a044-0274-46a3-8af3-5720991e24df)
-
-![Screenshot (1644)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b10d1a74-c1b7-4e5e-8daf-d4ec4d6466fb)
-
+![download (33_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1bab1814-9fb0-40dd-a93e-9b6f22cb55b2)
 
 So now to bring the bottom connection up, we will use the layer of photoresist and mask-11 exposing the non-contact areas. Now the excess TiN is etched out using RCA cleaning which is nothing but a combination of deionized H2O, NH4OH and H2O2 solutions and hence the TiN contacts remains.
 
-![Screenshot (1645)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ca1a4794-4983-45dc-94e4-56d6c679f5be)
-
-![Screenshot (1647)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd364ff-a2a8-40b1-9256-a02bb393f144)
+![download (35_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/dacbfb18-04fc-4e79-87be-92d37666598f)
 
 ### Higher Level Metal Formation
 To avoid the non-linear surface topography of the wafer we need to planarize it. To achieve this deposit a thick layer (~1um) of SiO2 doped with phosphorous or boron (known as phosphosilicate or borophospho-silicat) which act as a protective layer for the mobile Na ion as well as boron reduces the overall temperature. Now the wafer surface is polished using a process called CMP (Chemical Mechanical Polishing) and outputs something similar the fgure below- 
