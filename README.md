@@ -8,7 +8,7 @@ PDK Used : SKyWater 130nm openPDK
 Date : 22nd May 2024
 
 ## Contents
-1. [Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
+1. [Module-1 : Inception of OpenSource EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
    - [RTL Synthesis Through OpenLANE](#rtl-synthesis-through-openlane)
 2. [Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization](#module-2--floorplanning,-poweplanning,-placement-and-introduction-to-library-cell-characterization)
    - [Floorplanning Through openLANE](#floorplanning-through-openlane)
@@ -44,7 +44,7 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 5. MAGIC & NETGEN : Cell Characterization & Physical Verification
 
 
-# Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs
+# Module-1 : Inception of OpenSource EDA Tools and Skywater 130 nm Designs
 The development and adoption of open-source EDA tools provide a cost-effective, accessible alternative to proprietary softwares. Projects such as OpenLANE, which integrates multiple open-source tools into a cohesive flow, brings greater functionality and ease of use to the design process. In the open-source hardware movement, the SkyWater 130 nm Process Design Kit (PDK) represents a significant milestone providing comprehensive documentation, design rules, and process parameters. 
 
  This module provides the foundation for the chip to be designed alongside introduced the OpenLANE ASIC design flow and Skywater 130 nm openPDK.
