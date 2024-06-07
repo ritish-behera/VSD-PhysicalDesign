@@ -759,33 +759,38 @@ Our custom cell (sky130_vsdInv) can be seen with its layout, being placed on the
 
 
 
-### Introduction to Delay Table
-Clock Tree Synthesis (CTS) is primarily aimed at distributing the clock signal from a single source to all the sequential elements (flip-flops and registers) in a chip. The goal of CTS is to ensure that the clock signal reaches all these elements with minimal skew and jitter, ensuring synchronized operation. For this purpose we use buffers in the path of clock nets. This in turn requires more power. So to reduce power consumption in CTS (also called as Power Aware CTS) we use techniques like clock blocking through AND gates and OR gates which turns on or off with an enable signal from the user. This is called as clock gating.
+### Introduction to Clock Tree Synthesis and Delay Table
+Clock Tree Synthesis (CTS) is primarily aimed at distributing the clock signal from a single source to all the sequential elements (flip-flops and registers) in a chip. The goal of CTS is to ensure that the clock signal reaches all these elements with minimal skew and jitter, ensuring synchronized operation. For this purpose we use buffers in the path of clock nets. This in turn requires more power. So to reduce power consumption in CTS (also called as Power Aware CTS) we use techniques like clock gating through AND gates and OR gates which turns on or off with an enable signal from the user.
 
-Before adding the gates we need to evaluate the timing characteristics of the buffers of clock path. For exampl, for the calculation of timing of the belowe figure we have taken the following assumption-
-- c1 = c2 = c3 = c4 = 25fF
-- cbuf1 = cbuf2 = 30fF
-Therefore, total cap at node-A = 60fF, node-B = 50fF, node-C = 50fF
-
-Moreover, the observations can be listed as -
-- 2 Levels of buffers are present in the diagram
-- AT every level, each node is driving same load
-- Identical buffer at same level
-Note that the load capacitance of buffers are not equal to the output capacitances. Output capacitances are varying, hence it produces a variety of delays. So in order to create timing models a table is created between varying input slew (from 10-100ps) to the varying ouput capacitances (from 10-100fF) and the respective delay values are noted. This is called as the delay table which characterizes the delays of the buffers.
+Example for Buffer Timing Calculation and Delay Table :
 
 ![Screenshot (1689)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a0e5651a-de2e-417e-be15-8348709b9c03)
 
+Consider the following assumptions for timing calculation -
+- c1 = c2 = c3 = c4 = 25fF
+- cbuf1 = cbuf2 = 30fF
+
+Therefore, total cap at node-A = 60fF, node-B = 50fF, node-C = 50fF
+
+The observations can be listed as -
+- 2 Levels of buffers are present in the diagram
+- AT every level, each node is driving same load
+- Identical buffer at same level
+
+Note that the load capacitance of buffers are not equal to the output capacitances. Output capacitances are varying, hence it produces a variety of delays. So in order to create timing models a table is created between varying input slew (from 10-100ps) to the varying ouput capacitances (from 10-100fF) and the respective delay values are noted. This is called as the delay table which characterizes the delays of the buffers.
+
 From this delay table we can estimate the delays at each node and hence will be able to calculate the skew (The difference of arrival time of clock pulse between two FF/registers) produced at he end. It plays a crucial role during the static timing analysis as it may violate the setup and hold times.
+
 
 ## Timing Analysis With Ideal Clocks Using OpenSTA
 ### Setup Time And Intro to FF Setup Time
-A flipflop is a basic sequential element which stores or pass data depending upon the clock edge. It consists of two MUX structures to perform the data storing activity according to the clock pulses. This in turn produces some delay before passing the data to output. This specific delay affects the clock period of the circuit containg it which is known as set up time.
+A flip-flop stores or passes data depending on the clock edge, consisting of two MUX structures. This causes a delay (setup time) before data passes to output. The setup time affects the clock period of the circuit.
 
 ![Screenshot (1691)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9f448f0e-6da5-40fc-83fa-9eef59f981c7)
 
-In an ideal clock scenario where no clock tree or buffers are added, the combinational delay between launch and capture flipflop should be less than the clock period so as to synchronize the data. But due to the internal delay of the FFs,i.e. setup time (MUX 1 delay), the FFs take some time to settle down the data. This reduces the total clock period and hencce puts a constraint to the combinational delay.
+In an ideal clock scenario (no clock tree/buffers), the combinational delay between launch and capture flip-flop should be less than the clock period to synchronize data. Due to flip-flop internal delay (setup time or MUX1 Delay), the clock period is reduced, constraining the combinational delay:
 
-So the constraint can be expressed as, combinational delay(theta) = Clock Period(T) - Setup Time(S)
+Combinational Delay(θ)=Clock Period(T)−Setup Time(S)
 
 ![Screenshot (1690)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/481d5206-32ce-4c9a-b97f-716a67bf74e0)
 
@@ -796,10 +801,12 @@ The clock signals or pulses are basically generated by a PLL inside a chip. But 
 
 Due to this jitter, another variable is added to the constraint of the combinational delay which can be represented as-
 
-combinational delay(theta) = Clock Period(T) - Setup Time(S) - Jitter(SU)
+Combinational Delay(θ) = Clock Period(T) − Setup Time(S) − Jitter(SU)
 
 ### Setup Time for Real Clock
-A real clock considers the delays of extra buffers present in the clock path hence producing the skew. Basically skew is the difference between arrival time of clock signal between flops. So in case of a real clock the constraint can be modified as - combinational delay(theta) + Delta1 < Clock Period(T) + Delta2  - SetupTime(S) - Jitter (SU)
+In real clocks, delays of extra buffers in the clock path produce skew (difference in arrival time of clock signal between flops). The constraint for combinational delay with real clocks is- 
+
+Combinational Delay(θ) + Δ1 < Clock Period(T) + Δ2 − Setup Time(S) − Jitter(SU)
 
 Delta1 and Delta2 are basically the delay of buffers present in the clock path of FF1 and FF2.
 
@@ -808,13 +815,14 @@ Delta1 and Delta2 are basically the delay of buffers present in the clock path o
 The left hand side term is called as arrival time whereas the right hand side term is called as required time. The difference between required time and arrival time is called as setup slack.
 
 ### Hold Time for Ideal and Real Clock
-Hold Time is the minimum amount of time that the data input (D) must remain stable after the clock edge for the data to be reliably latched by a sequential element (like a flip-flop). It is produced due to 2nd MUX present in the capture flop which takes some amount of time to send out the data or latch the data. 
+Hold time is the minimum time that data input (D) must remain stable after the clock edge for reliable latching by a sequential element (flip-flop). It is due to the second MUX present in the capture flop which takes some amount of time to send out the data or latch the data. 
 
 ![Screenshot (1695)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a145e9ca-90d9-4a23-af01-0862ac3238bf)
+For ideal clocks : Combinational Delay(θ) > Hold Time(H)
 
-It puts the constraint that the combinational delay should be greater than capture flop delay i.e. Combinational Delay (Theta) > Hold Time(H).
+But for real cases due to wire RC delays in clock path there might be skew between the clock edges like earlier cases as well as uncertainty due to PLL. 
 
-But for real cases due to wire RC delays in clock path there might be skew between the clock edges like earlier cases as well as uncertainty due to PLL. So for real clock it can be stated as - combinational delay(Theta) + Delta1 > Hold Time(H) + Delta2 + Hold Uncertainty(HU)
+So for real clocks : Combinational Delay(θ)+ Δ1 > Hold Time(H) + Δ2 + Hold Uncertainty(HU)
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d02767d8-8812-430e-8dba-9373f8c70e9b)
 
