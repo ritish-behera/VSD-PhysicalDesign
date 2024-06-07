@@ -6,7 +6,7 @@ Date : 22nd May 2024
 
 ## Contents
 1. [Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
-   - [Synthesis of Design Through OpenLANE](#synthesis-of-design-through-openlane)
+   - [RTL Synthesis Through OpenLANE](#rtl-synthesis-through-openlane)
 2. [Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization](#module-2--floorplanning,-poweplanning,-placement-and-introduction-to-library-cell-characterization)
    - [Floorplanning Through openLANE](#floorplanning-through-openlane)
    - [Congestion Aware Placement using RePlAce](#congestion-aware-placement-using-replace)
@@ -50,7 +50,7 @@ The development and adoption of open-source EDA tools provide a cost-effective, 
 
 ![download (1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9652e6d8-23f7-4b9e-b9ef-97ef0c04e439)
 
-## Synthesis of Design Through OpenLANE
+## RTL Synthesis Through OpenLANE
 
 The primary objective of this module was to commence the openLANE flow, thereby initiating the logic or RTL synthesis of the design through YOSYS and ABC. Besides a supplementary task involving the calculation of the flop ratio for the synthesized design was introduced at a later stage as part of the assignments.
 
