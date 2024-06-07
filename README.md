@@ -504,33 +504,43 @@ This ends the total process of fabricating a 16 mask CMOS inverter with source ,
 
 ![Screenshot (1657)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/435e0439-3fbe-4ff8-a67a-96ef4d2b17bb)
 
+
+
 ## Layout and SPICE Parameter Extraction Through "Magic"
 For reference we have taken a pre-built cmos inverter cloning it from the github repo - https://github.com/nickson-jose/vsdstdcelldesign
 
-After cloning it to /openlane directory we can see several files contained in it.  Our point of interest is the "sky130_inv.mag" file which stores the layout information. Invoke the Magic tool through the tech file and pass "sky130inv.mag" as the argument. It will show the layout in the magic window.
+After cloning it to the ```/openlane``` directory, several files will be present. Our point of interest is the ```sky130_inv.mag``` file, which stores the layout information.
 
-![layoutInvoking](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e37f273e-c399-4e7b-b24b-0786ebf4a06a)
+Invoking the Magic Tool : Invoke the Magic tool using the tech file and pass ```sky130_inv.mag``` as the argument to view the layout in the Magic window.
+```
+$ magic -T <tech_file_path> sky130_inv.mag
+```
+![335428851-e37f273e-c399-4e7b-b24b-0786ebf4a06a](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/584fc877-66f0-485b-bb36-4b6947348610)
+
+Viewing the Layout : Once the layout is open in the Magic tool, it will appear in the Magic window as shown below-
 
 ![InverterLayout](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1b9c9d3d-8cdf-4fbf-8e89-e6468f13bc30)
 
-We can check drc errors in the layout through the "DRC" tab and from the drop down list, select the "DRC Find Next Error" and it will lead to the area of the error as well as list down the errrors in command line. We will discuss about the design rules in Magic in later sections. 
+We can check drc errors in the layout through the ```DRC``` tab and from the drop down list, select the ```DRC Find Next Error``` and it will lead to the area of the error as well as list down the errors in command line. We will discuss about the design rules in Magic in later sections. 
 
-![drc](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/4b4f8a74-bca6-41f1-aedf-fae99a89b188)
+![335452811-4b4f8a74-bca6-41f1-aedf-fae99a89b188](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a64d1764-f876-4561-9bf0-95c9991a9ecb)
 
-Now to extract the whole layout use the following command in the command line of Magic-
+Extracting the Layout : Now to extract the layout, use the following command in the command line of Magic-
 ```
-extract all
+% extract all
 ```
-Now for the extraction of netlist with parasitics that will be used in NGSpice we will use the following commands-
+To extract the netlist along with parasitics for use in NGSpice, use the following commands-
 ```
-ext2spice cthresh 0 rthresh 0
-ext2spice
+% ext2spice cthresh 0 rthresh 0
+% ext2spice
 ```
-![ExtractionCommands](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6aacae3f-0688-406e-987f-a4fd0e33aca1)
+![335454543-6aacae3f-0688-406e-987f-a4fd0e33aca1](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/97219964-6084-48b9-a754-121202f5cf86)
 
-After execxuting these codes we will get the following extracted files in our directory-
+After executing these commands, the following extracted files will be generated in your directory-
 
-![OutputExtFile](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/15df62b3-1410-48db-a772-d51a31351b06)
+![335454796-15df62b3-1410-48db-a772-d51a31351b06](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/db75c2dc-1560-4f88-acae-769f1ecdcf5c)
+
+These steps allow you to prepare the CMOS inverter layout and extract the necessary files for further analysis and characterization using NGSpice.
 
 ## SPICE Deck Creation and Timing Characterization of the Inverter
 After extracting the SPICE netlist from the layout we modified it as following for the transient analysis and created the final SPICE deck for the inverter.
