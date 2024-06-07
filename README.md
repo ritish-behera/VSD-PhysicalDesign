@@ -325,6 +325,9 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 ![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d3e2be6b-1a30-497a-8714-1534023c645d)
 
+
+
+
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further, we'll analyze the timing characteristics of the inverter (rise time, fall time, and propagation delay) using Magic and then import this design into our library "picorv32a," generating the LEF files.
 
@@ -333,7 +336,7 @@ SPICE is a powerful, general-purpose analog electronic circuit simulator that is
 
 Here in this report we will discuss about a CMOS inverter and hence in the first step we will create a SPICE deck or netlist for the inverter circuit.
 
-![Screenshot (1623)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd27fb4-8426-43f0-bc68-2dbb078b9af2)
+![download (15)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/58b85de8-c003-4229-ae4b-9c058a4ee798)
 
 Example of SPICE deck program for CMOS inverter :
 ``` 
@@ -367,16 +370,14 @@ Switching Threshold Conditions :
 
 The switching threshold depends heavily on the transistor sizing (W/L ratio of the transistors). A higher W/L ratio for PMOS shifts the VTC to the right, while a higher W/L ratio for NMOS shifts it to the left. The switching threshold can be calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
 
-![Screenshot (1629)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9aac8057-4b72-4618-b116-a31ba7eb9134)
+![download (16)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3d2cd71a-25dd-448d-840d-b9493fb502a6)
 
 Example VTC and Switching Threshold :
  
-![Screenshot (1628)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2482a7fc-2354-4176-b817-0e17303aa16e)
+![download (17)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/84b27762-4151-49c7-ab46-37c76a83c547)
 
 ### Dyanamic Simulation of CMOS Inverter 
 Dynamic simulation of a CMOS inverter refers to the analysis of its performance under varying input signals over time. This type of simulation helps in understanding the transient behavior and timing characteristics of the inverter, which are crucial for characterization of cells. We will use this transient analysis to calculate the timing characteristics i.e. rise time, fall time & propagation delay of the inverter through SPICE simulations.
-
-![Screenshot (1630)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9a78550d-eb2a-49c8-9369-734022816d26)
 
 Example SPICE Deck for Transient Analysis :
 ```
@@ -393,6 +394,9 @@ vin in 0 pulse 0 2.5 0 10p 10p 1n 2n         // Input Voltage: pulse 0 to 2.5V w
 .lib "tsmc_025um_model.mod"                  // Model file containing the description of pmos and nmos
 .end
 ```
+
+![download (18)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f8c671df-3afe-4b10-8b44-0517cc2bfc71)
+
 This SPICE deck will produce time-dependent waveforms from which delay values of the inverter can be calculated by setting the load capacitances. The setup is carried out in NGSPICE for further analysis.
 
 ## Inception of Layout and 16 Mask CMOS Fabrication Process
