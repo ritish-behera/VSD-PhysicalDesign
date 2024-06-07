@@ -1098,6 +1098,16 @@ After the execution, the final design layout can be viewed using the ```picorv32
 
 Finally we get the full layout of the RISC-V processor with all the necessary components and without any timing violations. This is the end of the PnR flow and hence we have successfully performed all the necessary steps and optimization techniques to make it feasible as a chip.
 
+# Conclusion
+Open-source tools are revolutionizing the semiconductor industry by providing widespread access to advanced design and verification technologies. This project showcased their impact by using OpenLane and SkyWater 130nm PDK for a complete RTL-to-GDSII flow in designing a custom RISC-V processor.
+
+We began with the synthesis of picorv32 design producing a synthesized netlist. After synthesis, we proceeded with floorplanning and placement. Initial static timing analysis (STA) revealed slack violations, prompting several optimization steps, such as cell upsizing to improve drive strength and maintaining appropriate fanout levels.
+
+A key aspect of this project was the design, characterization, and integration of a custom inverter cell. We extracted the LEF file for this cell and used it in the OpenLane flow, ensuring accurate representation in the new design. The characterization involved defining the cell's functionality and timing characteristics to meet the design specifications.
+
+Clock Tree Synthesis (CTS) ensured efficient clock distribution, followed by detailed routing and parasitic extraction for accurate timing and power analysis. Library cell characterization ensured that each cell met performance specifications, and physical verifications, including DRC and LVS checks, confirmed the design's integrity. The final layout, verified using Magic, showed all components correctly placed and interconnected without timing violations.
+
+This project demonstrated how open-source tools can effectively achieve an optimized, manufacturable RISC-V processor design, highlighting their significance in the semiconductor industry.
 
 # Appendix
 1. For more information visit https://github.com/efabless/openlane2
