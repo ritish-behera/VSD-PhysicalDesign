@@ -838,38 +838,38 @@ A STA environment requires some necessary files to execute it process which incl
 - Library Files (.lib)
 - Constraints (.sdc file)
 
-To load our design we need to create a script cotaining our design and the following library files for min, max and typical corner analysis. In this flow we have created a "pre_sta.conf" file for the same containing the verilog data, min/max analysis, linking design, reading sdc followed by reports for tns and wns (slack information). We have creted this file in the /openlane directory.
+To load our design we need to create a script cotaining our custom design and the following library files for min, max and typical corner analysis. In this flow we have created a ```pre_sta.conf``` file for the same containing the verilog data, min/max analysis, linking design, reading sdc followed by reports for tns and wns (slack information). We have creted this file in the ```/openlane``` directory.
 
 ![Screenshot (1732)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/aff81c71-8f6d-458c-b6ff-5fa090ef5cdb)
 
-Followed by creating this file we have created the constraints file linked with it (similar to base.sdc file for openLANE flow) which contains the information of clock definitions, input output delays and max fanout along with some additional data like clock port, clock period, driving cell & its pin and load capacitance specific to our design. We have named the file as "my_base.sdc" in the "openlane/designs/picorv32a/src" directory.
+Followed by creating this file we have created the constraints file linked with it (similar to base.sdc file for openLANE flow) which contains the information of clock definitions, input output delays and max fanout along with some additional data like clock port, clock period, driving cell and load capacitance specific to our design. We have named the file as ```my_base.sdc``` in the ```openlane/designs/picorv32a/src``` directory.
 
 ![Screenshot (1731)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3146cf75-bbcb-4ee2-93b4-f7f3ae25fc33)
 
-After the files for the tool are configured run the "sta pre_sta.conf" command to execute the flow.
+After the files for the tool are configured run the ```% sta pre_sta.conf``` command to execute the flow.
 
 ![Screenshot (1702)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ab72e913-1122-4f62-b3fa-6bf977776e1d)
 
-We can see after the STA analysis there is slack violation is present in the design and hence we need to fix it to some extent before CTS which adds buffers to meet the timings. 
+We can see after the STA analysis there is slack violation is present (below image) in the design and hence we need to fix it to some extent before CTS, which adds buffers to meet the timings. 
 
-So first we tried to look out for the cells with high fanout which were causing the delays and checked it characteristics throught the command -
+So first we tried to look out for the cells with high fanout which were causing the delays and checked it characteristics through the command -
 ```
-report_net -connections (net_number)
+% report_net -connections <net_number>
 ```
 ![Screenshot 2024-06-05 132522](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5c907cd0-81ec-4eb0-9292-cda129765a50)
 
 As these were having high fanouts of 5 and 6, we limited the max fanout number and ran the synthesis again for updated netlist. 
 ```
-set ::env(SYNTH_MAX_FANOUT) "value"
-run_synthesis
+% set ::env(SYNTH_MAX_FANOUT) "value"
+% run_synthesis
 ```
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6379dc50-e9b5-408a-9da9-ae7fb56942b9)
 
 Again we increased the drive strength of few cells with higher capacitances values to reduce the overall value. We replaced the existing cells with their respective upsized cells for this purpose and again executed the sta analysis with report checks.
 
 ```
-replace_cell (InstanceNumber) (LibraryCell)
-report_checks -fields {net cap slew input_pins} -digits 4
+% replace_cell <Instance> <LibraryCellName>
+% report_checks -fields {net cap slew input_pins} -digits 4
 ```
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/83526898-bab3-441d-bf75-05ddf0f33f85)
 
@@ -880,7 +880,7 @@ After the modifications now we can see a slightly reduced slack and now we can m
 Now overwrite the current design file (picorv32a.synthesis.v) with the new modified netlist which includes the replaced cells with larger drive strength using the below command and afterwards run floorplan and placement to update the correspondinf def files.
 
 ```
-write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/04-06_12-17/results/synthesis/picorv32a.synthesis.v
+% write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/04-06_12-17/results/synthesis/picorv32a.synthesis.v
 ```
 
 ## Clock Tree Synthesis and Signal Integrity
@@ -890,57 +890,58 @@ To achieve this a clock tree topology is implemented called as H-tree structure 
 
 Another problem which arises due to this is the signal integrity issue which is produced due to the wire resistance and capacitance of the clock net. To overcome this challenge we use repeaters or buffers over the clock network which amplifies the signal over long distances.
 
-Below figure describes both H-tree structure as well as insertion of clock tree buffers.
+Below is the figure describing H-tree routing strategy-
 
-![Screenshot 2024-06-03 152533](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/fa4d40fb-7b04-4557-a7d4-dbf78fbb1d20)
+![download (51)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/795aa527-ae8d-4d1a-9d37-544c6423533f)
 
-You can see there is also a yellow line surrounding the clock nets. These are a part of clock net shielding. They are connected to either VDD or GND which doesnt switch. Basically what it does is it protects the critical clock nets from crosstalk issues which is basically produced due to the changing signal between nearby nets.
 
-Crosstalk is mainly due to the chargin and discharging of the capacitors associated with the critical nets. It leads to issues like glitches and delta delay which in turn detoriates the original signal. Therfore it is necessary to create the clock net shielding to help avoid this phenomenon. The only downpoint with this is it prevents crosstalk at the cost of more routing resources.
+You can see there is also a yellow line surrounding the clock nets. These are parts of clock net shielding. They are connected to either VDD or GND which doesnt switch. Basically what it does is, it protects the critical clock nets from crosstalk issues which is produced due to the changing/switching signal in the nearby nets.
+
+Crosstalk is mainly due to the charging and discharging of the capacitors associated with the critical nets. It leads to issues like glitches and delta delay which in turn detoriates the original signal. Therfore it is necessary to create the clock net shielding to help avoid this phenomenon. The only downpoint with this is, it prevents crosstalk at the cost of more routing resources.
 
 ### CTS Using TritonCTS Tool
-TritonCTS is an open-source tool designed for this clock tree synthesis purpose. In this section we have performed CTS for the previous deisgn with STA analysis.
+TritonCTS is an open-source tool designed for this clock tree synthesis purpose. In this section we have performed CTS for the previous synthesized deisgn with STA analysis.
 
-Before diving into the flow we will look at the switches available for the CTS flow which can be found in  "README.md" file in the "/openlane/configurations" directory which can be used for optimization purpose if necessary.
+Before diving into the flow we will look at the switches available for the CTS flow which can be found in  ```README.md``` file in the ```/openlane/configurations``` directory which can be used for optimization purpose if necessary.
 
 ![Screenshot (1705)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3e191fb8-4c17-4247-9471-a58371c8722c)
 
-PS : Moreover, we can also look for the TCL proc for each step like synthesis, FP, place, CTS in the "openlane/scripts" directory under tcl_commands folder. Basically proc is behind the steps code that gets executed when we run a specific program. For example we have taken an instance for the "run_cts" command which goes through a set of stages for checking necessary files and hands over the control to openROAD tool for execution.
+PS : Moreover, we can also look for the TCL proc for each step like synthesis, FP, place, CTS in the ```openlane/scripts``` directory under ```tcl_commands``` folder. Basically proc is behind the steps code that gets executed when we run a specific program. For example we have taken an instance for the ```run_cts``` command which goes through a set of stages for checking necessary files and hands over the control to openROAD tool for execution.
 
 ![Screenshot (1709)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c38cd7a9-699a-45c2-8b9d-7dd6eb329011)
 
 Once these checkings are done we can move to perform CTS in openlane flow using our previous design. 
 
-After the placement is done, run the "run_cts" command in the terminal.
+After the placement is done, run the ```% run_cts``` command in the terminal.
 
 ![Screenshot (1706)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3ac6ed3a-faa8-4d98-a87e-52287b9abcdf)
 
-As in this step the tool adds the extra buffers to the design in order to meet the timing constaints, a new design file "picorv32a.synthesis_cts.v" is created in the synthesis folder. From now on this new netlist will be used for the future purposes.
+As in this step the tool adds the extra buffers to the design in order to meet the timing constaints, a new design file ```picorv32a.synthesis_cts.v``` is created in the synthesis folder. From now on this new netlist will be used for the future purposes.
 
 ![Screenshot (1707_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e3d62d2c-aa34-4364-a964-31e81121efee)
 
- As the new buffers are being added to the netlist, it will have impact to the skew values and hence the STA analysis needs to be done one more time for this ideal clock scenario. 
+ As the new buffers are being added to the netlist, it will have impact to the skew values and hence the STA analysis needs to be done one more time for this real clock scenario. 
 
- This time we will analyze the timings through invoking the openROAD flow rather than invoking the openSTA outside of the original flow. OpenROAD includes the openSTA project which helps us performig the analysis. But for this we have to, like earlier, define library and constraints files as well as have to create a ".db" file by merging the .lef and .def file. We have created the file named as "pico_cts.db" for the same purpose and has executed it.
+ This time we will analyze the timings through invoking the ```openROAD``` flow rather than invoking the openSTA outside of the original flow. OpenROAD includes the openSTA project which helps us perform the analysis. But for this we have to, like earlier, define library and constraints files as well as have to create a ".db" file by merging the .lef and .def file. We have created the file named as ```pico_cts.db``` for the same purpose and has executed it.
 
  In the first part we have created the db file -
  ```
-read_lef (directory)
-read_def (directory)
+% read_lef <PathOfDirectory>
+% read_def <PathOfDirectory>
 
-write_db pico_cts.db
+% write_db pico_cts.db
 ```
 ![Screenshot (1715)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/36edb643-5e18-4d2c-946f-bfe8f8ef5e7d)
 
 In the next part we have read the db file along with new netlist, min/max libraries and sdc file and performed the report checks for timing analysis.
 ```
-read_db pico_cts.db
-read_verilog (directory)
-read_liberty -max (directory)
-read_liberty -min (directory)
-read_sdc (directory)
-set_propagated_clock [all_clocks]
-report_checks -path_delay min_max -format full_clock_expanded -digits 4
+% read_db pico_cts.db
+% read_verilog <directory>
+% read_liberty -max <directory>
+% read_liberty -min <directory>
+% read_sdc <directory>
+% set_propagated_clock [all_clocks]
+% report_checks -path_delay min_max -format full_clock_expanded -digits 4
 ```
 ![Screenshot (1716)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/5b6027df-9603-4038-87cc-498b0fb6e507)
 
@@ -948,10 +949,10 @@ Now we can see the updated timing results and clearly the slack is met, which is
 
 ![Screenshot (1717)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/48094ee0-42da-442c-b974-a395343bc8ce)
 
-The only problem with this analysis is that we have considered the slowest and fastest corner library and as of now the TritonCTS is not yet optimized for that corners as it is still in devlopment as an opensource tool. But is is quite optimized for the typical library and hence we will test it again by chnaging te library files.
+The only problem with this analysis is that we have considered the slowest and fastest corner library and as of now the TritonCTS is not yet optimized for that corners as it is still in devlopment as an opensource tool. But it is quite optimized for the typical library and hence we will test it again by chnaging the library files to typical corners.
 
 ```
-read_liberty $::env(LIB_SYNTH_COMPLETE)
+% read_liberty $::env(LIB_SYNTH_COMPLETE)
 ```
 *The "LIB_SYNTH_COMPLETE" switch redirects to the typical library.
 
@@ -965,14 +966,15 @@ Now as part of the assessment, we have tried looking at the impact of bigger CTS
 
 Use the following command to check the buffer list-
 ```
-echo $::env(CTS_CLK_BUFFER_LIST)
+% echo $::env(CTS_CLK_BUFFER_LIST)
 ```
-To remove the specific buffer from the list the following command along with the index of the buffer twice -
+To remove the specific buffer from the list, use the following command along with the index of the buffer as argument, twice, -
 ```
-set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0 ]
+% set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0 ]
 ```
 Now run the CTS.
-*One thing to note is that we have to change the def file to "picorv32a.placement.def" as we are performing CTS which is followed by placement stage.
+
+*One thing to note is that we have to change the def file to ```picorv32a.placement.def``` as we are performing CTS which is followed by placement stage.
 
 ![Screenshot (1725)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c1aaba7c-a96c-40ce-a094-751f71b9c48d)
 
@@ -984,12 +986,12 @@ Now invoke the openROAD flow for STA analysis while repeating all the previous s
 
 Clearly slack value is reduced and also we have checked the setup and hold time for the same using the commands-
 ```
-report_clock_skew -hold
-report_clock_skew -setup
+% report_clock_skew -hold
+% report_clock_skew -setup
 ```
 Note: To add the removed buffer again we can use the following command-
 ```
-set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd_clkbuf_1]
+% set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd_clkbuf_1]
 ```
 ![Screenshot (1729_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/972f8ac4-9e0f-4040-aaf0-501714fec2ff)
 
@@ -1035,7 +1037,7 @@ We can visualize through the above figure that the power and ground lines enter 
 ### PDN Through OpenLANE
 As the CTS is now completed, the current def file will be used to produce the PDN network in the design. To run the generation of pdn use the command-
 ```
-gen_pdn
+% gen_pdn
 ```
 The gen_pdn  performs the following operations-
 - writes lef
