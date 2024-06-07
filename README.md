@@ -450,7 +450,7 @@ Now for gate formation, we use a polysilicon layer(0.4um) over it and then the p
 
 ### Lightly Doped Drain (LDD) Formation
 We want to achieve a doping profile of P+,P-,N in nmos and N+,N-,P in pmos region. The P+ & N+ represent the source drain doping whereas N and P rpresnt the substrate dopings. The profile P- & P+ represents the lightly doped drain in the well. So basically there are two reasons for this extra LDD formation -
-1. Hot Electroon Effect : When device size is reduced, the elctric field provided by the power supply becomes stronger leading to breakage of Si-Si bonds by the high energy carriers as well as crosses the 3.2eV barrier between the Si and SiO2 conduction band and hence penetrating into the oxide.
+1. Hot Electron Effect : When device size is reduced, the elctric field provided by the power supply becomes stronger leading to breakage of Si-Si bonds by the high energy carriers as well as crosses the 3.2eV barrier between the Si and SiO2 conduction band and hence penetrating into the oxide.
 2. Short Channel Effect : Due to the reduced size of the device, the drain field penetrates to the channel leading to effects like channel length modulation, velocity saturation and DIBL.
 
 Therefore in order to avoid these phenomenon we use the LDD formation technique.
@@ -644,17 +644,17 @@ After updating the tech file and running the DRC check, it can be seen in the fi
 # Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
 Till this point we discussed about the extraction of the layout of a standard cell as well as calculated the timing characterization values for the cell. Our next goal is to plug in this newly designed standard cell to our working design "picorv32a" and check its functionality. In this module we will be focusing on how to import the data associated with the cell to the design library in form of LEF as well as make it ready for PnR stages.
 
-Openlane is just a place and route tool and hence heavily dependent upon the LEF file. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. But the layout which we have extracted (.mag) contains extra informations like power, ground and logic implemented which is of no significant use in PnR. This is what makes extracting LEF file more important. 
+OpenLane, being a place and route tool, relies heavily on LEF files. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. While the extracted layout file (.mag) contains comprehensive details, including power, ground, and logic implementation, these details are often redundant for PnR processes. Therefore, extracting a simplified LEF file that focuses on the necessary elements is crucial. 
 
 ## Synthesis and Timing Analysis of New Std Cell
 ### Conversion of Grid Info to Track Info
-Tracks are basically the paths through which the routing takes place. It connects the outside IO pins to cell's IO nodes. To get the track information of the sky130 pdk move to the directory "openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/" and open the "tracks.info file".
+Tracks are essentially the paths through which routing occurs, connecting the outside IO pins to the cell's IO nodes. To get the track information of the SkyWater 130nm PDK, move to the directory ```openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/``` and open the ```tracks.info``` file.
 
-PS : The first term in a track info represents the track layer followed by horizontal (X) or vertical (Y) direction followed by offset value followed by pitch i.e. [Tracklayer Horizontal/Vertical Offset Pitch]
+PS : The first element in a track info represents the track layer followed by horizontal (X) or vertical (Y) direction followed by offset value followed by metal pitch 
 
 ![Screenshot 2024-06-01 221016](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a03c81cf-6133-4c00-a8b0-389ddf5920d2)
 
-The PnR tool follows some specific guidelines to execute its automated process. It includes -
+The Place and Route (PnR) tool follows specific guidelines to execute its automated process, including -
 - The IO port must lie on the intersection of vertical and horizontal tracks
 - Widths of standard cells should be odd multiple of track pitch
 - Height should be odd multiple of vertical track pitch
@@ -665,10 +665,10 @@ So in order to check the guideline that our designed inverter's IO ports lie on 
 
 ![Screenshot 2024-06-01 221246](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d2470e14-5d89-4116-9af0-cf06fca054ac)
 
-The 2nd and guidelines of the PnR tool can also be verified through the grid as the the grid dimesion refers to the pitch and the inner PR boundar contains 3 horizontal box and 7 vertical box. So our design is completely compatible for the PnR tool.
+The second and third guidelines of the PnR tool can also be verified through the grid dimensions, as the grid dimension refers to the pitch, and the inner PR boundary contains 3 horizontal boxes and 7 vertical boxes. Therefore, our design is fully compatible with the PnR tool.
 
 ### Conversion of Magic Layout to Standard Cell LEF
-The first step for this would be the conversion of all the labels of inverter into specific ports. This can be done through the "Edit" tab and then selecting the "Text" option. 
+Setting Up Ports : The first step for this would be the conversion of all the labels of inverter into specific ports. This can be done through the "Edit" tab and then selecting the "Text" option. 
 
 Now set the port name (Text String), size, layer attached and enable the port for all the labels. The enable number should be given as per you want it on the LEF file.
 
@@ -680,11 +680,15 @@ Now set the port name (Text String), size, layer attached and enable the port fo
 
 ![Screenshot 2024-06-01 231307](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d6fa89f8-73cd-4bbf-b659-34b3e9a01a13)
 
-Once this is done we have to define the port class (input/output/inout) and port use attributes (power/ground/signal) for every port in the magic command terminal and save it with a custom name for further use.
+Define Port Attributes : Now we have to define the port class (input/output/inout) and port use attributes (power/ground/signal) for every port in the magic command terminal and save it with a custom name for further use.
+```
+% port class <input/output/inout>
+% port use <signal/power/ground>
+```
 
 ![Screenshot 2024-06-01 232151](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8831babb-82da-4cc0-be24-bdfd5cb3b081)
 
-Now open the newly saved .mag file in magic and use the command "lef write" to generate the LEF file in the current directory.
+Generating LEF File : Now open the newly saved .mag file in magic and use the command ```lef write``` to generate the LEF file in the current directory.
 
 ![Screenshot 2024-06-01 232744](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9ed3e163-5842-41c8-a41e-cee47ce1b66f)
 
@@ -693,34 +697,35 @@ Now open the .lef file to see all the contents as we have assigned before. See t
 ![Screenshot 2024-06-01 232841](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1c6f10d1-deb7-4363-aa9a-39c81ecfe6c8)
 
 ### Additon of New Std Cell to Library and Its Synthesis
-For adding the standard cell to "picorv32" design directory copy the lef file of the cell to the source directory of the design library (openlane/designs/picorv32a/src/).
+To integrate the newly designed custom cell into the "picorv32a" design and verify its functionality, we have follwed these steps:
+
+Copy LEF File : Copy the lef file of the cell to the source directory of the design library ```openlane/designs/picorv32a/src/```.
 
 ![Screenshot 2024-06-02 083748](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/541d2585-0aad-4e08-8c9e-cbba1d6226b9)
 
-Now again repeat the steps for the technology library (typical, fast and slow corner) files from the "libs" directory of "vsdstdcelldesign" to the src folder of picorv32a. The library files contain the information of cells in different PVT corners such as tt,ff & ss .
+Copy Library Files : Copy the technology library (typical, fast and slow corner) files from the ```/vsdstdcelldesign/libs/``` directory to the same source directory of picorv32a design ```openlane/designs/picorv32a/src/```. The library files contain the information of cells in different PVT corners such as tt,ff & ss .
 
 ![Screenshot 2024-06-02 092935](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0c294637-6946-47e2-8826-ca55f46395a2)
 
 ![Screenshot 2024-06-02 092159](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2d55b65f-96e3-4a21-b1ba-4c07e2d4435d)
 
-Once this is done modify the "config.tcl" of the picorv32a design by adding these paths or switches for the run -
+Update confi.tcl File : Modify the ```config.tcl``` of the picorv32a design by adding these paths through switches for the run -
 ```
-set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
-set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
-set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
-set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+% set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+% set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+% set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+% set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
 
-set ::env(EXTRA_LEF) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
-
+% set ::env(EXTRA_LEF) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
 ```
 ![Screenshot 2024-06-02 095616](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8b6e8cba-2165-48dc-8c37-2c0b53d40f05)
 
-The LIB_SYNTH switch is used for the synthesis whereas LIB_FASTEST, LIB_SLOWEST & LIB_TYPICAL switches are used for STA analysis. The "EXTRA_LEF" switch adds the extra lef file for the process.
+*Note : The LIB_SYNTH switch is used for the synthesis whereas LIB_FASTEST, LIB_SLOWEST & LIB_TYPICAL switches are used for STA analysis. The "EXTRA_LEF" switch adds the extra lef file for the process.
 
-Moving on, invoke the openLANE tool and add these two command lines to consider the new LEF file in the tool and then run the synthesis.
+Initiating OpenLANE Flow : Invoke the openLANE tool and add the new LEF files to the OpenLANE session and then run the synthesis.
 ```
-set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
-add_lefs -src $lefs
+% set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+% add_lefs -src $lefs
 ```
 ![Screenshot 2024-06-02 114950](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/60ce01e1-21ea-415b-b3d1-3bf04e57dcde)
 
@@ -729,29 +734,28 @@ add_lefs -src $lefs
 
 Our synthesis is successful with adding the new standard cells. Now we will move the timing aspects of the cells and its effects.
 
-You can see at the end of the synthesis there are two parameters tns and wns are present. These represents the Total Negative Slack and Worst Negative Slack respectively. Slack is the difference of required time and arrival time for a cell. In order to reduce these timing violations we can take certain measures like delay and area balance, which means that we will improve the delay at the cost of area. 
+We can see at the end of the synthesis there are two parameters ```tns``` and ```wns``` are present. These represents the Total Negative Slack and Worst Negative Slack respectively. Slack is the difference of required time and arrival time for a cell. In order to reduce these timing violations we can take certain measures such as delay and area balance i.e. improvement in delay at the cost of area. 
 
-As discussed earlier, in the openLANE flow there exists some switches for every procedure. So we can try to implement it on the terminal to change the variables taken for area and anything that realtes to delays in the circuit.
+As discussed earlier, in the openLANE flow there exists some switches for every stage. We can try to implement it through the terminal to change the variables taken for area and delays in the circuit during synthesis.
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e4c43a2e-1978-4d57-ae86-98627ff2b524)
 
-We can play around the following switches to reduce the slack but as of now our concern is to add the custom cell to library we will be focusing on this on static timing analysis part.
+We can play around the following synthesis switches to reduce the slack but as of now our concern is to add the custom cell to the library, we will be focusing on this slack issue on static timing analysis part.
 
 ![Screenshot 2024-06-03 082923](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ea667c32-655a-445f-8310-f9d5b64733ed)
 
-We can check that whether our custom inverter cell information is added or not by checking the "merged.lef" file in the "tmp" directory.
+Verify Custom Cell in merged.lef : To verify whether our custom inverter cell information is added to design or not, check the ```merged.lef``` file in the ```/picorv32a/tmp/``` directory.
 
 ![Screenshot 2024-06-03 084022](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a5ee9383-6920-4369-abdd-4d7c7e161efb)
 
-Now run the floorplan followed by placement to see the results. Open the magic tool to view the placement statistics.
+Run Floorplan and Placement : Run the floorplan followed by placement to see the results. 
+Visualize Placement in Magic : Open the magic tool and pass the new .def as argument to view the placement result window.
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/1e9d7d57-d875-4069-a2ea-b1c541242854)
 
-![WhatsApp Image 2024-06-03 at 9 03 21 AM](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/30e88e96-fd4d-4d78-bba7-40306d10ac4c)
+![download (43)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/70e350df-af22-4a8e-9d81-8b9b2d114f09)
 
-We can see our custom cell (sky130_vsdInv) being placed on the figure with its layout.
-
-This indicates that we are successfull with placing our standarrd cell in the design and now can move to further otimizations. 
+Our custom cell (sky130_vsdInv) can be seen with its layout, being placed on the design. Hence, we have successfully integrated our custom cell to the design and now can move to further optimizations. 
 
 
 
