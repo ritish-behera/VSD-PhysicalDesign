@@ -542,18 +542,19 @@ After executing these commands, the following extracted files will be generated 
 
 These steps allow you to prepare the CMOS inverter layout and extract the necessary files for further analysis and characterization using NGSpice.
 
+
 ## SPICE Deck Creation and Timing Characterization of the Inverter
-After extracting the SPICE netlist from the layout we modified it as following for the transient analysis and created the final SPICE deck for the inverter.
+After extracting the SPICE netlist from the layout, we modified it for transient analysis and created the final SPICE deck for the inverter.
 
 ![Screenshot 2024-06-01 055227](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/44711b2b-fee4-4c26-bc1a-bdebbe5d9c32)
 
-Then we simulated it through NGSPICE to obtains it output waveforms as well as to calculate timing characteristics.
+Running the Simulation : We simulated the inverter through NGSPICE to obtain the output waveforms and calculate the timing characteristics.
 
 ![Screenshot 2024-06-01 054747](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/586fefab-8ac7-4419-bbad-fd08b0d1c02f)
 
 ![Screenshot 2024-06-01 054706](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/00f711ad-3419-48d5-b5b4-4db6c3380b46)
 
-Now the rise and fall delay of the output waveform was calculated at 20% (0.66) and 80% (2.64) values as well as the rise and fall propagation delay was calculated at 50% (1.65) values of both input and output.
+Timing Characterization : The rise and fall delays of the output waveform were calculated at 20% (0.66V) and 80% (2.64V) levels, and the rise and fall propagation delays were calculated at 50% (1.65V) levels of both input and output by taking the data from the displayed waveforms.
 
 ![Screenshot 2024-06-01 054637](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/86847f87-2733-4b81-9888-cb22eb5f5a0f)
 
@@ -562,73 +563,80 @@ Now the rise and fall delay of the output waveform was calculated at 20% (0.66) 
 - Rise Propagation Delay = 2.20701e-09 - 2.14989e-09 = 0.05712ns
 - Fall Propagation Delay = 4.07529e-09 - 4.05057e-09 = 0.02472ns
 
-This values sums up the timing characterization of the standard library cell at a nominal temperature of 27 degree centigrade.
+These values summarize the timing characterization of the standard library cell at a nominal temperature of 27 degrees Celsius.
 
 ## Magic Tool Options and DRC Rules
-In this section we will go through the DRC rules for the open source pdks. The following figure represents the process stack diagram for the SkyWater 130nm process node. Further for more detailed information on the rules set visit https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root .
+In this section, we will explore the DRC rules for the open-source SkyWater 130nm PDK. Below is the process stack diagram for the SkyWater 130nm process node. For more detailed information on the rule set, visit theSkyWater PDK documentation - https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root .
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/114ed88f-5354-4d8a-b2bb-973727b4e12b)
 
-To check and verify some of the rules as part of the exercise, we have sourced files from the website - http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz which contains various layout models in magic.
+To check and verify some of the rules as part of the exercise, we have sourced files from the website - http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz which contains various layout models in Magic.
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6ea40030-172e-4512-a845-00daa54cd01c)
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/eccb26cc-ebff-4221-a583-1b87af682b2d)
 
-The .mag files gives the layout files whereas the .magicrc tells the magic tool where to find the tech file.
+The ```.mag``` files provide the layout files, while the ```.magicrc``` file tells the Magic tool where to find the tech file.
 
-As the first exercise for resolving the drc error we have taken an example of poly and nres poly spacing which is in the poly.mag file. As per the rule in the documentation the poly to poly distance should be at least 0.480 microns. But it doesnt consider the poly to nres poly distance . So our aim in this exercise was to add the rule to the tech file "sky130A.tech". 
+Exercise 1 : Resolving DRC Errors for Poly and nres Poly Spacing
+
+As the first exercise for resolving the drc rule we have taken an example of poly and nres poly spacing which is in the ```poly.mag``` file. According to the documentation, the poly-to-poly distance should be at least 0.480 microns. However, the poly-to-nres poly distance is not considered. Our goal is to add this rule to the sky130A.tech file 
 
 We first checked the distance between the poly and nres poly through creating a box and viewing its height on the terminal. Clearly the space is 0.210 microns which is less than the desired space.
 
 ![Screenshot 2024-06-01 105944](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c453a061-daa9-4d0c-b98c-c7c0ca3d407a)
 
-Now to resolve this issue we added the following rules set to poly.9 which will also define the rules for poly and nres poly spacings.
+Now to resolve this issue we added the following rule set to ```poly.9``` which will define the rules for poly and nres poly spacings.
 
 ![Screenshot 2024-06-01 110505](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/79fec960-c969-43a0-bb45-22a6e7582e16)
 
-Now we will load the updated tech file to Magic through magic command line as well as will check the drc error is fixed or not. The following figure verifies that the issue is solved as there is no drc error found.
+We then loaded the updated tech file into Magic through the Magic command line and checked if the DRC error was resolved. The following figure confirms that the issue is resolved as there is an error can be seen for the poly to nres-poly spacing which earlier wasn't there.
 
-![Screenshot 2024-06-01 110905](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/13321c51-9a81-4f59-a36c-322c8c9a7b8f)
+![335780573-13321c51-9a81-4f59-a36c-322c8c9a7b8f](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/abff5ea8-3a77-419d-804c-44b051b96387)
 
-In the next exercise we have tried adding the drc rule for spacings between nres poly and diffusion. In this case we are not checking the diffusion rules, so that can be ignored for now. In the follwing example there exists errors for the spacing between poly and diffusion but no such error can be seen for the npoly res and diffusion.
+Exercise 2: Adding DRC Rules for Spacings between nres Poly and Diffusion
+
+In the next exercise, we added a DRC rule for spacings between nres poly and diffusion. In this case, we are not checking the diffusion rules, so they can be ignored for now. In the example, there are errors for the spacing between poly and diffusion, but no errors for the nres poly and diffusion.
 
 ![Screenshot 2024-06-01 152029](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c3ff0faf-6460-45bf-8627-fc0c0b9d9d97)
 
-In order to add the rule as per the documentation we have added the following error constrcut in the tech file which serves the error for all diffusion spacings.
+To add the rule as per the documentation, we have added the following error constrcut in the tech file which serves the error for all diffusion spacings.
 
 ![Screenshot 2024-06-01 152507](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/17d63e20-3b5d-41cc-bc71-919de16b00a5)
 
-Now after going through similar process of loading the tech file again and checking the drc, the errors can be seen (Highlighted by yellow circles in the figure).
+After loading the updated tech file and checking the DRC, the errors can be seen, highlighted by yellow circles in the figure.
 
 ![Screenshot 2024-06-01 152935](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f6ab5552-9047-45c3-a883-f285fa956c65)
 
+Exercise 3: Geometrical Constructs of DRC Rules and Missing Rules in n-well Structures
 
-In the next few exercise we have dealt geometrical construct of drc rules and missing rules through the n-well structures defined in nwell.mag file. The below figure shows the part of the documentation which contains the drc rules for the n-well in sky130 nm pdk.
+In the next few exercises, we dealt with the geometrical constructs of DRC rules and missing rules through the n-well structures defined in ```nwell.mag``` file. The following figure shows part of the documentation containing the DRC rules for the n-well in the Sky130 nm PDK.
 
 ![Screenshot 2024-06-01 154922](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/7a7fda54-80c5-47d6-83bd-1d7f84abe97d)
 
-To describe the drc error in geometrical constructs we have taken an example of dnwell placed inside the nwell. As per the rule nwell.5 and nwell.6, the outer and inner layer of the dnwell must be surrounded by layers of nwell with minimum widths of 0.4um and 1.03um respectively. 
+To describe the DRC error in geometrical constructs, we used an example of dnwell placed inside the nwell. According to rules nwell.5 and nwell.6, the outer and inner layer of the dnwell must be surrounded by nwell layers with minimum widths of 0.4µm and 1.03µm, respectively.
 
-To describe the errors in geometrical construct we have to invoke the command "cif ostyle drc" in the Magic terminal. We have taken an example of inner layer error of dnwell which can be seen through the command "cif see dnwell_shrink". (Refer to the figure)
+To describe the errors in geometrical construct we have to invoke the command ```cif ostyle drc``` in the Magic terminal. We have taken an example of inner layer error of dnwell which can be seen through the command ```cif see dnwell_shrink``` (Refer to the figure).
 
 ![Screenshot 2024-06-01 162028](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/90d4c0b9-3dd6-45f4-8233-c1db4eb14274)
 
-Moving towards the next exercise, we have identified some missing or incorrect drc rules in the n-well layout and fixed that according to the documentation. In the figure below which we have taken as an example, there exists no error in the n-well structure as per the current rule set of the tech file.
+Exercise 4: Fixing Missing or Incorrect DRC Rules in n-well Layout
+
+Moving towards the next exercise, we identified some missing or incorrect DRC rules in the n-well layout and fixed them according to the documentation. In the figure below, there are no errors in the n-well structure based on the current rule set in the tech file.
 
 ![Screenshot 2024-06-01 163826](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/401b3bf1-3096-4f18-89d0-a8e193efca5a)
 
-But according to the nwell.4 rule, all n-wells should contain metal-contacted tap inside it. Therefore to fix this missing rule we have to modify the tech file by adding these constructs -
+However, according to rule nwell.4, all n-wells should contain metal-contacted taps inside them. Therefore, to fix this missing rule, we modified the tech file by adding the following constructs -
 
 ![image](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9f3da849-98da-452e-b9a4-7a95f6a4cc38)
 
-PS: the bloat-all operator has set of all n-well that contains tap. What we have done is, we have taken the set of all n-well and removed all the set of n-well containing taps from that. Whatever now is leftover, is taken as an error.
+PS: The ```bloat-all``` operator has set of all n-well that contains tap. What we have done is, we have taken the set of all n-well and from that, removed all the set of n-well containing taps. Whatever now is leftover, is taken as an error.
 
-Afterwards, we have defined the error in the "N-well" section as full variants, which means that this error will be showed whenever we run the drc in 'full' style.
+Afterwards, we have defined the error in the "N-well" section as full variants, which means that this error will be showed whenever we run the drc in ```full``` style.
 
 ![Screenshot 2024-06-01 174222](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/108a6f0a-c4b8-4cc5-814d-a21decdfd2a1)
 
-Now we will check our updated tech file by loading it again and will run the drc check. As can be seen in the figure the n-well without the tap shows an drc error whereas the n-well with tap, at the right side, doesnt show any errors. Hence we have fixed the missing drc rule.
+After updating the tech file and running the DRC check, it can be seen in the figure the n-well without the tap shows an drc error whereas the n-well with tap, at the right side, doesnt show any errors. Hence we have fixed the missing drc rule.
 
 ![Screenshot 2024-06-01 183728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f3e24948-d0b7-43fa-9c5a-6bfa245f2b9b)
 
