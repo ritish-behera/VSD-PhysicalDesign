@@ -5,11 +5,22 @@ PDK Used : SKyWater 130nm
 Date : 22nd May 2024
 
 ## Contents
-1. Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs
-2. Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
-3. Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
-4. Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
-5. Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
+1. [Module-1 : Inception of OpenSOurce EDA Tools and Skywater 130 nm Designs](module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
+   - [Synthesis of Design Through OpenLANE](synthesis-of-design-through-openlane)
+2. [Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization](module-2--floorplanning,-poweplanning,-placement-and-introduction-to-library-cell-characterization)
+   - [Floorplanning Through openLANE](floorplanning-through-openlane)
+   - [Congestion Aware Placement using RePlAce](congestion-aware-placement-using-replace)
+3. [Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization](module-3-design-library-cell-using-magic-layout-and-ngspice-characterization)
+    - [Inception of Layout and 16 Mask CMOS Fabrication Process](inception-of-layout-and-16-mask-cmos-fabrication-process)
+    - [Layout and SPICE Parameter Extraction Through "Magic"](layout-and-spice-parameter-extraction-through-"magic")
+    - [Magic Tool Options and DRC Rules Check](magic-tool-options-and-drc-rules)
+4. [Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis](module-4-pre-layout-timing-analysis-and-clock-tree-synthesis)
+    - [Synthesis and Timing Analysis of New Custom Cell](synthesis-and-timing-analysis-of-new-custom-cell)
+    - [Timing Analysis Using OpenSTA](timing-analysis-using-opensta)
+    - [CTS Using TritonCTS Tool](cts-using-tritoncts-tool)
+5. [Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis](module-5-final-steps-for-rtl2gds--routing-and-post-route-timing-analysis)
+    - [PDN Through OpenLANE](pdn-through-openlane)
+    - [Routing Through TritonRoute](routing-through-tritonroute)
 
 ## Introduction
 In the current scenario where using the commercial tools or software may feel expensive and difficult to master, the opensopurce EDA tools are trying to fill the gaps
@@ -38,6 +49,8 @@ The development and adoption of open-source EDA tools provide a cost-effective, 
  The chip featured a Quad Flat No-Leads (QFN) die package with 48 pins occupying an area of 7mm x 7mm. The SoC comprised of a CPU with GPIO bank designed on RISC-V ISA. Moreover, it included various foundry IPs such as PLL, SRAM, ADC & DAC all interconnected to the IO pads via wire bonds to ensure the chip's functionality.
 
 ![download (1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9652e6d8-23f7-4b9e-b9ef-97ef0c04e439)
+
+## Synthesis of Design Through OpenLANE
 
 The primary objective of this module was to commence the openLANE flow, thereby initiating the logic or RTL synthesis of the design through YOSYS and ABC. Besides a supplementary task involving the calculation of the flop ratio for the synthesized design was introduced at a later stage as part of the assignments.
 
@@ -641,12 +654,15 @@ After updating the tech file and running the DRC check, it can be seen in the fi
 ![Screenshot 2024-06-01 183728](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/f3e24948-d0b7-43fa-9c5a-6bfa245f2b9b)
 
 
-# Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis Using TritonCTS 
+
+
+
+# Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis
 Till this point we discussed about the extraction of the layout of a standard cell as well as calculated the timing characterization values for the cell. Our next goal is to plug in this newly designed standard cell to our working design "picorv32a" and check its functionality. In this module we will be focusing on how to import the data associated with the cell to the design library in form of LEF as well as make it ready for PnR stages.
 
 OpenLane, being a place and route tool, relies heavily on LEF files. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. While the extracted layout file (.mag) contains comprehensive details, including power, ground, and logic implementation, these details are often redundant for PnR processes. Therefore, extracting a simplified LEF file that focuses on the necessary elements is crucial. 
 
-## Synthesis and Timing Analysis of New Std Cell
+## Synthesis and Timing Analysis of New Custom Cell
 ### Conversion of Grid Info to Track Info
 Tracks are essentially the paths through which routing occurs, connecting the outside IO pins to the cell's IO nodes. To get the track information of the SkyWater 130nm PDK, move to the directory ```openlane/pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/``` and open the ```tracks.info``` file.
 
@@ -782,7 +798,7 @@ Note that the load capacitance of buffers are not equal to the output capacitanc
 From this delay table we can estimate the delays at each node and hence will be able to calculate the skew (The difference of arrival time of clock pulse between two FF/registers) produced at he end. It plays a crucial role during the static timing analysis as it may violate the setup and hold times.
 
 
-## Timing Analysis With Ideal Clocks Using OpenSTA
+## Timing Analysis Using OpenSTA
 ### Setup Time And Intro to FF Setup Time
 A flip-flop stores or passes data depending on the clock edge, consisting of two MUX structures. This causes a delay (setup time) before data passes to output. The setup time affects the clock period of the circuit.
 
