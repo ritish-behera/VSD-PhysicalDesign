@@ -995,47 +995,47 @@ Note: To add the removed buffer again we can use the following command-
 ```
 ![Screenshot (1729_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/972f8ac4-9e0f-4040-aaf0-501714fec2ff)
 
-This sums up the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage and hence will sign off the RTL2GDS flow. 
+This ends the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage, thereby completing the RTL2GDS flow. 
 
 
 # Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
-SO upto this module we have dealt with synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now comes thew routing phase where we defines the best possible path to connect two elements in order to use less roting resources with minimum timing violations due to its RC effects. Further we will use the tritonRoute tool to do the routing in our previous design followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
+So upto this module we have covered synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now, we move to the routing phase, where we define the optimal path to connect two elements, aiming to use less routing resources with minimum timing violations due to its RC effects. We will use TritonRoute tool to perform the routing in our previous design, followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
 
 ## Routing
-Routing is basically the physical interconnection between cells and ports to drive signals and clocks. Our goal is to achieve the best possible route or path to connect the nets with less no of twist and turns which will allow us to use less routing resources. For this we use specific routing algorithms which takes measures to connect the nets by creating source and traget terminals and iterates the best possible path between them. One such algorithm is 'Lee's Maze Routing Algorthim'.
+Routing involves the physical interconnection of cells and ports to drive signals and clocks. Our goal is to achieve the best possible route or path to connect the nets with less number of twist and turns in the path which will allow us to use less routing resources.  Specific routing algorithms are employed to determine the optimal paths by creating source and target terminals and iteratively finding the best route between them. One such algorithm is 'Lee's Maze Routing Algorithm'.
 
 ### Lee's Maze Algorithm
-This algorith starts with existing pre-placed cells during the floorplan which acts as the obstruts for routing. It creates a routing grid inside the core with standard dimension and defines the source and traget. Then it starts with labeling adjacent grid box with integers and keeps it increasing till it reaches the target with minimum cost. Below we have taken an example of such labeling of grids till it reaches from source to target.
+Lee's algorithm begins with pre-placed cells from the floorplan, which act as obstructions for routing. It creates a routing grid within the core area, defining source and target points. The algorithm labels adjacent grid boxes with increasing integers, representing the cost, until it reaches the target with minimal cost. Below is an example of such grid labeling from source to target - 
 
-![Screenshot (1698)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b5acf4c0-f959-4a2a-aa2b-c512890a93ef)
+![download (52)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9666f34b-7a4c-4e4c-bcef-7dc997f108df)
 
-Clearly we can see that it takes 9 minimum grid boxes to reach the target and hence now we have multiple paths to reach that point. But as we have discussed there should be minimum zigzag in path (due to lithography issues), the algorithm traces the path with minimum bends i.e. the 2nd figure . This concludes the Lee's algorithm. 
+Clearly, we can see that it takes a minimum of 9 grid boxes to reach the target. Now, we have multiple paths to reach that point. However, as discussed earlier, there should be minimal zigzagging in the path due to lithography issues. Therefore, the algorithm traces the path with the fewest bends, as shown in the second figure. This concludes Lee's algorithm.
 
 There are also other routing algorithms like Steiner tree and line search algorithm which follows the same principle of shortest routing path while using less memory and time than the Lee's algorithm.
 
 ### DRC Rules Associated with Routing
-While doing the routing step we also have to consider the DRCviolation due to the interconnect wires which is produced due to the lithography processes. Below we mentioned some of the DRC issues which needs to be taken care of :
+While doing the routing step we also have to consider the DRC violations due to the interconnect wires which is produced beacuse of lithography processes. Below we mentioned some of the DRC issues which needs to be taken care of :
 - Wire Width
 - Wire Pitch
 - Wire Spacing
 - Signal short
 - Via Widths
 - Via Spacings
-  
-![Screenshot 2024-06-04 112105](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c2fbf0fb-2b37-4159-ba8d-f9e2ab80e635)
+
+![download (53)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/c1de4c8e-2570-4a88-895d-df03faf13225)
 
 ### Parasitic Extraction
-Another aspect of the routing is the resistance and capacitance produced by the variable widths and heights of the connecting wires. This leads to delay in the circuit. In order to measure this delay we perform the parasitic extraction which outputs the value of RC delay in SPEF format. This will be discussed more properly in the lab assessments.
+Another crucial aspect of routing is the resistance and capacitance produced by the variable widths and heights of the connecting wires, which leads to delays in the circuit. To measure this delay, we perform parasitic extraction, which outputs the RC delay values in SPEF format. This process will be discussed in more detail during the lab assessments.
 
 ## Power Distribution Network
-Before moving into the routing stage we have to deploy the power and ground straps for power delivery along the cells. generally this is a step which is done just after the floorplan but due to the openLANE flow adjustment, this is created after the CTS step.
+Before moving into the routing stage we have to deploy the power and ground straps for power delivery along the cells. Generally this is a step which is done just after the floorplan but due to the openLANE flow adjustment, this is deployed after the CTS step.
 
-![Screenshot 2024-06-04 120142](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/e753eadc-458d-429f-a5cc-d1df7eb869ca)
+![download (54)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d4008e86-fe07-4838-b471-1f132f07857c)
 
-We can visualize through the above figure that the power and ground lines enter the core through the specific power/grand pads creating a ring structure around it. Later on these lines are distributed along the core using the straps (vertical lines). The standard cell rows and other macros (like memory cell) are then supplied power with the horizontal lines creating a mesh structure. A robust Power Distribution Network (PDN) is crucial for ensuring the reliable operation of an integrated circuit.
+We can visualize through the above figure that the power and ground lines enter the core through the specific power/ground pads creating a ring structure around it. Later on these lines are distributed along the core using the straps (vertical lines). The standard cell rows and other macros (like memory cell) are then supplied power with the horizontal lines creating a mesh structure. A robust Power Distribution Network (PDN) is crucial for ensuring the reliable operation of an integrated circuit.
 
 ### PDN Through OpenLANE
-As the CTS is now completed, the current def file will be used to produce the PDN network in the design. To run the generation of pdn use the command-
+As the CTS is now completed, the current def file will be used to produce the PDN network in the design. To run the pdn generation flow, use the command-
 ```
 % gen_pdn
 ```
@@ -1048,32 +1048,47 @@ The gen_pdn  performs the following operations-
 
 ![Screenshot 2024-06-05 235004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9fee1ef5-deb8-4f41-8844-318dd5e1e029)
 
+Using the .def file produced we can visualize the power network in the Magic window.
+
 ![Screenshot 2024-06-06 001004](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/a63d36f1-fa2f-4cf7-a1a0-7f135eac9794)
 
 ## Routing Through TritonRoute
-Basically the routing is divided into two sectons-
+Basically the routing is divided into two sections-
 - Global Routing : Rectangular coarse grid structures with routing guides generation
 - Detail Routing : Uses the global routes to realize segments and vias, creating fine grid structures for connectivity between points (uses various algorithms)
 
 The global routing is done by the "FastRoute" whereas the data is then being used by "TritonRoute" tool for the detailed routing.
 
-TritonRoute is an open-source detailed routing tool that is part of the OpenROAD project. Detailed routing involves defining the precise paths for interconnections within an integrated circuit design, ensuring that all signals are correctly routed without violations.
+TritonRoute is an open-source detail-routing tool that is part of the OpenROAD project. Detailed routing involves defining the precise paths for interconnections within an integrated circuit design, ensuring that all signals are correctly routed without violations.
 
-We can see the switches for the TritonRoute in the "/openroad/configurations" directory as follows-
+TritonRoute has three features which enables it for routing -
+- Routing within route guides 
+  ![download (55)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/97dd72a0-6ef2-4812-af0f-fad064b74112)
+- Inter-guide connectivity through access points
+  ![download (56)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/53640cec-f6df-422e-980a-3213117536d2)
+- MILP(Mixed Integer Linear Programming) based panel routing
+  ![download (57)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/efeb17b9-6e5a-42ec-bdcc-2507645dbf10)
+
+Following are the requirements for the execution of the tool as well as the produced output -
+- Inputs to TritonRoute : LEF file, DEF file, Preprocessed route guide
+- Constranits : Route guide honoring, Connectivity constraints, Design rules
+- Outputs : Detailed route with optimized wire length and vias
+
+Switches : We can see the available switches for the TritonRoute in the ```/openroad/configurations``` directory.
 
 ![Screenshot 2024-06-06 005501](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/44e57fb9-0653-4de1-a553-3efe2478978a)
 
-Now we can run the routing process after the pdn has been created. Use the command ``` run_route``` for the execution.
+Invoking the Tool : Now run the routing process after the pdn has been created. Use the command ``` run_route``` for the execution.
 
 We can check the optimization factors of the routing through using the switches ```echo $::env(ROUTING_CORES)``` and ```echo $::env(ROUTING_OPT_ITERS)``` which will ensure the optimization factor as well as the memmory and runtime taken by the routing tool.
 
 ![Screenshot 2024-06-06 005837](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2610119b-5bcd-42df-b59e-1debd4d94832)
 
-One thing to notice in the run is that it automatically extracts the post-route parasitics in the design into a .spef file which can be found in the "results/routing/" directory. Parasitic extraction identifies the parasitic resistances and capacitances associated with the interconnections in the design, which is then used for accurate timing analysis, power analysis, and signal integrity verification.
+Parasitic Extraction : One thing to notice in the run is that it automatically extracts the post-route parasitics in the design into a .spef file which can be found in the "results/routing/" directory. Parasitic extraction identifies the parasitic resistances and capacitances associated with the interconnections in the design, which is then used for accurate timing analysis, power analysis, and signal integrity verification.
 
 ![Screenshot (1736)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/68c055e6-5e65-4aa2-b680-b3820ffabc86)
 
-After all this runs, the final design layout was viewed through Magic and it happens to be something like this -
+After the execution, the final design layout can be viewed using the ```picorv32a.cts.def``` file present in the ```/runs/results/cts``` directory, through Magic.
 
 ![Screenshot 2024-06-06 011416](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/110198a7-6276-4f51-9a1f-9f40be6f9bd0)
 
@@ -1081,7 +1096,7 @@ After all this runs, the final design layout was viewed through Magic and it hap
 
 ![Screenshot 2024-06-06 011910](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d314392e-d549-46a0-a169-1daea2703f15)
 
-This concludes the total PnR flow of the picorv32a design while adding the custom library cell.
+Finally we get the full layout of the RISC-V processor with all the necessary components and without any timing violations. This is the end of the PnR flow and hence we have successfully performed all the necessary steps and optimization techniques to make it feasible as a chip.
 
 
 # Appendix
