@@ -1,4 +1,3 @@
-![download (25_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/eaccb1ad-247c-4e51-96a8-c4dad6036dbf)# VSD- Physical Design Using OpenSource Tools
 This repository details the report of all the technical works performed during the VSD- Physical Design workshop through OpenSource tools.
 PDK Used : SKyWater 130nm
 
@@ -476,13 +475,9 @@ So now to bring the bottom connection up, we will use the layer of photoresist a
 ![download (35_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/dacbfb18-04fc-4e79-87be-92d37666598f)
 
 ### Higher Level Metal Formation
-To avoid the non-linear surface topography of the wafer we need to planarize it. To achieve this deposit a thick layer (~1um) of SiO2 doped with phosphorous or boron (known as phosphosilicate or borophospho-silicat) which act as a protective layer for the mobile Na ion as well as boron reduces the overall temperature. Now the wafer surface is polished using a process called CMP (Chemical Mechanical Polishing) and outputs something similar the fgure below- 
+To avoid the non-linear surface topography of the wafer we need to planarize it. To achieve this deposit a thick layer (~1um) of SiO2 doped with phosphorous or boron (known as phosphosilicate or borophospho-silicat) which act as a protective layer for the mobile Na ion as well as boron reduces the overall temperature. Now the wafer surface is polished using a process called CMP (Chemical Mechanical Polishing) and outputs something similar the figure below followed by drilling the contacts into it by the same photolithography technique using the mask-12. 
 
-![Screenshot (1649)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/3a3ef481-f7db-47da-9f39-e302ba5846a9)
-
-The next step is to drilling the contacts into it by the same photolithography technique using the mask-12. 
-
-![Screenshot (1650)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d2b34eaa-2780-46eb-a5fe-7436cc1e5a82)
+![download (37_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/27fc21c7-b3b7-41f5-8106-329b0a6edb37)
 
 Now remove the mask and etch out the SiO2 to drill the contact holes making it accessible to upper layers and use a thin layer (~10nm) of TiN which is very good adhesion material for TiSi2. The next step is to deposit a blanket tungsten layer for the contact and carry out the CMP process for planarizing it.
 
@@ -490,9 +485,7 @@ Now remove the mask and etch out the SiO2 to drill the contact holes making it a
 
 Now to bring the contacts outside of the chip we deposit a aluminium layer (which is a higher metal layer) and pattern it through photolithography to take it to top layer. Now use the same method of SiO2 depostion followed by CMP and tugsten-aluminium layers while using the masks13-15 to take it outside of the chip. Nowadays instead of aluminium, copper is used as the alternative for higher metal layers due to its low resistivity.
 
-![Screenshot (1654)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/b2de6856-cd8c-494f-96cb-53b199257e10)
-
-![Screenshot (1655)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/6a239c8e-443e-4985-a57a-00579424ec92)
+![download (39_1)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/98f3ab71-04d9-4761-926c-6531cdf78f8f)
 
 At the end, in order to protect the chip a Si3N4 layer is deposited on the top metal layer wchich uses the final mask-16.
 
