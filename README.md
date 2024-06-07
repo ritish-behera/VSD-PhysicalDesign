@@ -1,6 +1,9 @@
 # VSD - Physical Design Using OpenSource Tools Workshop
-This repository details the report of all the technical works performed during the VSD- Physical Design workshop through OpenSource tools.
-PDK Used : SKyWater 130nm
+This repository details the report of all the technical works performed during the VSD- Physical Design through OpenSource tools.
+
+Tool Used : OpenLANE Flow
+
+PDK Used : SKyWater 130nm openPDK
 
 Date : 22nd May 2024
 
