@@ -311,10 +311,17 @@ Characterization of a cell is the most important aspect of a library cell genera
 - Providing simulation commands like tran and dc
 At last all these data output is fed to the "GUNA" characterization tool which outputs the config file.
 
-The following figures define some of the timing characterization values of cells which helps calculating propagation delay and transition time.
-
-![download (13)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/ff8930ce-af9f-446c-966e-f1abe197a8e6)
-
+The following terms define some of the timing characterization values of cells which helps calculating propagation delay and transition time-
+```
+- slew_low_rise_thr
+- slew_high_rise_thr
+- slew_low_fall_thr
+- slew_high_rise_thr
+- in_rise_thr
+- in_fall_thr
+- out_rise_thr
+- out_fall_thr
+```
 Propagation delay = Out_time_threshold - In_time_threshold
 
 - Propagation delay is calculated by the difference of output and input time at 50% point of both the waveforms.
@@ -323,8 +330,9 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 - Transition time is calculated by the difference of time between 80% & 20% point of the same waveform. 
 
-![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d3e2be6b-1a30-497a-8714-1534023c645d)
+![download (40)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/adb7e4fe-996d-42b7-b383-dd52c15b7fa8)
 
+![download (41)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0fc2a48e-ac21-4969-bbed-1a01671d54d8)
 
 
 
@@ -336,7 +344,7 @@ SPICE is a powerful, general-purpose analog electronic circuit simulator that is
 
 Here in this report we will discuss about a CMOS inverter and hence in the first step we will create a SPICE deck or netlist for the inverter circuit.
 
-![download (15)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/58b85de8-c003-4229-ae4b-9c058a4ee798)
+![Picture16](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/0ab30571-911c-4215-a86d-158ffed85783)
 
 Example of SPICE deck program for CMOS inverter :
 ``` 
