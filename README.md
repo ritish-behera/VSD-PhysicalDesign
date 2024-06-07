@@ -3,7 +3,7 @@ This repository details the report of all the technical works performed during t
 
 Tool Used : OpenLANE Flow
 
-PDK Used : SKyWater 130nm openPDK
+PDK Used : SkyWater 130nm openPDK
 
 Date : 22nd May 2024
 
