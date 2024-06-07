@@ -326,16 +326,16 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 ![334234044-8a5d0f17-39e3-4001-9afa-0289bc704c85](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/d3e2be6b-1a30-497a-8714-1534023c645d)
 
 # Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
-In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further as part of the cell characterization we will anylyze the timings i.e. rise, fall and propagation delay of the inverter through Magic and later on we will import this complete design to our library "picrov32a" generating the lef files.
+In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further, we'll analyze the timing characteristics of the inverter (rise time, fall time, and propagation delay) using Magic and then import this design into our library "picorv32a," generating the LEF files.
 
 ## SPICE Deck Creation for CMOS Inverter
-SPICE is a powerful, general-purpose analog electronic circuit simulator that is used to verify the integrity of circuit designs and predict circuit behavior. The circuit is described in a SPICE netlist, which includes component values and connectivity. Further, accurate models for the components (transistors, diodes, etc.) are provided, often based on process technology data and analysis types (transient, AC, DC) are specified along with simulation parameters.T he output results are then analyzed using graphical tools to verify the circuit's performance.
+SPICE is a powerful, general-purpose analog electronic circuit simulator that is used to verify the integrity of circuit designs and predict circuit behavior. The circuit is described in a SPICE netlist, which includes component values and connectivity, along with accurate models for the components (transistors, diodes, etc.), based on process technology data. Simulation parameters and analysis types (transient, AC, DC) are specified, and the output results are analyzed to verify the circuit's performance.
 
 Here in this report we will discuss about a CMOS inverter and hence in the first step we will create a SPICE deck or netlist for the inverter circuit.
 
 ![Screenshot (1623)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/8cd27fb4-8426-43f0-bc68-2dbb078b9af2)
 
-SPICE deck program :
+Example of SPICE deck program for CMOS inverter :
 ``` 
 M1 out in vdd vdd pmos w=0.375u l=0.25u      // ModelName Drain Gate Source Substrate Type Width Length
 M2 out in 0 0 nmos w=0.375u l=0.25u          // ModelName Drain Gate Source Substrate Type Width Length
@@ -357,17 +357,19 @@ vin in 0 0.25                                // Input Voltage
 
 Whatever we have done in the above setup is called as the static simluation or DC analysis of a CMOS inverter which produces a voltage transfer curve (VTC) when plotted.
 
-The robustness of a CMOS inverter can be studied through its static behaviour which is a reason of its wide use. 
+The robustness of a CMOS inverter can be studied through its static behavior, which is one reason for its wide use.
 
-The main characteristic of a VTC which defines the specfic inverter is the switching thershold or trip point which is nothing but the point where both input and output has the same voltage value. At this point both pmos and nmos are at satuaration region leading to huge amount of current flow. The switching threshold condition can be given as 
-1. Vgs = Vds    i.e. Gate-source voltage is equal to drain-source voltage
-2. Idsp = -Idsn    i.e. the summation of drain current of pmos and nmos is always zero
+The main characteristic of a VTC which defines the specfic inverter is the switching thershold or trip point which is nothing but the point where both input and output has the same voltage value. At this point both pmos and nmos are at satuaration region leading to a huge amount of current flow. 
 
-This switching threshold is heavily dependent upon the transistor sizing of pmos and nmos which is nothing but the W/L ratio of the transistor. The switching threshold is calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
+Switching Threshold Conditions : 
+1. Vgs = Vds     (Gate-source voltage is equal to drain-source voltage)
+2. Idsp = -Idsn   (The summation of drain current of pmos and nmos is always zero)
+
+The switching threshold depends heavily on the transistor sizing (W/L ratio of the transistors). A higher W/L ratio for PMOS shifts the VTC to the right, while a higher W/L ratio for NMOS shifts it to the left. The switching threshold can be calcculated by drawing a 45 degree angled line from origin and the point at which it intersects with the curve is taken as the trip point.
 
 ![Screenshot (1629)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9aac8057-4b72-4618-b116-a31ba7eb9134)
 
-The output VTC of inverter having higher W/L ratio of pmos than nmos is shifted towards the right from the ideal position whereas inverter having higher W/L ratio of nmos than pmos is shifted towards the left. An example is given below which depicts the behaviour of the curve depending upon the W/L ratio shifting the switching threshold. 
+Example VTC and Switching Threshold :
  
 ![Screenshot (1628)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/2482a7fc-2354-4176-b817-0e17303aa16e)
 
@@ -376,15 +378,22 @@ Dynamic simulation of a CMOS inverter refers to the analysis of its performance 
 
 ![Screenshot (1630)](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/9a78550d-eb2a-49c8-9369-734022816d26)
 
-To perform the transient analysis we have to make the following changes in the previous program :
+Example SPICE Deck for Transient Analysis :
 ```
-vin in 0 0 pulse 0 2.5 0 10p 10p 1n 2n                               // ModelName Node dcValue0 dcValue1 Type ZeroValue OneValue Shift RiseDelay FallDelay PulseWidth Period
+M1 out in vdd vdd pmos w=0.375u l=0.25u      // ModelName Drain Gate Source Substrate Type Width Length
+M2 out in 0 0 nmos w=0.375u l=0.25u          // ModelName Drain Gate Source Substrate Type Width Length
+
+cload out 0 10f                              // Output load capacitance
+vdd vdd 0 0.25                               // Supply voltage
+vin in 0 pulse 0 2.5 0 10p 10p 1n 2n         // Input Voltage: pulse 0 to 2.5V with specified delays and pulse width
 
 ** Simulation Commands **
 .op
-.tran 10p 4n
+.tran 10p 4n                                 // Transient Analysis: Step time 10p, Total time 4n
+.lib "tsmc_025um_model.mod"                  // Model file containing the description of pmos and nmos
+.end
 ```
-This will produce time dependent waveform from which we can calculate the delay values of the inverter by setting the load capacitances. The following setup is carried out in NGSpice in later stages.
+This SPICE deck will produce time-dependent waveforms from which delay values of the inverter can be calculated by setting the load capacitances. The setup is carried out in NGSPICE for further analysis.
 
 ## Inception of Layout and 16 Mask CMOS Fabrication Process
 The 16-mask CMOS process is a specific technology where 16 photolithographic masks are employed during the fabrication. the mask is an opaque plate which blocks the UV light to react with certain areas of
