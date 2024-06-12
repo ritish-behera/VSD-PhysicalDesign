@@ -8,7 +8,7 @@ PDK Used : SkyWater 130nm openPDK
 Date : 22nd May 2024
 
 ## Contents
-1. [Module 1 : Inception of Open Source EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
+1. [Module 1: Inception of Open Source EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
    - [RTL Synthesis Through OpenLANE](#rtl-synthesis-through-openlane)
 2. [Module 2: Floorplanning, Power Planning, Placement, and Introduction to Library Cell Characterization](#module-2-floorplanning-power-planning-placement-and-introduction-to-library-cell-characterization)
    - [Floorplanning Through OpenLANE](#floorplanning-through-openlane)
@@ -106,7 +106,7 @@ Flop Ratio = 1613 / 14876 = 0.10842
 This concludes the first module.
 
 
-# Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
+# Module-2 FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization
 After the synthesis stage comes the floorplanning stage where we arrange the pre-placed cells in the power rail and ground rail grid of the core followed by powerplanning, pin assignment and placement of standard cells. In this module we have executed the floorplanning stage in openLANE and viewed it layout results through the Magic tool. Also a minor task of representing the core dimeison in micron units was done as part of the module.
 
 Afterwards, we have moved to powerplanning, pin assignment and placement steps and at the end briefed about the library cell characterization using the SPICE parameters, DRC rules and timing constraints.
@@ -353,7 +353,7 @@ Transition Time = (slew_high_rise - slew_low_rise) or (slew_high_fall - slew_low
 
 
 
-# Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization
+# Module-3 Design Library Cell Using MAGIC Layout and NGSPICE Characterization
 In this module we will discuss about the library cell characterization and layout generation through "Magic" tool with emphasis on fabrication steps of a 16 mask CMOS inverter to better understand the design rules of the layout. Further, we'll analyze the timing characteristics of the inverter (rise time, fall time, and propagation delay) using Magic and then import this design into our library "picorv32a," generating the LEF files.
 
 ## SPICE Deck Creation for CMOS Inverter
@@ -661,7 +661,7 @@ After updating the tech file and running the DRC check, it can be seen in the fi
 
 
 
-# Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis
+# Module-4 Pre-layout Timing Analysis and Clock Tree Synthesis
 Till this point we discussed about the extraction of the layout of a standard cell as well as calculated the timing characterization values for the cell. Our next goal is to plug in this newly designed standard cell to our working design "picorv32a" and check its functionality. In this module we will be focusing on how to import the data associated with the cell to the design library in form of LEF as well as make it ready for PnR stages.
 
 OpenLane, being a place and route tool, relies heavily on LEF files. A LEF file provides information about the cell's power & ground rails, inner PR boundary and input/output port information. While the extracted layout file (.mag) contains comprehensive details, including power, ground, and logic implementation, these details are often redundant for PnR processes. Therefore, extracting a simplified LEF file that focuses on the necessary elements is crucial. 
@@ -1018,7 +1018,7 @@ Note: To add the removed buffer again we can use the following command-
 This ends the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage, thereby completing the RTL2GDS flow. 
 
 
-# Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
+# Module-5 Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
 So upto this module we have covered synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now, we move to the routing phase, where we define the optimal path to connect two elements, aiming to use less routing resources with minimum timing violations due to its RC effects. We will use TritonRoute tool to perform the routing in our previous design, followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
 
 ## Routing
