@@ -21,7 +21,7 @@ Date : 22nd May 2024
    - [Synthesis and Timing Analysis of New Custom Cell](#synthesis-and-timing-analysis-of-new-custom-cell)
    - [Timing Analysis Using OpenSTA](#timing-analysis-using-opensta)
    - [CTS Using TritonCTS Tool](#cts-using-tritoncts-tool)
-5. [Module 5: Final Steps for RTL2GDS - Routing and Post-Route Timing Analysis](#module-5-final-steps-for-rtl2gds-routing-and-post-route-timing-analysis)
+5. [Module 5: Final Steps for RTL2GDS - Routing and Post-Route Timing Analysis](#module-5-final-steps-for-rtl2gds-routing-and-postroute-timing-analysis)
    - [PDN Through OpenLANE](#pdn-through-openlane)
    - [Routing Through TritonRoute](#routing-through-tritonroute)
 
@@ -1018,7 +1018,7 @@ Note: To add the removed buffer again we can use the following command-
 This ends the CTS process and in the next module we will move to the Power Distribution Network as well as routing stage, thereby completing the RTL2GDS flow. 
 
 
-# Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis 
+# Module-5 Final Steps for RTL2GDS Routing and PostRoute Timing Analysis 
 So upto this module we have covered synthesis, floorplan, routing, placement and CTS with a partial static timing analysis. Now, we move to the routing phase, where we define the optimal path to connect two elements, aiming to use less routing resources with minimum timing violations due to its RC effects. We will use TritonRoute tool to perform the routing in our previous design, followed by timing violations check and improvement through openSTA. This will conclude our whole process of RTL2GDS of the RISC-V architecture processor.
 
 ## Routing
