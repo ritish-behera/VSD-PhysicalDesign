@@ -8,22 +8,23 @@ PDK Used : SkyWater 130nm openPDK
 Date : 22nd May 2024
 
 ## Contents
-1. [Module-1 : Inception of OpenSource EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
+1. [Module 1 : Inception of Open Source EDA Tools and Skywater 130 nm Designs](#module-1-inception-of-opensource-eda-tools-and-skywater-130-nm-designs)
    - [RTL Synthesis Through OpenLANE](#rtl-synthesis-through-openlane)
-2. [Module-2 : FloorPlanning, PowePlanning, Placement and Introduction to Library Cell Characterization](#module-2--floorplanning,-poweplanning,-placement-and-introduction-to-library-cell-characterization)
-   - [Floorplanning Through openLANE](#floorplanning-through-openlane)
+2. [Module 2: Floorplanning, Power Planning, Placement, and Introduction to Library Cell Characterization](#module-2-floorplanning-power-planning-placement-and-introduction-to-library-cell-characterization)
+   - [Floorplanning Through OpenLANE](#floorplanning-through-openlane)
    - [Congestion Aware Placement using RePlAce](#congestion-aware-placement-using-replace)
-3. [Module-3 : Design Library Cell Using MAGIC Layout and NGSPICE Characterization](#module-3-design-library-cell-using-magic-layout-and-ngspice-characterization)
-    - [Inception of Layout and 16 Mask CMOS Fabrication Process](#inception-of-layout-and-16-mask-cmos-fabrication-process)
-    - [Layout and SPICE Parameter Extraction Through "Magic"](#layout-and-spice-parameter-extraction-through-"magic")
-    - [Magic Tool Options and DRC Rules Check](#magic-tool-options-and-drc-rules)
-4. [Module-4 : Pre-layout Timing Analysis and Clock Tree Synthesis](#module-4-pre-layout-timing-analysis-and-clock-tree-synthesis)
-    - [Synthesis and Timing Analysis of New Custom Cell](#synthesis-and-timing-analysis-of-new-custom-cell)
-    - [Timing Analysis Using OpenSTA](#timing-analysis-using-opensta)
-    - [CTS Using TritonCTS Tool](#cts-using-tritoncts-tool)
-5. [Module-5 : Final Steps for RTL2GDS -Routing and Post-Route Timing Analysis](module-5-final-steps-for-rtl2gds--routing-and-post-route-timing-analysis)
-    - [PDN Through OpenLANE](pdn-through-openlane)
-    - [Routing Through TritonRoute](routing-through-tritonroute)
+3. [Module 3: Design Library Cell Using MAGIC Layout and NGSPICE Characterization](#module-3-design-library-cell-using-magic-layout-and-ngspice-characterization)
+   - [Inception of Layout and 16 Mask CMOS Fabrication Process](#inception-of-layout-and-16-mask-cmos-fabrication-process)
+   - [Layout and SPICE Parameter Extraction Through "Magic"](#layout-and-spice-parameter-extraction-through-magic)
+   - [Magic Tool Options and DRC Rules Check](#magic-tool-options-and-drc-rules)
+4. [Module 4: Pre-layout Timing Analysis and Clock Tree Synthesis](#module-4-pre-layout-timing-analysis-and-clock-tree-synthesis)
+   - [Synthesis and Timing Analysis of New Custom Cell](#synthesis-and-timing-analysis-of-new-custom-cell)
+   - [Timing Analysis Using OpenSTA](#timing-analysis-using-opensta)
+   - [CTS Using TritonCTS Tool](#cts-using-tritoncts-tool)
+5. [Module 5: Final Steps for RTL2GDS - Routing and Post-Route Timing Analysis](#module-5-final-steps-for-rtl2gds-routing-and-post-route-timing-analysis)
+   - [PDN Through OpenLANE](#pdn-through-openlane)
+   - [Routing Through TritonRoute](#routing-through-tritonroute)
+
 
 ## Introduction
 In the current scenario where using the commercial tools or software may feel expensive and difficult to master, the opensopurce EDA tools are trying to fill the gaps
@@ -44,7 +45,7 @@ The openLANE ASIC design flow involves the following opensource tools for differ
 5. MAGIC & NETGEN : Cell Characterization & Physical Verification
 
 
-# Module-1 : Inception of OpenSource EDA Tools and Skywater 130 nm Designs
+# Module-1 Inception of OpenSource EDA Tools and Skywater 130 nm Designs
 The development and adoption of open-source EDA tools provide a cost-effective, accessible alternative to proprietary softwares. Projects such as OpenLANE, which integrates multiple open-source tools into a cohesive flow, brings greater functionality and ease of use to the design process. In the open-source hardware movement, the SkyWater 130 nm Process Design Kit (PDK) represents a significant milestone providing comprehensive documentation, design rules, and process parameters. 
 
  This module provides the foundation for the chip to be designed alongside introduced the OpenLANE ASIC design flow and Skywater 130 nm openPDK.
