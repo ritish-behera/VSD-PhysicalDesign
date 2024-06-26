@@ -1,5 +1,5 @@
-# VSD - Physical Design Using OpenSource Tools Workshop
-This repository details the report of all the technical works performed during the VSD- Physical Design through OpenSource tools.
+# VSD - Physical Design Using OpenSource Tools 
+This repository details the report of all the technical works performed during the VSD- Physical Design Course through OpenSource tools.
 
 Tool Used : OpenLANE Flow
 
