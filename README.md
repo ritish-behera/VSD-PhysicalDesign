@@ -33,7 +33,7 @@ to reach the mass of semiconducter enthusisat. Opensource tools are great way to
   In this report, I have documented all my learnings as part of completion of "VSD-Physical design through opensource tools" workshop as well as tried to add a small contribution towards the community which I hope will be helpful for new learners.
 
 ## Objective
-The following workshop involved the complete RTL to GDSII design flow of a RISC-V processor architecture considering all the steps- RTL synthesis, static timing analysis, DFT, floorplan, placement, CTS, routing, physical verification as well as sign-off of the chip through the openLANE ASIC design flow with the Skywater 130nm PDK for all model libraries.
+The following workshop involved the complete RTL to GDSII design flow of a RISC-V processor architecture considering all the steps- RTL synthesis, static timing analysis, DFT, floorplan, placement, CTS, routing, physical verification as well as sign-off of the chip through the openLANE ASIC design flow with the Skywater 130nm PDK for all model libraries. Moreover, this involved integration of a characterized custom cell into the design and hence place&route operation were performed while verifying the timing constraints.
 
 ![download](https://github.com/ritish-behera/VSD-PhysicalDesign/assets/158822580/33c9085b-b05e-484e-a381-adac5c2f3db5)
 
